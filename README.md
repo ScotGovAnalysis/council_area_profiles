@@ -40,11 +40,10 @@ In rough order of importance/urgency:
     included? Should Scotland be included?)
   - Simplify the code. For example:
       - Replace deeply nested `ifelse` with `case_when`
-      - Use functions,
+      - Use functions and apply
         [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
       - Use [existing
         utilities](https://scales.r-lib.org/reference/label_ordinal.html)
-  - Write a README
   - Number files in the order they should be run
   - Reduce the time it takes to run
       - This may be because some datasets are very large
