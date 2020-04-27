@@ -21,6 +21,7 @@ council area.
 ## How to update
 
 1.  Make a copy of the most recent files
+      - Recommend you save to a local drive so the RMarkdown knits faster
 2.  Update the data file
 3.  Update the code
       - Start and end years, last and next updates, etc
