@@ -1,0 +1,57 @@
+council area profiles - 2585 - 2634
+
+
+<!-- COMMENT 20 NOVEMBER 2019 -->
+<!-- Data for the final chart in Dwellings was not available. -->
+<!-- So this section was commented out and will be reintroduced the next time it's available. -->
+
+
+<br>
+<a name="dwell_num_plots5"></a>
+
+<div class = "row">
+<div class = "col-md-3">
+
+``` {r dwell_text3, echo=FALSE}
+
+dwell_type_most <- data_dwell_type$Type[data_dwell_type$Area == paramsarea & data_dwell_type$Number == max(data_dwell_type$Number[data_dwell_type$Area == paramsarea & data_dwell_type$Year == dwell_est_end_year])]
+
+dwell_type_most_perc <- data_dwell_type_ca$Perc[data_dwell_type_ca$Area == paramsarea & data_dwell_type_ca$Type == dwell_type_most]
+
+dwell_type_second_most <- data_dwell_type$Type[data_dwell_type$Area == paramsarea & data_dwell_type$Number == max(data_dwell_type$Number[data_dwell_type$Area == paramsarea & data_dwell_type$Number != max(data_dwell_type$Number[data_dwell_type$Area == paramsarea])])]
+
+dwell_type_second_most_perc <- data_dwell_type_ca$Perc[data_dwell_type_ca$Area == paramsarea & data_dwell_type_ca$Type == dwell_type_second_most]
+
+dwell_type_most_scotland <- data_dwell_type$Type[data_dwell_type$Area == "Scotland" & data_dwell_type$Number == max(data_dwell_type$Number[data_dwell_type$Area == "Scotland"])]
+
+dwell_type_second_most_scotland <- data_dwell_type$Type[data_dwell_type$Area == "Scotland" & data_dwell_type$Number == max(data_dwell_type$Number[data_dwell_type$Area == "Scotland" & data_dwell_type$Number != max(data_dwell_type$Number[data_dwell_type$Area == "Scotland"])])]
+
+```
+
+In 
+`r paramsarea` in 
+`r dwell_est_end_year`, 
+`r paste0("\"",dwell_type_most,"\"")` 
+`r ifelse(length(dwell_type_most) > 1, paste0("were the most common dwelling types"),  paste0("was the most common dwelling type"))`
+`r paste0("(",formatC(round(dwell_type_most_perc[1], 1), format = "f", digits = 1),"%")`), followed by 
+`r paste0("\"",dwell_type_second_most,"\"")` 
+`r paste0("(",formatC(round(dwell_type_second_most_perc[1], 1), format = "f", digits = 1),"%")`). In Scotland overall, 
+`r paste0("\"",dwell_type_most_scotland,"\"")` 
+`r ifelse(length(dwell_type_most_scotland) > 1, paste0("were the most common dwelling types"),  paste0("was the most common dwelling type"))`, followed by 
+`r paste0("\"",dwell_type_second_most_scotland,"\"")`.
+<br>
+
+View [Source Table](#table_dwell_type)
+
+</div>
+
+<div class = "col-md-9">
+
+```{r dwell_num_plots5, echo=FALSE, warning = FALSE, fig.width=9, fig.align='right'}
+
+p_dwell_type
+
+```
+
+</div>
+</div>
