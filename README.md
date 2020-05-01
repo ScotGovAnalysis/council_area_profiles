@@ -45,16 +45,12 @@ In rough order of importance/urgency:
         [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
       - Use [existing
         utilities](https://scales.r-lib.org/reference/label_ordinal.html)
-  - Number files in the order they should be run
   - Reduce the time it takes to run
       - This may be because some datasets are very large
       - A solution could be to create aggregate versions of a single
         dataset
   - Improve/shorten variable names
-  - Separate data from code (i.e. dates)
   - Improve comments (e.g. **why** not **what**)
-  - Simplify how data is read in from the spreadsheet
-    ([example](https://readxl.tidyverse.org/articles/articles/readxl-workflows.html#iterate-over-multiple-worksheets-in*%20-a-workbook))
   - Nest/tidy datasets so the environment is more managable
 
 ## Licence
