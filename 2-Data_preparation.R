@@ -1,7 +1,7 @@
 # Define paramsarea ======================================================================
 
 paramsarea <- params$area
-
+#paramsarea <- "City of Edinburgh"
 # Start and end years for each chapter
 
 # Population estimates
@@ -16,6 +16,8 @@ pop_proj_end_year <- min(`population-projections`[["Year"]]) + 10
 bir_dea_marr_est_start_year <- max(`standardised-birth-rates`[["Registration Year"]]) - 20
 cp_start_year <- min(`civil-partnerships`[["Registration Year"]])
 bir_dea_marr_cp_est_end_year <- max(`standardised-birth-rates`[["Registration Year"]])
+#added a new end_date because the leading causes of deaths were not available 
+dea_marr_cp_est_end_year <- max(`standardised-birth-rates`[["Registration Year"]])-1
 
 # Household estimates
 house_est_start_year <- min(`household-estimates`[["Year"]])
@@ -1203,6 +1205,7 @@ deaths_age_sex <-
 
 # Total deaths by sex (not total "All people") by age group for each council area and Scotland
 total_deaths_age_sex_comp <- deaths_age_sex %>%
+  filter(Year == bir_dea_marr_cp_est_end_year) %>%
   group_by(Area, Sex, Age_group) %>%
   summarise(Number = sum(Number)) %>%
   filter(Sex != "All people",
@@ -1261,6 +1264,7 @@ deaths_rate_end_year <- deaths_rate %>%
 
 
 # Leading cause of death
+
 
 # Mutate initial leading-causes-of-death dataset to rename variables and select certain columns.
 # Leading causes of death for each council area and Scotland, for end year only.

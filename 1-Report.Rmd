@@ -5,9 +5,9 @@ output:
     toc: true
     toc_depth: 2
     toc_float: true
-    self_contained: no
+    self_contained: yes
 params: 
-  area: "East Lothian"
+  area: " "
 ---
 
 ```{r setup, echo=FALSE, include=FALSE, warning = FALSE}
@@ -1084,6 +1084,10 @@ p_deaths_age_sex
 The following leading cause of death analysis is based on a [list of causes](https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/methodologies/userguidetomortalitystatistics/leadingcausesofdeathinenglandandwalesrevised2016) developed by the World Health Organisation (WHO). There are around 60 categories in total and cancers are grouped separately according to the type of cancer, for example, lung, breast and prostate cancer are all counted as separate causes. If all cancers were grouped together, cancer would be the leading cause of death.
 
 <br>
+
+Please note that the leading cause of death data are still for 2018 and they will be updated in December 2020.
+
+<br>
 <a name="deaths_plots6"></a>
 
 <div class = "row">
@@ -1103,7 +1107,7 @@ second_leading_cause_m_scotland <- deaths_cause_m_comp$Cause_label[deaths_cause_
 
 In 
 `r paramsarea`, the leading cause of death for males in
-`r bir_dea_marr_cp_est_end_year` was
+`r dea_marr_cp_est_end_year` was
 `r leading_cause_m`
 `r paste0("(",formatC(round(deaths_cause_m$Perc[deaths_cause_m$Cause_label == leading_cause_m[1]][1], 1), format='f', digits=1))`% of all male deaths), followed by
 `r second_leading_cause_m`
@@ -2789,7 +2793,7 @@ table_deaths_age_sex
 
 <a name="table_deaths_cause_m"></a>
 
-#### Male leading causes of death, `r paramsarea`, `r bir_dea_marr_cp_est_end_year`
+#### Male leading causes of death, `r paramsarea`, `r dea_marr_cp_est_end_year`
 
 View [Chart](#deaths_plots6)
 
@@ -2799,7 +2803,7 @@ table_deaths_cause_m
 
 ```
 
-**Source:** [Vital Events Reference Tables `r bir_dea_marr_cp_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2018/section-6-death-causes) Table 6.03
+**Source:** [Vital Events Reference Tables `r dea_marr_cp_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2018/section-6-death-causes) Table 6.03
 
 <div style="page-break-after: always;"></div>
 
@@ -2807,7 +2811,7 @@ table_deaths_cause_m
 
 <a name="table_deaths_cause_f"></a>
 
-#### Female leading causes of death, `r paramsarea`, `r bir_dea_marr_cp_est_end_year`
+#### Female leading causes of death, `r paramsarea`, `r dea_marr_cp_est_end_year`
 
 View [Chart](#deaths_plots7)
 
@@ -2817,7 +2821,7 @@ table_deaths_cause_f
 
 ```
 
-**Source:** [Vital Events Reference Tables `r bir_dea_marr_cp_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2018/section-6-death-causes) Table 6.03
+**Source:** [Vital Events Reference Tables `r dea_marr_cp_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2018/section-6-death-causes) Table 6.03
 
 <br>
 

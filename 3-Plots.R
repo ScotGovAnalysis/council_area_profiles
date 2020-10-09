@@ -1642,7 +1642,9 @@ p_deaths_cause_f <- plot_horizontal_bar(
   col = dea,
   title = paramsarea,
   subtitle = paste0("Female leading causes of death, ",
-                    bir_dea_marr_cp_est_end_year, "\n\n",
+                    # adding a new date because leading cause not yet available
+                    dea_marr_cp_est_end_year, "\n\n",
+                    #bir_dea_marr_cp_est_end_year, "\n\n",
                     abs_comma(deaths_cause_f$Total[1]), " female deaths")) +
   labs(x = NULL, y = NULL)
 
@@ -1652,7 +1654,9 @@ p_deaths_cause_m <- plot_horizontal_bar(
   col = dea,
   title = paramsarea,
   subtitle = paste0("Male leading causes of death, ",
-                    bir_dea_marr_cp_est_end_year, "\n\n",
+                    # adding a new date because leading cause not yet available
+                    dea_marr_cp_est_end_year, "\n\n",
+                    #bir_dea_marr_cp_est_end_year, "\n\n",
                     abs_comma(deaths_cause_m$Total[1]), " male deaths")) +
   labs(x = NULL, y = NULL)
 

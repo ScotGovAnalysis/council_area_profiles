@@ -16,8 +16,39 @@ updates %>%
   list2env(globalenv())
 
 # Knit HTML documents =========================================================
-Area <- c("Argyll and Bute",
-          "City of Edinburgh")
+Area <- c(
+  
+  "Aberdeen City",
+  "Aberdeenshire",
+  "Angus",
+  "Argyll and Bute",
+  "City of Edinburgh",
+  "Clackmannanshire",
+  "Dumfries and Galloway",
+  "East Ayrshire",
+  "East Dunbartonshire",
+  "East Lothian",
+  "East Renfrewshire",
+  "Falkirk",
+  "Fife",
+  "Glasgow City",
+  "Highland",
+  "Inverclyde",
+  "Midlothian",
+  "Moray",
+  "Na h-Eileanan Siar",
+  "North Ayrshire",
+  "North Lanarkshire",
+  "Orkney Islands",
+  "Perth and Kinross",
+  "Renfrewshire",
+  "Scottish Borders",
+  "Shetland Islands",
+  "South Lanarkshire",
+  "West Dunbartonshire",
+  "West Lothian"
+  
+  )
 
 pb = txtProgressBar(min = 0, max = length(Area), initial = 0, style = 3)
 
