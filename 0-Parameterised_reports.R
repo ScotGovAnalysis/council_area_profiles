@@ -3,12 +3,12 @@ library(dplyr)
 
 start_time <- Sys.time()
 
-path <- "data/council-area-profiles-dataset_test.xlsx"
+path <- "data/council-area-profiles-dataset.xlsx"
 
 path %>%
   excel_sheets() %>%
   purrr::set_names() %>%
-  purrr::map(read_excel, path = path)  %>%
+  purrr::map(read_excel, path = path) %>%
   list2env(globalenv())
 
 updates %>% 
