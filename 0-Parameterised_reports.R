@@ -24,7 +24,7 @@ raw_data <- path %>%
   purrr::map(read_excel, path = path)
 
 # Sources list of expected sheet names and the columns within them
-source("sourced/expected_names_and_columns.R")
+source("source/expected_names_and_columns.R")
 
 
 
