@@ -38,7 +38,7 @@ council area.
 In rough order of importance/urgency:
 
   - Validate data before preparing tables (e.g. is every council area
-    included? Should Scotland be included?)
+    included? Should Scotland be included? Are values as expected e.g. age < 120?)
   - Simplify the code. For example:
       - Replace deeply nested `ifelse` with `case_when`
       - Use functions and apply
@@ -52,7 +52,11 @@ In rough order of importance/urgency:
   - Improve/shorten variable names
   - Improve comments (e.g. **why** not **what**)
   - Nest/tidy datasets so the environment is more managable
-
+  - Fix Y axis on fertility plot
+      - [Plot function](https://github.com/DataScienceScotland/council_area_profiles/blob/c6dcec1e1daf40bdbc1892cc12aaf29edaf29ee1/3-Plots.R#L455-L524)
+      - [Fertility plot code](https://github.com/DataScienceScotland/council_area_profiles/blob/c6dcec1e1daf40bdbc1892cc12aaf29edaf29ee1/3-Plots.R#L1384-L1392)
+      - [Fertility rate data](https://github.com/DataScienceScotland/council_area_profiles/blob/c6dcec1e1daf40bdbc1892cc12aaf29edaf29ee1/2-Data_preparation.R#L1064-L1070)
+      
 ## Licence
 
 This repository is available under the [Open Government Licence
