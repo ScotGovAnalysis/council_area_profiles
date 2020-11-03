@@ -26,8 +26,6 @@ raw_data <- path %>%
 # Sources list of expected sheet names and the columns within them
 source("source/expected_names_and_columns.R")
 
-
-
 # Check for expected data sheets
 if (identical(names(raw_data), names(expected_names_and_columns)) == F){ 
   stop(paste("Unexpected Sheet Names: ", setdiff(names(raw_data), names(expected_names_and_columns)), "\n"),
