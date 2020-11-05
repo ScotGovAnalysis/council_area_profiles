@@ -32,6 +32,8 @@ council area.
 6.  Send a sample of HTML documents to the relevant Statistician for QA
 7.  Send all HTML documents to the web team to upload to the website
       - Email 10 zipped HTML documents at a time
+8.  Make a note of the next date for update
+9.  **After publication** upload changes to GitHub
 
 ## Room for improvement
 
