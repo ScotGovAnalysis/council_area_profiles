@@ -22,7 +22,7 @@ council area.
 
 1. Save a copy of the most recent files to a local drive (RMarkdown will knit faster in a local drive)
 1. Update the data file (including data and last/next updates)
-1. Run the script that loops over each council area
+1. Run the script that loops over each council area (this normally takes around 20 mins)
 1. Sense check the HTML document
 1. Send a sample of HTML documents to the relevant Statistician for QA
 1. Send all HTML documents to the web team to upload to the website
