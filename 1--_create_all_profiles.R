@@ -1,15 +1,17 @@
 library(readxl)
 library(dplyr)
+library(purrr)
 
 start_time <- Sys.time()
 
 path <- "data/council-area-profiles-dataset.xlsx"
 
-path %>%
+raw_data <- path %>%
   excel_sheets() %>%
   purrr::set_names() %>%
-  purrr::map(read_excel, path = path) %>%
-  list2env(globalenv())
+  purrr::map(read_excel, path = path)
+  
+list2env(raw_data, globalenv())
 
 updates %>% 
   as.list() %>%
@@ -19,38 +21,7 @@ source("11-_check_data.R")
 
 # Knit HTML documents =========================================================
 Area <- c(
-  "Aberdeen City",
-  "Aberdeenshire",
-  "Angus",
-  "Argyll and Bute",
-  "City of Edinburgh",
-  "Clackmannanshire",
-  "Dumfries and Galloway",
-  "Dundee City",
-  "East Ayrshire",
-  "East Dunbartonshire",
-  "East Lothian",
-  "East Renfrewshire",
-  "Falkirk",
-  "Fife",
-  "Glasgow City",
-  "Highland",
-  "Inverclyde",
-  "Midlothian",
-  "Moray",
-  "Na h-Eileanan Siar",
-  "North Ayrshire",
-  "North Lanarkshire",
-  "Orkney Islands",
-  "Perth and Kinross",
-  "Renfrewshire",
-  "Scottish Borders",
-  "Shetland Islands",
-  "South Ayrshire",
-  "South Lanarkshire",
-  "Stirling",
-  "West Dunbartonshire",
-  "West Lothian"
+  "Aberdeen City"
   )
 
 pb = txtProgressBar(min = 0, max = length(Area), initial = 0, style = 3)
