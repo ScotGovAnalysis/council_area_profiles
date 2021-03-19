@@ -15,7 +15,7 @@ updates %>%
   as.list() %>%
   list2env(globalenv())
 
-source("11__check_data.R")
+source("11-_check_data.R")
 
 # Knit HTML documents =========================================================
 Area <- c(
@@ -56,7 +56,7 @@ Area <- c(
 pb = txtProgressBar(min = 0, max = length(Area), initial = 0, style = 3)
 
 for (i in seq_along(Area)) {
-  rmarkdown::render("12__create_profile.Rmd",
+  rmarkdown::render("12-_create_profile.Rmd",
                     output_dir = "output",
                     output_file = paste0(gsub(" ", "-", tolower(Area[[i]])),
                                          "-council-profile.html"),
