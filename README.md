@@ -21,14 +21,17 @@ council area.
 ## How to update
 
 1. Save a copy of the most recent files to a local drive (RMarkdown will knit faster in a local drive)
-1. Update the data file (including data and last/next updates)
-1. Run the script that loops over each council area (this normally takes around 20 mins)
-1. Sense check the HTML document
-1. Send a sample of HTML documents to the relevant Statistician for QA
-1. Send all HTML documents to the web team to upload to the website
-      - Email 10 zipped HTML documents at a time
-1. Make a note of the next date for update
-1. **After publication** upload changes to GitHub
+2. Update the data file (including data and last/next updates)
+3. Check you’re using the latest dataset and only the updated datasets have changed
+4. Check all the 'next update' dates are still in the future
+5. Update links to source tables
+6. Run the script that loops over each council area (this normally takes around 20 mins)
+7. Sense check the HTML document
+8. Send a sample of HTML documents to the relevant Statistician for checking
+9. Send all HTML documents to the web team to upload to the website
+10. Set a reminder for the next update
+11. **After publication** upload changes to GitHub
+12. Delete old local copies of the code
 
 ## Room for improvement
 
