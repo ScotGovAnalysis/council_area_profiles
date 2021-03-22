@@ -12,15 +12,15 @@ sheet_names_correct <-
   identical(names(raw_data), names(expected_names_and_columns))
 
 if(identical(lapply(raw_data, names), expected_names_and_columns)) {
-  message("Sheet and column names are correct :)")
+  message("Check passed: sheet and column names are correct")
   
   # First check if sheet names are correct
 } else if (isFALSE(sheet_names_correct)) {
   warning(
-    paste("Unexpected Sheet Names: ", setdiff(
+    paste("Check failed: unexpected Sheet Names: ", setdiff(
       names(raw_data), names(expected_names_and_columns)
     ), "\n"),
-    paste("Missing Sheet Names: ", setdiff(
+    paste("Check failed: missing Sheet Names: ", setdiff(
       names(expected_names_and_columns), names(raw_data)
     ), "\n")
   )
@@ -39,9 +39,9 @@ if(identical(lapply(raw_data, names), expected_names_and_columns)) {
                 setdiff) %>%
     compact()
   
-  warning(paste("Unexpected column names (above)",str(unexpected_col_names)),
+  warning(paste("Check failed: unexpected column names (above)",str(unexpected_col_names)),
           immediate. = TRUE)
-  warning(paste("Missing column names (above)", str(missing_col_names)),
+  warning(paste("Check failed: missing column names (above)", str(missing_col_names)),
           immediate. = TRUE)
 }
 
@@ -53,12 +53,12 @@ data_sets_with_max_row_limit <- lapply(raw_data, nrow) == 1048575
 if (any(data_sets_with_max_row_limit)) {
   warning(
     paste(
-      "These datasets are at the maximum row limit for Excel (suggesting possible data loss):",
+      "Check failed: these datasets are at the maximum row limit for Excel (suggesting possible data loss):",
       paste(names(data_sets_with_max_row_limit[data_sets_with_max_row_limit]), collapse = ", ")
     )
   )
 } else {
-  message("All datasets are under the maximum row limit for Excel :)")
+  message("Check passed: all datasets are under the maximum row limit for Excel")
 }
 
 # No NAs ------------------------------------------------------------------
@@ -70,11 +70,11 @@ data_sets_with_NA <-
   )
 
 if (any(data_sets_with_NA)) {
-  warning(paste("There are NAs in:", paste(names(
+  warning(paste("Check failed: there are NAs in:", paste(names(
     data_sets_with_NA[data_sets_with_NA]
   ), collapse = ", ")))
 } else {
-  message("No NAs found :)")
+  message("Check passed: no NAs found")
 }
 
 # Scotland in Council Areas -----------------------------------------------
