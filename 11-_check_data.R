@@ -88,5 +88,7 @@ for(i in seq_along(raw_data)){
   }
 }
 
-
+check_values_CA <- function(tb, council_areas) {
+  return(identical(unique(tb[["Council area"]]), council_areas))
+}
 

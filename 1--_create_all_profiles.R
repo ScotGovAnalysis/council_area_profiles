@@ -19,6 +19,10 @@ updates %>%
 
 source("11-_check_data.R")
 
+readline(paste("Are you following the update instructions?",
+         "\n https://github.com/DataScienceScotland/council_area_profiles",
+         "\n Hit enter to continue:"))
+
 # Knit HTML documents =========================================================
 Area <- c(
   "Aberdeen City"

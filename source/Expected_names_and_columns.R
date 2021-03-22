@@ -1,4 +1,5 @@
-#Creating list of expected sheet names and columns within those sheets for data validation in 0-Parameterised_reports.R
+# Creating list of expected sheet names and columns within those sheets for data
+# validation
 
 expected_names_and_columns <-
   list(
@@ -167,3 +168,41 @@ expected_names_and_columns <-
       "Number"
     )
   )
+
+expected_values <- list(
+  "Council area" = c(
+    "Aberdeen City",
+    "Aberdeenshire",
+    "Angus",
+    "Argyll and Bute",
+    "City of Edinburgh",
+    "Clackmannanshire",
+    "Dumfries and Galloway",
+    "Dundee City",
+    "East Ayrshire",
+    "East Dunbartonshire",
+    "East Lothian",
+    "East Renfrewshire",
+    "Falkirk",
+    "Fife",
+    "Glasgow City",
+    "Highland",
+    "Inverclyde",
+    "Midlothian",
+    "Moray",
+    "Na h-Eileanan Siar",
+    "North Ayrshire",
+    "North Lanarkshire",
+    "Orkney Islands",
+    "Perth and Kinross",
+    "Renfrewshire",
+    "Scotland",
+    "Scottish Borders",
+    "Shetland Islands",
+    "South Ayrshire",
+    "South Lanarkshire",
+    "Stirling",
+    "West Dunbartonshire",
+    "West Lothian"
+  )
+)
