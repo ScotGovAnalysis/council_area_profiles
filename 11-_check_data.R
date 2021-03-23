@@ -2,9 +2,8 @@
 # AUTHORS:            Rhiannon.Batstone@nrscotland.gov.uk
 #                     joseph.adams@nrscotland.gov.uk
 # PURPOSE OF SCRIPT:  Check data for Council Area Profiles
-###############################################################################
 
-# Basics ------------------------------------------------------------------
+# Set expectations --------------------------------------------------------
 source("source/expected_names_and_columns.R")
 
 # Sheet and column names --------------------------------------------------
@@ -39,7 +38,7 @@ if(identical(lapply(raw_data, names), expected_names_and_columns)) {
                 setdiff) %>%
     compact()
   
-  warning(paste("Check failed: unexpected column names (above)",str(unexpected_col_names)),
+  warning(paste("Check failed: unexpected column names (above)", str(unexpected_col_names)),
           immediate. = TRUE)
   warning(paste("Check failed: missing column names (above)", str(missing_col_names)),
           immediate. = TRUE)
@@ -61,7 +60,7 @@ if (any(data_sets_with_max_row_limit)) {
   message("Check passed: all datasets are under the maximum row limit for Excel")
 }
 
-# No NAs ------------------------------------------------------------------
+# Missing values ----------------------------------------------------------
 data_sets_with_NA <-
   sapply(
     raw_data,
@@ -77,18 +76,39 @@ if (any(data_sets_with_NA)) {
   message("Check passed: no NAs found")
 }
 
-# Scotland in Council Areas -----------------------------------------------
-#TODO Find out if scotland is not meant to be in any tables (it's currently in
-#all (except updates))
-for(i in seq_along(raw_data)){
-  if("Council area" %in% names(raw_data[[i]])){ 
-    if(!("Scotland" %in% raw_data[[i]]$'Council area')){
-      warning(paste("Scotland expected but missing in:", names(raw_data[i])))
-    }
+
+# Values ------------------------------------------------------------------
+raw_data_without_updates <- raw_data[names(raw_data) != "updates"]
+
+
+# Values - council area ---------------------------------------------------
+check_values_CA <-
+  function(tb, council_areas = expected_values[["Council area"]]) {
+    return(setequal(unique(tb[["Council area"]]), council_areas))
   }
+
+values_CA <- map(raw_data_without_updates, .f = check_values_CA)
+
+if (all(as.logical(values_CA))) {
+  message("Check passed: correct values (council area)")
+} else {
+  warning(
+    paste(
+      "Check failed: these datasets have either missing or unexpected values",
+      "in the council areas column:\n",
+      paste(names(values_CA[values_CA == FALSE]), collapse = ", ")
+    )
+  )
 }
 
-check_values_CA <- function(tb, council_areas) {
-  return(identical(unique(tb[["Council area"]]), council_areas))
-}
+# Values - population-estimates ------------------------------------------
+identical(
+  map(select(raw_data[["population-estimates"]], -Population), unique),
+  expected_values[["population_estimates"]]
+)
+
+
+
+
+
 

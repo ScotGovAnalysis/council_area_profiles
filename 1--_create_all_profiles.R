@@ -1,3 +1,7 @@
+readline(paste("Are you following the update instructions?",
+               "\n https://github.com/DataScienceScotland/council_area_profiles",
+               "\n Hit enter to continue:"))
+
 library(readxl)
 library(dplyr)
 library(purrr)
@@ -19,13 +23,40 @@ updates %>%
 
 source("11-_check_data.R")
 
-readline(paste("Are you following the update instructions?",
-         "\n https://github.com/DataScienceScotland/council_area_profiles",
-         "\n Hit enter to continue:"))
-
 # Knit HTML documents =========================================================
 Area <- c(
-  "Aberdeen City"
+  "Aberdeen City",
+  "Aberdeenshire",
+  "Angus",
+  "Argyll and Bute",
+  "City of Edinburgh",
+  "Clackmannanshire",
+  "Dumfries and Galloway",
+  "Dundee City",
+  "East Ayrshire",
+  "East Dunbartonshire",
+  "East Lothian",
+  "East Renfrewshire",
+  "Falkirk",
+  "Fife",
+  "Glasgow City",
+  "Highland",
+  "Inverclyde",
+  "Midlothian",
+  "Moray",
+  "Na h-Eileanan Siar",
+  "North Ayrshire",
+  "North Lanarkshire",
+  "Orkney Islands",
+  "Perth and Kinross",
+  "Renfrewshire",
+  "Scottish Borders",
+  "Shetland Islands",
+  "South Ayrshire",
+  "South Lanarkshire",
+  "Stirling",
+  "West Dunbartonshire",
+  "West Lothian"
   )
 
 pb = txtProgressBar(min = 0, max = length(Area), initial = 0, style = 3)

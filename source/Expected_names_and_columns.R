@@ -1,6 +1,7 @@
 # Creating list of expected sheet names and columns within those sheets for data
 # validation
 
+# Names of sheets and columns ---------------------------------------------
 expected_names_and_columns <-
   list(
     "updates" = c(
@@ -169,8 +170,12 @@ expected_names_and_columns <-
     )
   )
 
-expected_values <- list(
-  "Council area" = c(
+# Values ------------------------------------------------------------------
+expected_values <- list()
+
+# Values in MULTIPLE datasets ---------------------------------------------
+expected_values[["multiple"]] <- list(
+  council_area = c(
     "Aberdeen City",
     "Aberdeenshire",
     "Angus",
@@ -204,5 +209,131 @@ expected_values <- list(
     "Stirling",
     "West Dunbartonshire",
     "West Lothian"
+  ),
+  registration_year = 1991:2019
+)
+
+# Values in SINGLE datasets -----------------------------------------------
+# Values in SINGLE datasets population_estimates --------------------------
+expected_values[["population_estimates"]] <- list(
+  `Council area` = expected_values[["multiple"]][["council_area"]],
+  Year = as.numeric(1998:2019),
+  Sex = c("Female", "Male"),
+  Age = as.numeric(0:90)
+)
+
+# Values in SINGLE datasets births_by_age_of_mother -----------------------
+expected_values_births_by_age_of_mother <- list(
+  mother_age_group = c(
+    "0 to 19",
+    "20 to 24",
+    "25 to 29",
+    "30 to 34",
+    "35 to 39",
+    "40 and over",
+    "All ages",
+    "Not stated"
+  )
+)
+
+# Values in SINGLE datasets deaths_by_sex_by_age --------------------------
+expected_values_deaths_by_sex_by_age <- list(
+  age_group = c(
+    "0",
+    "1 to 4",
+    "5 to 9",
+    "10 to 14",
+    "15 to 19",
+    "20 to 24",
+    "25 to 29",
+    "30 to 34",
+    "35 to 39",
+    "40 to 44",
+    "45 to 49",
+    "50 to 54",
+    "55 to 59",
+    "60 to 64",
+    "65 to 69",
+    "70 to 74",
+    "75 to 79",
+    "80 to 84",
+    "85 to 89",
+    "90 and over",
+    "All ages"
+  )
+)
+
+# Values in SINGLE datasets net_migration ---------------------------------
+expected_values_net_migration <- list(
+  age_group = c(
+    "0 to 4",
+    "5 to 9",
+    "10 to 14",
+    "15 to 19",
+    "20 to 24",
+    "25 to 29",
+    "30 to 34",
+    "35 to 39",
+    "40 to 44",
+    "45 to 49",
+    "50 to 54",
+    "55 to 59",
+    "60 to 64",
+    "65 to 69",
+    "70 to 74",
+    "75 to 79",
+    "80 to 84",
+    "85 to 89",
+    "90 and over",
+    "All ages"
+  )
+)
+
+# Values in SINGLE datasets life_expectancy -------------------------------
+expected_values_life_expectancy <- list(
+  age_group = c(
+    "0",
+    "1 to 4",
+    "5 to 9",
+    "10 to 14",
+    "15 to 19",
+    "20 to 24",
+    "25 to 29",
+    "30 to 34",
+    "35 to 39",
+    "40 to 44",
+    "45 to 49",
+    "50 to 54",
+    "55 to 59",
+    "60 to 64",
+    "65 to 69",
+    "70 to 74",
+    "75 to 79",
+    "80 to 84",
+    "85 to 89",
+    "90+" # This replaces "90 and over" in life-expectancy starting with 2016-18
+  )
+)
+
+# Values in SINGLE datasets household_projections -------------------------
+expected_values_household_projections <- list(
+  age_group = c(
+    "16 to 19",
+    "20 to 24",
+    "25 to 29",
+    "30 to 34",
+    "35 to 39",
+    "40 to 44",
+    "45 to 49",
+    "50 to 54",
+    "55 to 59",
+    "60 to 64",
+    "65 to 69",
+    "70 to 74",
+    "75 to 79",
+    "80 to 84",
+    "85 to 89",
+    "90 and over",
+    "All ages"
   )
 )
