@@ -174,52 +174,62 @@ expected_names_and_columns <-
 expected_values <- list()
 
 # Values in MULTIPLE datasets ---------------------------------------------
-expected_values[["multiple"]] <- list(
-  council_area = c(
-    "Aberdeen City",
-    "Aberdeenshire",
-    "Angus",
-    "Argyll and Bute",
-    "City of Edinburgh",
-    "Clackmannanshire",
-    "Dumfries and Galloway",
-    "Dundee City",
-    "East Ayrshire",
-    "East Dunbartonshire",
-    "East Lothian",
-    "East Renfrewshire",
-    "Falkirk",
-    "Fife",
-    "Glasgow City",
-    "Highland",
-    "Inverclyde",
-    "Midlothian",
-    "Moray",
-    "Na h-Eileanan Siar",
-    "North Ayrshire",
-    "North Lanarkshire",
-    "Orkney Islands",
-    "Perth and Kinross",
-    "Renfrewshire",
-    "Scotland",
-    "Scottish Borders",
-    "Shetland Islands",
-    "South Ayrshire",
-    "South Lanarkshire",
-    "Stirling",
-    "West Dunbartonshire",
-    "West Lothian"
-  ),
-  registration_year = 1991:2019
+expected_values_CA <- c(
+  "Aberdeen City",
+  "Aberdeenshire",
+  "Angus",
+  "Argyll and Bute",
+  "City of Edinburgh",
+  "Clackmannanshire",
+  "Dumfries and Galloway",
+  "Dundee City",
+  "East Ayrshire",
+  "East Dunbartonshire",
+  "East Lothian",
+  "East Renfrewshire",
+  "Falkirk",
+  "Fife",
+  "Glasgow City",
+  "Highland",
+  "Inverclyde",
+  "Midlothian",
+  "Moray",
+  "Na h-Eileanan Siar",
+  "North Ayrshire",
+  "North Lanarkshire",
+  "Orkney Islands",
+  "Perth and Kinross",
+  "Renfrewshire",
+  "Scotland",
+  "Scottish Borders",
+  "Shetland Islands",
+  "South Ayrshire",
+  "South Lanarkshire",
+  "Stirling",
+  "West Dunbartonshire",
+  "West Lothian"
 )
 
 # Values in SINGLE datasets -----------------------------------------------
 # Values in SINGLE datasets population_estimates --------------------------
 expected_values[["population_estimates"]] <- list(
-  `Council area` = expected_values[["multiple"]][["council_area"]],
+  `Council area` = expected_values_CA,
   Year = as.numeric(1998:2019),
   Sex = c("Female", "Male"),
   Age = as.numeric(0:90)
+)
+
+# Values in SINGLE datasets population_projections ------------------------
+expected_values[["population_projections"]] <- list(
+  `Council area` = expected_values_CA,
+  Year = as.numeric(2018:2043),
+  Sex = c("Female", "Male"),
+  Age = as.numeric(0:90)
+)
+
+# Values in SINGLE datasets nature_of_population_change -------------------
+expected_values[["nature_of_population_change"]] <- list(
+  `Council area` = expected_values_CA
 )
 
 # Values in SINGLE datasets births_by_age_of_mother -----------------------

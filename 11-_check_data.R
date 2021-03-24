@@ -101,11 +101,50 @@ if (all(as.logical(values_CA))) {
   )
 }
 
-# Values - population-estimates ------------------------------------------
-identical(
-  map(select(raw_data[["population-estimates"]], -Population), unique),
-  expected_values[["population_estimates"]]
+
+# Values - all ------------------------------------------------------------
+check_values <- function(values_actual, values_expected) {
+  map2(.x = values_actual,
+       .y = values_expected,
+       ~ setequal(.x, .y))
+}
+
+raw_data_values <- map2(.x = raw_data[c("population-estimates",
+                                        "population-projections",
+                                        "nature-of-population-change")],
+                        .y = expected_values,
+                        ~ select(.x, names(.y))) %>%
+  map(~ map(.x = ., unique))
+
+raw_data_values_as_expected <- map2(.x = raw_data_values,
+                                    .y = expected_values,
+                                    .f = check_values)
+
+# To do: display only the problematic table/column combinations:
+raw_data_values_incorrect <- discard(
+  raw_data_values_as_expected,
+  .p = function(x) {
+    all(as.logical(x))
+  }
 )
+
+if (raw_data_values_as_expected %>%
+    flatten() %>%
+    as.logical() %>%
+    all()) {
+  message("Check passed: all values as expected")
+} else {
+  warning(
+    paste(
+      "Check failed: these datasets have either missing or unexpected values",
+      paste(raw_data_values_incorrect, collapse = ", ")
+    )
+  )
+}
+
+
+
+
 
 
 
