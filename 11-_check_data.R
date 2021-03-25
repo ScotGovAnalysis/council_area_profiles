@@ -5,35 +5,36 @@
 
 # Set expectations --------------------------------------------------------
 source("source/expected_names_and_columns.R")
+result <- list()
 
 # Sheet and column names --------------------------------------------------
-sheet_names_correct <-
-  identical(names(raw_data), names(expected_names_and_columns))
+result[["sheet_names"]] <-
+  identical(names(raw_data), names(expected[["col_names"]]))
 
-if(identical(lapply(raw_data, names), expected_names_and_columns)) {
+if(identical(lapply(raw_data, names), expected[["col_names"]])) {
   message("Check passed: sheet and column names are correct")
   
   # First check if sheet names are correct
-} else if (isFALSE(sheet_names_correct)) {
+} else if (isFALSE(result[["sheet_names"]])) {
   warning(
     paste("Check failed: unexpected Sheet Names: ", setdiff(
-      names(raw_data), names(expected_names_and_columns)
+      names(raw_data), names(expected[["col_names"]])
     ), "\n"),
     paste("Check failed: missing Sheet Names: ", setdiff(
-      names(expected_names_and_columns), names(raw_data)
+      names(expected[["col_names"]]), names(raw_data)
     ), "\n")
   )
   
   # If sheet names are correct then check column names
-} else if (sheet_names_correct) {
+} else if (result[["sheet_names"]]) {
   unexpected_col_names <-
     purrr::map2(lapply(raw_data, names),
-                expected_names_and_columns,
+                expected[["col_names"]],
                 setdiff) %>%
     compact()
   
   missing_col_names <-
-    purrr::map2(expected_names_and_columns,
+    purrr::map2(expected[["col_names"]],
                 lapply(raw_data, names),
                 setdiff) %>%
     compact()
@@ -47,13 +48,13 @@ if(identical(lapply(raw_data, names), expected_names_and_columns)) {
 # Realistic row limit -----------------------------------------------------
 # If the row limit is exactly 1,048,576 rows (the maximum for Excel) it is
 # likely there has been some data loss
-data_sets_with_max_row_limit <- lapply(raw_data, nrow) == 1048575
+result[["max_row_limit"]] <- lapply(raw_data, nrow) == 1048575
 
-if (any(data_sets_with_max_row_limit)) {
+if (any(result[["max_row_limit"]])) {
   warning(
     paste(
       "Check failed: these datasets are at the maximum row limit for Excel (suggesting possible data loss):",
-      paste(names(data_sets_with_max_row_limit[data_sets_with_max_row_limit]), collapse = ", ")
+      paste(names(result[["max_row_limit"]][result[["max_row_limit"]]]), collapse = ", ")
     )
   )
 } else {
@@ -61,16 +62,16 @@ if (any(data_sets_with_max_row_limit)) {
 }
 
 # Missing values ----------------------------------------------------------
-data_sets_with_NA <-
+result[["NAs"]] <-
   sapply(
     raw_data,
     FUN = function(x)
       any(is.na(x))
   )
 
-if (any(data_sets_with_NA)) {
+if (any(result[["NAs"]])) {
   warning(paste("Check failed: there are NAs in:", paste(names(
-    data_sets_with_NA[data_sets_with_NA]
+    result[["NAs"]][result[["NAs"]]]
   ), collapse = ", ")))
 } else {
   message("Check passed: no NAs found")
@@ -78,76 +79,36 @@ if (any(data_sets_with_NA)) {
 
 
 # Values ------------------------------------------------------------------
-raw_data_without_updates <- raw_data[names(raw_data) != "updates"]
-
-
-# Values - council area ---------------------------------------------------
-check_values_CA <-
-  function(tb, council_areas = expected_values[["Council area"]]) {
-    return(setequal(unique(tb[["Council area"]]), council_areas))
-  }
-
-values_CA <- map(raw_data_without_updates, .f = check_values_CA)
-
-if (all(as.logical(values_CA))) {
-  message("Check passed: correct values (council area)")
-} else {
-  warning(
-    paste(
-      "Check failed: these datasets have either missing or unexpected values",
-      "in the council areas column:\n",
-      paste(names(values_CA[values_CA == FALSE]), collapse = ", ")
-    )
-  )
-}
-
-
-# Values - all ------------------------------------------------------------
+# To do: expand these checks to the rest of the datasets
 check_values <- function(values_actual, values_expected) {
   map2(.x = values_actual,
        .y = values_expected,
        ~ setequal(.x, .y))
 }
 
-raw_data_values <- map2(.x = raw_data[c("population-estimates",
-                                        "population-projections",
-                                        "nature-of-population-change")],
-                        .y = expected_values,
-                        ~ select(.x, names(.y))) %>%
-  map(~ map(.x = ., unique))
+result[["values"]] <- map2(.x = raw_data[c("population-estimates",
+                                           "population-projections",
+                                           "nature-of-population-change")],
+                           .y = expected[["col_values"]][["tibble"]][1:3],
+                           ~ select(.x, names(.y))) %>%
+  map(~ map(.x = ., unique)) %>%
+  map2(.y = expected[["col_values"]][["tibble"]][1:3],
+       .f = check_values)
 
-raw_data_values_as_expected <- map2(.x = raw_data_values,
-                                    .y = expected_values,
-                                    .f = check_values)
+result[["values_message"]] <- result[["values"]] %>%
+  discard( ~ all(as.logical(.))) %>%
+  map( ~ discard(., ~ .)) %>%
+  map( ~ names(.))
 
-# To do: display only the problematic table/column combinations:
-raw_data_values_incorrect <- discard(
-  raw_data_values_as_expected,
-  .p = function(x) {
-    all(as.logical(x))
-  }
-)
-
-if (raw_data_values_as_expected %>%
+if (result[["values"]] %>%
     flatten() %>%
     as.logical() %>%
     all()) {
   message("Check passed: all values as expected")
 } else {
-  warning(
-    paste(
-      "Check failed: these datasets have either missing or unexpected values",
-      paste(raw_data_values_incorrect, collapse = ", ")
-    )
-  )
+  warning("Check failed: these columns have missing and/or unexpected values:",
+          immediate. = TRUE)
+  result[["values_message"]]
 }
-
-
-
-
-
-
-
-
 
 

@@ -1,8 +1,10 @@
 # Creating list of expected sheet names and columns within those sheets for data
 # validation
 
+expected <- list()
+
 # Names of sheets and columns ---------------------------------------------
-expected_names_and_columns <-
+expected[["col_names"]] <-
   list(
     "updates" = c(
       "pop_est_last_update",
@@ -171,10 +173,9 @@ expected_names_and_columns <-
   )
 
 # Values ------------------------------------------------------------------
-expected_values <- list()
 
 # Values in MULTIPLE datasets ---------------------------------------------
-expected_values_CA <- c(
+expected[["col_values"]][["council_area"]] <- c(
   "Aberdeen City",
   "Aberdeenshire",
   "Angus",
@@ -212,28 +213,28 @@ expected_values_CA <- c(
 
 # Values in SINGLE datasets -----------------------------------------------
 # Values in SINGLE datasets population_estimates --------------------------
-expected_values[["population_estimates"]] <- list(
-  `Council area` = expected_values_CA,
+expected[["col_values"]][["tibble"]][["population_estimates"]] <- list(
+  `Council area` = expected[["col_values"]][["council_area"]],
   Year = as.numeric(1998:2019),
   Sex = c("Female", "Male"),
   Age = as.numeric(0:90)
 )
 
 # Values in SINGLE datasets population_projections ------------------------
-expected_values[["population_projections"]] <- list(
-  `Council area` = expected_values_CA,
+expected[["col_values"]][["tibble"]][["population_projections"]] <- list(
+  `Council area` = expected[["col_values"]][["council_area"]],
   Year = as.numeric(2018:2043),
   Sex = c("Female", "Male"),
   Age = as.numeric(0:90)
 )
 
 # Values in SINGLE datasets nature_of_population_change -------------------
-expected_values[["nature_of_population_change"]] <- list(
-  `Council area` = expected_values_CA
+expected[["col_values"]][["tibble"]][["nature_of_population_change"]] <- list(
+  `Council area` = expected[["col_values"]][["council_area"]]
 )
 
 # Values in SINGLE datasets births_by_age_of_mother -----------------------
-expected_values_births_by_age_of_mother <- list(
+expected[["col_values"]][["tibble"]][["births_by_age_of_mother"]] <- list(
   mother_age_group = c(
     "0 to 19",
     "20 to 24",
@@ -247,7 +248,7 @@ expected_values_births_by_age_of_mother <- list(
 )
 
 # Values in SINGLE datasets deaths_by_sex_by_age --------------------------
-expected_values_deaths_by_sex_by_age <- list(
+expected[["col_values"]][["tibble"]][["deaths_by_sex_by_age"]] <- list(
   age_group = c(
     "0",
     "1 to 4",
@@ -274,7 +275,7 @@ expected_values_deaths_by_sex_by_age <- list(
 )
 
 # Values in SINGLE datasets net_migration ---------------------------------
-expected_values_net_migration <- list(
+expected[["col_values"]][["tibble"]][["net_migration"]] <- list(
   age_group = c(
     "0 to 4",
     "5 to 9",
@@ -300,7 +301,7 @@ expected_values_net_migration <- list(
 )
 
 # Values in SINGLE datasets life_expectancy -------------------------------
-expected_values_life_expectancy <- list(
+expected[["col_values"]][["tibble"]][["life_expectancy"]] <- list(
   age_group = c(
     "0",
     "1 to 4",
@@ -326,7 +327,7 @@ expected_values_life_expectancy <- list(
 )
 
 # Values in SINGLE datasets household_projections -------------------------
-expected_values_household_projections <- list(
+expected[["col_values"]][["tibble"]][["household_projections"]] <- list(
   age_group = c(
     "16 to 19",
     "20 to 24",
