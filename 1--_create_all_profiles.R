@@ -14,14 +14,14 @@ raw_data <- path %>%
   excel_sheets() %>%
   purrr::set_names() %>%
   purrr::map(read_excel, path = path)
+
+source("11-_check_data.R")
   
 list2env(raw_data, globalenv())
 
 updates %>% 
   as.list() %>%
   list2env(globalenv())
-
-source("11-_check_data.R")
 
 # Knit HTML documents =========================================================
 Area <- c(

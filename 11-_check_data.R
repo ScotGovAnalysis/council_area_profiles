@@ -1,4 +1,4 @@
-# READ ME #####################################################################
+# READ ME -----------------------------------------------------------------
 # AUTHORS:            Rhiannon.Batstone@nrscotland.gov.uk
 #                     joseph.adams@nrscotland.gov.uk
 # PURPOSE OF SCRIPT:  Check data for Council Area Profiles
@@ -86,13 +86,11 @@ check_values <- function(values_actual, values_expected) {
        ~ setequal(.x, .y))
 }
 
-result[["values"]] <- map2(.x = raw_data[c("population-estimates",
-                                           "population-projections",
-                                           "nature-of-population-change")],
-                           .y = expected[["col_values"]][["tibble"]][1:3],
+result[["values"]] <- map2(.x = raw_data[names(raw_data) != "updates"],
+                           .y = expected[["col_values"]][["tibble"]],
                            ~ select(.x, names(.y))) %>%
   map(~ map(.x = ., unique)) %>%
-  map2(.y = expected[["col_values"]][["tibble"]][1:3],
+  map2(.y = expected[["col_values"]][["tibble"]],
        .f = check_values)
 
 result[["values_message"]] <- result[["values"]] %>%
@@ -108,7 +106,7 @@ if (result[["values"]] %>%
 } else {
   warning("Check failed: these columns have missing and/or unexpected values:",
           immediate. = TRUE)
-  result[["values_message"]]
+  print(result[["values_message"]])
 }
 
 
