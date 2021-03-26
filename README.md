@@ -39,7 +39,7 @@ In rough order of importance/urgency:
 
   - Validate data before preparing tables (e.g. is every council area included? Should Scotland be included? Are all combinations of all variables included? Are values sensible e.g. age < 120?)
   - Simplify the code. For example:
-      - Replace deeply nested `ifelse` with `case_when`
+      - Replace deeply nested `ifelse` with `case_when` or `switch` statements
       - Use functions and apply
         [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
       - Use [existing
