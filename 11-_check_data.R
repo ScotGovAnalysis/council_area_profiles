@@ -77,36 +77,50 @@ if (any(result[["NAs"]])) {
   message("Check passed: no NAs found")
 }
 
+# Values ------------------------------------------------------------
+result[["to_compare"]] <- 
+  map2(.x = raw_data[names(raw_data) != "updates"],
+       .y = expected[["col_values"]][["tibble"]],
+       ~ select(.x, names(.y)))
 
-# Values ------------------------------------------------------------------
-# To do: expand these checks to the rest of the datasets
-check_values <- function(values_actual, values_expected) {
-  map2(.x = values_actual,
-       .y = values_expected,
-       ~ setequal(.x, .y))
-}
+result[["combinations"]] <-
+  purrr::map(.x = expected[["col_values"]][["tibble"]],
+             .f = expand.grid,
+             stringsAsFactors = FALSE) %>% 
+  purrr::map(.f = as_tibble)
 
-result[["values"]] <- map2(.x = raw_data[names(raw_data) != "updates"],
-                           .y = expected[["col_values"]][["tibble"]],
-                           ~ select(.x, names(.y))) %>%
-  map(~ map(.x = ., unique)) %>%
-  map2(.y = expected[["col_values"]][["tibble"]],
-       .f = check_values)
+# * Missing values --------------------------------------------------------
+result[["values_missing"]] <- purrr::map2(
+  .x = result[["combinations"]],
+  .y = result[["to_compare"]],
+  .f = anti_join) %>%
+  `[`(names(.) != "leading_causes_of_death") %>%
+  purrr::discard(~ nrow(.x) == 0)
+# We cannot have different combinations of ICD code, Cause, and Cause label.
+# Also some rows in this table are suppressed. So we don't check this table for
+# missing values.
 
-result[["values_message"]] <- result[["values"]] %>%
-  discard( ~ all(as.logical(.))) %>%
-  map( ~ discard(., ~ .)) %>%
-  map( ~ names(.))
+# * Unexpected values -----------------------------------------------------
+result[["values_unexpected"]] <- purrr::map2(
+  .x = result[["to_compare"]],
+  .y = result[["combinations"]],
+  .f = anti_join) %>%
+  purrr::discard(~ nrow(.x) == 0)
 
-if (result[["values"]] %>%
-    flatten() %>%
-    as.logical() %>%
-    all()) {
+# * Message ---------------------------------------------------------------
+if (length(result[["values_missing"]]) == 0 &&
+    length(result[["values_unexpected"]]) == 0) {
   message("Check passed: all values as expected")
 } else {
-  warning("Check failed: these columns have missing and/or unexpected values:",
-          immediate. = TRUE)
-  print(result[["values_message"]])
+  if (length(result[["values_missing"]]) != 0) {
+    message("Check failed: these rows are missing:")
+    print(result[["values_missing"]])
+  }
+  if (length(result[["values_unexpected"]]) != 0) {
+    message("Check failed: these rows are unexpected:")
+    print(result[["values_unexpected"]])
+  }
 }
+
 
 
