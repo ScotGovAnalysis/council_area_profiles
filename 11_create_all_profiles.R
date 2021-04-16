@@ -42,7 +42,7 @@ Area <- c(
   "West Lothian"
   )
 
-pb = txtProgressBar(min = 0, max = length(Area), initial = 0, style = 3)
+pb <- txtProgressBar(min = 0, max = length(Area), initial = 0, style = 3)
 
 for (i in seq_along(Area)) {
   rmarkdown::render("31_create_profile.Rmd",

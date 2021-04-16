@@ -14,7 +14,7 @@ expected[["col_names"]] <-
       "births_last_update",
       "births_next_update",
       "deaths_last_update",
-      "deaths_next_update" ,
+      "deaths_next_update",
       "life_exp_last_update",
       "life_exp_next_update",
       "mig_last_update",
@@ -29,17 +29,17 @@ expected[["col_names"]] <-
       "dwell_next_update"
     ),
     "population-estimates" = c(
-      "Council area", 
-      "Year", 
-      "Sex", 
-      "Age", 
+      "Council area",
+      "Year",
+      "Sex",
+      "Age",
       "Population"
     ),
     "population-projections" = c(
-      "Council area", 
-      "Year", 
-      "Sex", 
-      "Age", 
+      "Council area",
+      "Year",
+      "Sex",
+      "Age",
       "Population"
     ),
     "nature-of-population-change" = c(
@@ -53,43 +53,43 @@ expected[["col_names"]] <-
       "Net migration"
     ),
     "births-by-sex" = c(
-      "Council area", 
-      "Registration Year", 
-      "Sex", 
+      "Council area",
+      "Registration Year",
+      "Sex",
       "Number"
     ),
     "standardised-birth-rates" = c(
-      "Council area", 
-      "Registration Year", 
+      "Council area",
+      "Registration Year",
       "Standardised birth rate"
     ),
     "births-by-age-of-mother" = c(
-      "Council area", 
-      "Registration Year", 
-      "Mother age group", 
+      "Council area",
+      "Registration Year",
+      "Mother age group",
       "Number"
     ),
     "fertility-rates" = c(
-      "Council area", 
-      "Registration Year", 
+      "Council area",
+      "Registration Year",
       "Total fertility rate"
     ),
     "deaths-by-sex" = c(
-      "Council area", 
-      "Registration Year", 
+      "Council area",
+      "Registration Year",
       "Sex",
       "Number"
     ),
     "standardised-death-rates" = c(
-      "Council area", 
-      "Registration Year", 
+      "Council area",
+      "Registration Year",
       "Standardised death rate"
     ),
     "deaths-by-sex-by-age" = c(
-      "Council area", 
-      "Registration Year", 
-      "Sex", 
-      "Age group", 
+      "Council area",
+      "Registration Year",
+      "Sex",
+      "Age group",
       "Number"
     ),
     "leading-causes-of-death" = c(
@@ -104,22 +104,22 @@ expected[["col_names"]] <-
       "Total deaths"
     ),
     "migration" = c(
-      "Council area", 
-      "Year", 
-      "Sex", 
-      "Type", 
+      "Council area",
+      "Year",
+      "Sex",
+      "Type",
       "Number"
-    ), 
+    ),
     "net-migration" = c(
-      "Council area", 
-      "Year", 
-      "Sex", 
-      "Age group", 
+      "Council area",
+      "Year",
+      "Sex",
+      "Age group",
       "Number"
     ),
     "net-migration-rates" = c(
-      "Council area", 
-      "Year", 
+      "Council area",
+      "Year",
       "Rate"
     ),
     "life-expectancy" = c(
@@ -131,8 +131,8 @@ expected[["col_names"]] <-
       "Life expectancy"
     ),
     "marriages" = c(
-      "Council area", 
-      "Registration Year", 
+      "Council area",
+      "Registration Year",
       "Number of marriages"
     ),
     "civil-partnerships" = c(
@@ -142,32 +142,32 @@ expected[["col_names"]] <-
       "Number of civil partnerships"
     ),
     "household-estimates" = c(
-      "Council area", 
-      "Year", 
+      "Council area",
+      "Year",
       "Number of households"
     ),
     "household-projections" = c(
-      "Council area", 
-      "Age group", 
-      "Household type",  
-      "Year", 
+      "Council area",
+      "Age group",
+      "Household type",
+      "Year",
       "Number"
     ),
     "dwellings" = c(
-      "Council area", 
-      "Year", 
+      "Council area",
+      "Year",
       "Number of dwellings"
     ),
     "dwellings-by-type" = c(
-      "Council area", 
-      "Year", 
-      "Type", 
+      "Council area",
+      "Year",
+      "Type",
       "Number"
     ),
     "dwellings-by-council-tax-band" = c(
-      "Council area", 
-      "Year", 
-      "Council Tax band", 
+      "Council area",
+      "Year",
+      "Council Tax band",
       "Number"
     )
   )

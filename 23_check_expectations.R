@@ -9,9 +9,9 @@ result <- list()
 result[["sheet_names"]] <-
   identical(names(raw_data), names(expected[["col_names"]]))
 
-if(identical(lapply(raw_data, names), expected[["col_names"]])) {
+if (identical(lapply(raw_data, names), expected[["col_names"]])) {
   message("Check passed: sheet and column names are correct")
-  
+
   # First check if sheet names are correct
 } else if (isFALSE(result[["sheet_names"]])) {
   warning(
@@ -22,7 +22,7 @@ if(identical(lapply(raw_data, names), expected[["col_names"]])) {
       names(expected[["col_names"]]), names(raw_data)
     ), "\n")
   )
-  
+
   # If sheet names are correct then check column names
 } else if (result[["sheet_names"]]) {
   unexpected_col_names <-
@@ -30,17 +30,24 @@ if(identical(lapply(raw_data, names), expected[["col_names"]])) {
                 expected[["col_names"]],
                 setdiff) %>%
     compact()
-  
+
   missing_col_names <-
     purrr::map2(expected[["col_names"]],
                 lapply(raw_data, names),
                 setdiff) %>%
     compact()
-  
-  warning(paste("Check failed: unexpected column names (above)", str(unexpected_col_names)),
-          immediate. = TRUE)
-  warning(paste("Check failed: missing column names (above)", str(missing_col_names)),
-          immediate. = TRUE)
+
+  warning(paste(
+    "Check failed: unexpected column names (above)",
+    str(unexpected_col_names)
+  ),
+  immediate. = TRUE)
+
+  warning(paste(
+    "Check failed: missing column names (above)",
+    str(missing_col_names)
+  ),
+  immediate. = TRUE)
 }
 
 # Realistic row limit -----------------------------------------------------
@@ -51,12 +58,15 @@ result[["max_row_limit"]] <- lapply(raw_data, nrow) == 1048575
 if (any(result[["max_row_limit"]])) {
   warning(
     paste(
-      "Check failed: these datasets are at the maximum row limit for Excel (suggesting possible data loss):",
-      paste(names(result[["max_row_limit"]][result[["max_row_limit"]]]), collapse = ", ")
+      "Check failed: these datasets are at the maximum row limit for Excel ",
+      "(suggesting possible data loss):",
+      paste(names(result[["max_row_limit"]][result[["max_row_limit"]]]),
+            collapse = ", ")
     )
   )
 } else {
-  message("Check passed: all datasets are under the maximum row limit for Excel")
+  message("Check passed: all datasets are under the maximum row limit for ",
+          "Excel")
 }
 
 
@@ -79,15 +89,15 @@ if (any(result[["NAs"]])) {
 }
 
 # * Missing ---------------------------------------------------------------
-result[["to_compare"]] <- 
-  map2(.x = raw_data[names(raw_data) != "updates"],
+result[["to_compare"]] <-
+  map2(.x = raw_data[!(names(raw_data) %in% c("updates", "expected_ranges"))],
        .y = expected[["col_values"]][["tibble"]],
        ~ select(.x, names(.y)))
 
 result[["combinations"]] <-
   purrr::map(.x = expected[["col_values"]][["tibble"]],
              .f = expand.grid,
-             stringsAsFactors = FALSE) %>% 
+             stringsAsFactors = FALSE) %>%
   purrr::map(.f = as_tibble)
 
 result[["values_missing"]] <- purrr::map2(
@@ -122,184 +132,259 @@ if (length(result[["values_unexpected"]]) == 0) {
 }
 
 # * Implausible -----------------------------------------------------------
+check_range <- function(tibble,
+                        column,
+                        min_expected,
+                        max_expected) {
+  if (min(raw_data[[tibble]][[column]]) < min_expected)
+    message(
+      "Check failed: the table '",
+      tibble,
+      "' has values in column '",
+      column,
+      "' below the expected minimum of ",
+      min_expected
+    )
+  if (max(raw_data[[tibble]][[column]]) > max_expected)
+    message(
+      "Check failed: the table '",
+      tibble,
+      "' has values in column '",
+      column,
+      "' above the expected maximum of ",
+      max_expected
+    )
+}
+
 # * * population_estimates ------------------------------------------------
-expect_gt(object = min(raw_data[["population-estimates"]][["Population"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["population-estimates"]][["Population"]]),
-          expected = 43000)
+check_range(
+  tibble = "population-estimates",
+  column = "Population",
+  min = 0,
+  max = 43000
+)
 
 # * * population_projections ----------------------------------------------
-expect_gt(object = min(raw_data[["population-projections"]][["Population"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["population-projections"]][["Population"]]),
-          expected = 55000)
+check_range(
+  tibble = "population-projections",
+  column = "Population",
+  min = 0,
+  max = 55000
+)
 
 # * * nature_of_population_change -----------------------------------------
-expect_gt(object = min(raw_data[["nature-of-population-change"]][[2]]),
-          expected = 22000)
-expect_lt(object = max(raw_data[["nature-of-population-change"]][[2]]),
-          expected = 5500000)
+check_range(
+  tibble = "nature-of-population-change",
+  column = 2,
+  min = 22000,
+  max = 5500000
+)
 
+check_range(
+  tibble = "nature-of-population-change",
+  column = 3,
+  min = 22000,
+  max = 5600000
+)
 
-expect_gt(object = min(raw_data[["nature-of-population-change"]][[3]]),
-          expected = 22000)
-expect_lt(object = max(raw_data[["nature-of-population-change"]][[3]]),
-          expected = 5600000)
+check_range(
+  tibble = "nature-of-population-change",
+  column = "Population change",
+  min = -5500,
+  max = 100000
+)
 
+check_range(
+  tibble = "nature-of-population-change",
+  column = "Births",
+  min = 1500,
+  max = 510000
+)
 
-expect_gt(object = min(raw_data[["nature-of-population-change"]][["Population change"]]),
-          expected = -5500)
-expect_lt(object = max(raw_data[["nature-of-population-change"]][["Population change"]]),
-          expected = 100000)
+check_range(
+  tibble = "nature-of-population-change",
+  column = "Deaths",
+  min = 2400,
+  max = 600000
+)
 
+check_range(
+  tibble = "nature-of-population-change",
+  column = "Natural change",
+  min = -95000,
+  max = 6500
+)
 
-expect_gt(object = min(raw_data[["nature-of-population-change"]][["Births"]]),
-          expected = 1500)
-expect_lt(object = max(raw_data[["nature-of-population-change"]][["Births"]]),
-          expected = 510000)
-
-
-expect_gt(object = min(raw_data[["nature-of-population-change"]][["Deaths"]]),
-          expected = 2400)
-expect_lt(object = max(raw_data[["nature-of-population-change"]][["Deaths"]]),
-          expected = 600000)
-
-
-expect_gt(object = min(raw_data[["nature-of-population-change"]][["Natural change"]]),
-          expected = -95000)
-expect_lt(object = max(raw_data[["nature-of-population-change"]][["Natural change"]]),
-          expected = 6500)
-
-
-expect_gt(object = min(raw_data[["nature-of-population-change"]][["Net migration"]]),
-          expected = -650)
-expect_lt(object = max(raw_data[["nature-of-population-change"]][["Net migration"]]),
-          expected = 190000)
+check_range(
+  tibble = "nature-of-population-change",
+  column = "Net migration",
+  min = -650,
+  max = 190000
+)
 
 # * * births_by_sex -------------------------------------------------------
-expect_gt(object = min(raw_data[["births-by-sex"]][["Number"]]),
-          expected = 60)
-expect_lt(object = max(raw_data[["births-by-sex"]][["Number"]]),
-          expected = 70000)
+check_range(
+  tibble = "births-by-sex",
+  column = "Number",
+  min = 60,
+  max = 70000
+)
 
 # * * standardised_birth_rates --------------------------------------------
-expect_gt(object = min(raw_data[["standardised-birth-rates"]][["Standardised birth rate"]]),
-          expected = 6)
-expect_lt(object = max(raw_data[["standardised-birth-rates"]][["Standardised birth rate"]]),
-          expected = 17)
+check_range(
+  tibble = "standardised-birth-rates",
+  column = "Standardised birth rate",
+  min = 6,
+  max = 17
+)
 
 # * * births_by_age_of_mother ---------------------------------------------
-expect_gte(object = min(raw_data[["births-by-age-of-mother"]][["Number"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["births-by-age-of-mother"]][["Number"]]),
-          expected = 67500)
+check_range(
+  tibble = "births-by-age-of-mother",
+  column = "Number",
+  min = 0,
+  max = 67500
+)
 
 # * * fertility_rates -----------------------------------------------------
-expect_gt(object = min(raw_data[["fertility-rates"]][["Total fertility rate"]]),
-           expected = 1)
-expect_lt(object = max(raw_data[["fertility-rates"]][["Total fertility rate"]]),
-          expected = 2.2)
+check_range(
+  tibble = "fertility-rates",
+  column = "Total fertility rate",
+  min = 1,
+  max = 2.2
+)
 
 # * * deaths_by_sex -------------------------------------------------------
-expect_gt(object = min(raw_data[["deaths-by-sex"]][["Number"]]),
-          expected = 75)
-expect_lt(object = max(raw_data[["deaths-by-sex"]][["Number"]]),
-          expected = 64500)
+check_range(
+  tibble = "deaths-by-sex",
+  column = "Number",
+  min = 75,
+  max = 64500
+)
 
 # * * standardised_death_rates --------------------------------------------
-expect_gt(object = min(raw_data[["standardised-death-rates"]][["Standardised death rate"]]),
-          expected = 7.5)
-expect_lt(object = max(raw_data[["standardised-death-rates"]][["Standardised death rate"]]),
-          expected = 15)
+check_range(
+  tibble = "standardised-death-rates",
+  column = "Standardised death rate",
+  min = 7.5,
+  max = 15
+)
 
 # * * deaths_by_sex_by_age ------------------------------------------------
-expect_gte(object = min(raw_data[["deaths-by-sex-by-age"]][["Number"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["deaths-by-sex-by-age"]][["Number"]]),
-          expected = 59000)
+check_range(
+  tibble = "deaths-by-sex-by-age",
+  column = "Number",
+  min = 0,
+  max = 59000
+)
 
 # * * leading_causes_of_death ---------------------------------------------
-expect_gte(object = min(raw_data[["leading-causes-of-death"]][["Number"]]),
-          expected = 5)
-expect_lt(object = max(raw_data[["leading-causes-of-death"]][["Number"]]),
-          expected = 4300)
+check_range(
+  tibble = "leading-causes-of-death",
+  column = "Number",
+  min = 5,
+  max = 4300
+)
 
-expect_gt(object = min(raw_data[["leading-causes-of-death"]][["Percent"]]),
-          expected = 3)
-expect_lt(object = max(raw_data[["leading-causes-of-death"]][["Percent"]]),
-          expected = 22)
+check_range(
+  tibble = "leading-causes-of-death",
+  column = "Percent",
+  min = 3,
+  max = 22
+)
 
-expect_gt(object = min(raw_data[["leading-causes-of-death"]][["Total deaths"]]),
-          expected = 90)
-expect_lt(object = max(raw_data[["leading-causes-of-death"]][["Total deaths"]]),
-          expected = 30000)
+check_range(
+  tibble = "leading-causes-of-death",
+  column = "Total deaths",
+  min = 90,
+  max = 30000
+)
 
 # * * migration -----------------------------------------------------------
-expect_gt(object = min(raw_data[["migration"]][["Number"]]),
-          expected = -5000)
-expect_lt(object = max(raw_data[["migration"]][["Number"]]),
-          expected = 100000)
+check_range(
+  tibble = "migration",
+  column = "Number",
+  min = -5000,
+  max = 100000
+)
+
 
 # * * net_migration -------------------------------------------------------
-expect_gt(object = min(raw_data[["net-migration"]][["Number"]]),
-          expected = -2500)
-expect_lt(object = max(raw_data[["net-migration"]][["Number"]]),
-          expected = 17500)
+check_range(
+  tibble = "net-migration",
+  column = "Number",
+  min = -2500,
+  max = 17500
+)
 
 # * * net_migration_rates -------------------------------------------------
-expect_gt(object = min(raw_data[["net-migration-rates"]][["Rate"]]),
-          expected = -6.5)
-expect_lt(object = max(raw_data[["net-migration-rates"]][["Rate"]]),
-          expected = 17.5)
-
+check_range(
+  tibble = "net-migration-rates",
+  column = "Rate",
+  min = -6.5,
+  max = 17.5
+)
 
 # * * life_expectancy -----------------------------------------------------
-expect_gt(object = min(raw_data[["life-expectancy"]][["Life expectancy"]]),
-          expected = 1.5)
-expect_lt(object = max(raw_data[["life-expectancy"]][["Life expectancy"]]),
-          expected = 85)
+check_range(
+  tibble = "life-expectancy",
+  column = "Life expectancy",
+  min = 1.5,
+  max = 85
+)
 
 # * * marriages -----------------------------------------------------------
-expect_gt(object = min(raw_data[["marriages"]][["Number of marriages"]]),
-          expected = 60)
-expect_lt(object = max(raw_data[["marriages"]][["Number of marriages"]]),
-          expected = 36000)
+check_range(
+  tibble = "marriages",
+  column = "Number of marriages",
+  min = 60,
+  max = 36000
+)
 
 # * * civil_partnerships --------------------------------------------------
-expect_gte(object = min(raw_data[["civil-partnerships"]][["Number of civil partnerships"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["civil-partnerships"]][["Number of civil partnerships"]]),
-          expected = 1100)
+check_range(
+  tibble = "civil-partnerships",
+  column = "Number of civil partnerships",
+  min = 0,
+  max = 1100
+)
 
 # * * household_estimates -------------------------------------------------
-expect_gt(object = min(raw_data[["household-estimates"]][["Number of households"]]),
-          expected = 8300)
-expect_lt(object = max(raw_data[["household-estimates"]][["Number of households"]]),
-          expected = 2500000)
+check_range(
+  tibble = "household-estimates",
+  column = "Number of households",
+  min = 8300,
+  max = 2500000
+)
 
 # * * household_projections -----------------------------------------------
-expect_gte(object = min(raw_data[["household-projections"]][["Number"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["household-projections"]][["Number"]]),
-          expected = 1930000)
+check_range(
+  tibble = "household-projections",
+  column = "Number",
+  min = 0,
+  max = 1930000
+)
 
 # * * dwellings -----------------------------------------------------------
-expect_gt(object = min(raw_data[["dwellings"]][["Number of dwellings"]]),
-          expected = 9000)
-expect_lt(object = max(raw_data[["dwellings"]][["Number of dwellings"]]),
-          expected = 2650000)
+check_range(
+  tibble = "dwellings",
+  column = "Number of dwellings",
+  min = 9000,
+  max = 2650000
+)
 
 # * * dwellings_by_type ---------------------------------------------------
-expect_gte(object = min(raw_data[["dwellings-by-type"]][["Number"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["dwellings-by-type"]][["Number"]]),
-          expected = 2610000)
+check_range(
+  tibble = "dwellings-by-type",
+  column = "Number",
+  min = 0,
+  max = 2610000
+)
 
 # * * dwellings_by_council_tax_band ---------------------------------------
-expect_gt(object = min(raw_data[["dwellings-by-council-tax-band"]][["Number"]]),
-          expected = 0)
-expect_lt(object = max(raw_data[["dwellings-by-council-tax-band"]][["Number"]]),
-          expected = 605000)
-
-
-
+check_range(
+  tibble = "dwellings-by-council-tax-band",
+  column = "Number",
+  min = 0,
+  max = 605000
+)

@@ -12,6 +12,6 @@ raw_data <- path %>%
 
 list2env(raw_data, globalenv())
 
-updates %>% 
+updates %>%
   as.list() %>%
   list2env(globalenv())
