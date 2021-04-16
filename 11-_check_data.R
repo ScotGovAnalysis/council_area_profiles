@@ -61,7 +61,10 @@ if (any(result[["max_row_limit"]])) {
   message("Check passed: all datasets are under the maximum row limit for Excel")
 }
 
-# Missing values ----------------------------------------------------------
+
+# Values ------------------------------------------------------------------
+
+# * NAs -------------------------------------------------------------------
 result[["NAs"]] <-
   sapply(
     raw_data,
@@ -77,7 +80,7 @@ if (any(result[["NAs"]])) {
   message("Check passed: no NAs found")
 }
 
-# Values ------------------------------------------------------------
+# * Missing ---------------------------------------------------------------
 result[["to_compare"]] <- 
   map2(.x = raw_data[names(raw_data) != "updates"],
        .y = expected[["col_values"]][["tibble"]],
@@ -89,7 +92,6 @@ result[["combinations"]] <-
              stringsAsFactors = FALSE) %>% 
   purrr::map(.f = as_tibble)
 
-# * Missing values --------------------------------------------------------
 result[["values_missing"]] <- purrr::map2(
   .x = result[["combinations"]],
   .y = result[["to_compare"]],
@@ -100,27 +102,206 @@ result[["values_missing"]] <- purrr::map2(
 # Also some rows in this table are suppressed. So we don't check this table for
 # missing values.
 
-# * Unexpected values -----------------------------------------------------
+if (length(result[["values_missing"]]) == 0) {
+  message("Check passed: no missing values found")
+} else {
+  message("Check failed: these rows are missing:")
+  print(result[["values_missing"]])
+}
+
+# * Unexpected ------------------------------------------------------------
 result[["values_unexpected"]] <- purrr::map2(
   .x = result[["to_compare"]],
   .y = result[["combinations"]],
   .f = anti_join) %>%
   purrr::discard(~ nrow(.x) == 0)
 
-# * Message ---------------------------------------------------------------
-if (length(result[["values_missing"]]) == 0 &&
-    length(result[["values_unexpected"]]) == 0) {
-  message("Check passed: all values as expected")
+if (length(result[["values_unexpected"]]) == 0) {
+  message("Check passed: no unexpected values found")
 } else {
-  if (length(result[["values_missing"]]) != 0) {
-    message("Check failed: these rows are missing:")
-    print(result[["values_missing"]])
-  }
-  if (length(result[["values_unexpected"]]) != 0) {
-    message("Check failed: these rows are unexpected:")
-    print(result[["values_unexpected"]])
-  }
+  message("Check failed: these rows are unexpected:")
+  print(result[["values_unexpected"]])
 }
+
+# * Implausible -----------------------------------------------------------
+# * * population_estimates ------------------------------------------------
+expect_gt(object = min(raw_data[["population-estimates"]][["Population"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["population-estimates"]][["Population"]]),
+          expected = 43000)
+
+# * * population_projections ----------------------------------------------
+expect_gt(object = min(raw_data[["population-projections"]][["Population"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["population-projections"]][["Population"]]),
+          expected = 55000)
+
+# * * nature_of_population_change -----------------------------------------
+expect_gt(object = min(raw_data[["nature-of-population-change"]][[2]]),
+          expected = 22000)
+expect_lt(object = max(raw_data[["nature-of-population-change"]][[2]]),
+          expected = 5500000)
+
+
+expect_gt(object = min(raw_data[["nature-of-population-change"]][[3]]),
+          expected = 22000)
+expect_lt(object = max(raw_data[["nature-of-population-change"]][[3]]),
+          expected = 5600000)
+
+
+expect_gt(object = min(raw_data[["nature-of-population-change"]][["Population change"]]),
+          expected = -5500)
+expect_lt(object = max(raw_data[["nature-of-population-change"]][["Population change"]]),
+          expected = 100000)
+
+
+expect_gt(object = min(raw_data[["nature-of-population-change"]][["Births"]]),
+          expected = 1500)
+expect_lt(object = max(raw_data[["nature-of-population-change"]][["Births"]]),
+          expected = 510000)
+
+
+expect_gt(object = min(raw_data[["nature-of-population-change"]][["Deaths"]]),
+          expected = 2400)
+expect_lt(object = max(raw_data[["nature-of-population-change"]][["Deaths"]]),
+          expected = 600000)
+
+
+expect_gt(object = min(raw_data[["nature-of-population-change"]][["Natural change"]]),
+          expected = -95000)
+expect_lt(object = max(raw_data[["nature-of-population-change"]][["Natural change"]]),
+          expected = 6500)
+
+
+expect_gt(object = min(raw_data[["nature-of-population-change"]][["Net migration"]]),
+          expected = -650)
+expect_lt(object = max(raw_data[["nature-of-population-change"]][["Net migration"]]),
+          expected = 190000)
+
+# * * births_by_sex -------------------------------------------------------
+expect_gt(object = min(raw_data[["births-by-sex"]][["Number"]]),
+          expected = 60)
+expect_lt(object = max(raw_data[["births-by-sex"]][["Number"]]),
+          expected = 70000)
+
+# * * standardised_birth_rates --------------------------------------------
+expect_gt(object = min(raw_data[["standardised-birth-rates"]][["Standardised birth rate"]]),
+          expected = 6)
+expect_lt(object = max(raw_data[["standardised-birth-rates"]][["Standardised birth rate"]]),
+          expected = 17)
+
+# * * births_by_age_of_mother ---------------------------------------------
+expect_gte(object = min(raw_data[["births-by-age-of-mother"]][["Number"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["births-by-age-of-mother"]][["Number"]]),
+          expected = 67500)
+
+# * * fertility_rates -----------------------------------------------------
+expect_gt(object = min(raw_data[["fertility-rates"]][["Total fertility rate"]]),
+           expected = 1)
+expect_lt(object = max(raw_data[["fertility-rates"]][["Total fertility rate"]]),
+          expected = 2.2)
+
+# * * deaths_by_sex -------------------------------------------------------
+expect_gt(object = min(raw_data[["deaths-by-sex"]][["Number"]]),
+          expected = 75)
+expect_lt(object = max(raw_data[["deaths-by-sex"]][["Number"]]),
+          expected = 64500)
+
+# * * standardised_death_rates --------------------------------------------
+expect_gt(object = min(raw_data[["standardised-death-rates"]][["Standardised death rate"]]),
+          expected = 7.5)
+expect_lt(object = max(raw_data[["standardised-death-rates"]][["Standardised death rate"]]),
+          expected = 15)
+
+# * * deaths_by_sex_by_age ------------------------------------------------
+expect_gte(object = min(raw_data[["deaths-by-sex-by-age"]][["Number"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["deaths-by-sex-by-age"]][["Number"]]),
+          expected = 59000)
+
+# * * leading_causes_of_death ---------------------------------------------
+expect_gte(object = min(raw_data[["leading-causes-of-death"]][["Number"]]),
+          expected = 5)
+expect_lt(object = max(raw_data[["leading-causes-of-death"]][["Number"]]),
+          expected = 4300)
+
+expect_gt(object = min(raw_data[["leading-causes-of-death"]][["Percent"]]),
+          expected = 3)
+expect_lt(object = max(raw_data[["leading-causes-of-death"]][["Percent"]]),
+          expected = 22)
+
+expect_gt(object = min(raw_data[["leading-causes-of-death"]][["Total deaths"]]),
+          expected = 90)
+expect_lt(object = max(raw_data[["leading-causes-of-death"]][["Total deaths"]]),
+          expected = 30000)
+
+# * * migration -----------------------------------------------------------
+expect_gt(object = min(raw_data[["migration"]][["Number"]]),
+          expected = -5000)
+expect_lt(object = max(raw_data[["migration"]][["Number"]]),
+          expected = 100000)
+
+# * * net_migration -------------------------------------------------------
+expect_gt(object = min(raw_data[["net-migration"]][["Number"]]),
+          expected = -2500)
+expect_lt(object = max(raw_data[["net-migration"]][["Number"]]),
+          expected = 17500)
+
+# * * net_migration_rates -------------------------------------------------
+expect_gt(object = min(raw_data[["net-migration-rates"]][["Rate"]]),
+          expected = -6.5)
+expect_lt(object = max(raw_data[["net-migration-rates"]][["Rate"]]),
+          expected = 17.5)
+
+
+# * * life_expectancy -----------------------------------------------------
+expect_gt(object = min(raw_data[["life-expectancy"]][["Life expectancy"]]),
+          expected = 1.5)
+expect_lt(object = max(raw_data[["life-expectancy"]][["Life expectancy"]]),
+          expected = 85)
+
+# * * marriages -----------------------------------------------------------
+expect_gt(object = min(raw_data[["marriages"]][["Number of marriages"]]),
+          expected = 60)
+expect_lt(object = max(raw_data[["marriages"]][["Number of marriages"]]),
+          expected = 36000)
+
+# * * civil_partnerships --------------------------------------------------
+expect_gte(object = min(raw_data[["civil-partnerships"]][["Number of civil partnerships"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["civil-partnerships"]][["Number of civil partnerships"]]),
+          expected = 1100)
+
+# * * household_estimates -------------------------------------------------
+expect_gt(object = min(raw_data[["household-estimates"]][["Number of households"]]),
+          expected = 8300)
+expect_lt(object = max(raw_data[["household-estimates"]][["Number of households"]]),
+          expected = 2500000)
+
+# * * household_projections -----------------------------------------------
+expect_gte(object = min(raw_data[["household-projections"]][["Number"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["household-projections"]][["Number"]]),
+          expected = 1930000)
+
+# * * dwellings -----------------------------------------------------------
+expect_gt(object = min(raw_data[["dwellings"]][["Number of dwellings"]]),
+          expected = 9000)
+expect_lt(object = max(raw_data[["dwellings"]][["Number of dwellings"]]),
+          expected = 2650000)
+
+# * * dwellings_by_type ---------------------------------------------------
+expect_gte(object = min(raw_data[["dwellings-by-type"]][["Number"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["dwellings-by-type"]][["Number"]]),
+          expected = 2610000)
+
+# * * dwellings_by_council_tax_band ---------------------------------------
+expect_gt(object = min(raw_data[["dwellings-by-council-tax-band"]][["Number"]]),
+          expected = 0)
+expect_lt(object = max(raw_data[["dwellings-by-council-tax-band"]][["Number"]]),
+          expected = 605000)
 
 
 
