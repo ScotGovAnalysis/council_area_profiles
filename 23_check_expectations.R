@@ -3,8 +3,6 @@
 #                     joseph.adams@nrscotland.gov.uk
 # PURPOSE OF SCRIPT:  Check data for Council Area Profiles
 
-# Set expectations --------------------------------------------------------
-source("source/expected_names_and_columns.R")
 result <- list()
 
 # Sheet and column names --------------------------------------------------
