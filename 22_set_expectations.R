@@ -213,7 +213,7 @@ expected[["col_values"]][["council_area"]] <- c(
 # * population_estimates --------------------------------------------------
 expected[["col_values"]][["tibble"]][["population_estimates"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  Year = as.numeric(1998:2019),
+  Year = as.numeric(1998:2020),
   Sex = c("Female", "Male"),
   Age = as.numeric(0:90)
 )
@@ -235,7 +235,7 @@ expected[["col_values"]][["tibble"]][["nature_of_population_change"]] <- list(
 # * births_by_sex ---------------------------------------------------------
 expected[["col_values"]][["tibble"]][["births_by_sex"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  `Registration Year` = as.numeric(1991:2019),
+  `Registration Year` = as.numeric(1991:2020),
   Sex = c("All people",
           "Female",
           "Male")
@@ -244,13 +244,13 @@ expected[["col_values"]][["tibble"]][["births_by_sex"]] <- list(
 # * standardised_birth_rates ---------------------------------------------
 expected[["col_values"]][["tibble"]][["standardised_birth_rates"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  `Registration Year` = as.numeric(1991:2019)
+  `Registration Year` = as.numeric(1991:2020)
 )
 
 # * births_by_age_of_mother -----------------------------------------------
 expected[["col_values"]][["tibble"]][["births_by_age_of_mother"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  `Registration Year` = as.numeric(1991:2019),
+  `Registration Year` = as.numeric(1991:2020),
   `Mother age group` = c(
     "0 to 19",
     "20 to 24",
@@ -266,13 +266,13 @@ expected[["col_values"]][["tibble"]][["births_by_age_of_mother"]] <- list(
 # * fertility_rates -------------------------------------------------------
 expected[["col_values"]][["tibble"]][["fertility_rates"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  `Registration Year` = as.numeric(1991:2019)
+  `Registration Year` = as.numeric(1991:2020)
 )
 
 # * deaths_by_sex ---------------------------------------------------------
 expected[["col_values"]][["tibble"]][["deaths_by_sex"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  `Registration Year` = as.numeric(1991:2019),
+  `Registration Year` = as.numeric(1991:2020),
   Sex = c("All people",
           "Female",
           "Male")
@@ -281,7 +281,7 @@ expected[["col_values"]][["tibble"]][["deaths_by_sex"]] <- list(
 # * standardised_death_rates ----------------------------------------------
 expected[["col_values"]][["tibble"]][["standardised_death_rates"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  `Registration Year` = as.numeric(1991:2019)
+  `Registration Year` = as.numeric(1991:2020)
 )
 
 # * deaths_by_sex_by_age --------------------------------------------------
@@ -367,9 +367,9 @@ expected[["col_values"]][["tibble"]][["leading_causes_of_death"]] <- list(
 # * migration -------------------------------------------------------------
 expected[["col_values"]][["tibble"]][["migration"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  Year = paste0(2001:2018,
+  Year = paste0(2001:2019,
                 "-",
-                stringr::str_sub(2002:2019, start = 3, end = 4)),
+                stringr::str_sub(2002:2020, start = 3, end = 4)),
   Sex = c("Female",
           "Male",
           "Persons"),
@@ -380,9 +380,9 @@ expected[["col_values"]][["tibble"]][["migration"]] <- list(
 # * net_migration ---------------------------------------------------------
 expected[["col_values"]][["tibble"]][["net_migration"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  Year = paste0(2001:2018,
+  Year = paste0(2001:2019,
                 "-",
-                stringr::str_sub(2002:2019, start = 3, end = 4)),
+                stringr::str_sub(2002:2020, start = 3, end = 4)),
   Sex = c("Female",
           "Male"),
   `Age group` = c(
@@ -412,9 +412,9 @@ expected[["col_values"]][["tibble"]][["net_migration"]] <- list(
 # * net_migration_rates ---------------------------------------------------
 expected[["col_values"]][["tibble"]][["net_migration_rates"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  Year = paste0(2008:2018,
+  Year = paste0(2008:2019,
                 "-",
-                stringr::str_sub(2009:2019, start = 3, end = 4))
+                stringr::str_sub(2009:2020, start = 3, end = 4))
 )
 
 # * life_expectancy -------------------------------------------------------
@@ -476,7 +476,7 @@ expected[["col_values"]][["tibble"]][["civil_partnerships"]] <- list(
 # * household_estimates ---------------------------------------------------
 expected[["col_values"]][["tibble"]][["household_estimates"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  Year = as.numeric(2001:2019)
+  Year = as.numeric(2001:2020)
 )
 
 # * household_projections -------------------------------------------------
@@ -519,7 +519,7 @@ expected[["col_values"]][["tibble"]][["household_projections"]] <- list(
 # * dwellings -------------------------------------------------------------
 expected[["col_values"]][["tibble"]][["dwellings"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  Year = as.numeric(2001:2019)
+  Year = as.numeric(2001:2020)
 )
 
 
@@ -540,6 +540,6 @@ expected[["col_values"]][["tibble"]][["dwellings_by_type"]] <- list(
 # * dwellings_by_council_tax_band -----------------------------------------
 expected[["col_values"]][["tibble"]][["dwellings_by_council_tax_band"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  Year = as.numeric(2019),
+  Year = as.numeric(2020),
   `Council Tax band` = LETTERS[1:8]
 )

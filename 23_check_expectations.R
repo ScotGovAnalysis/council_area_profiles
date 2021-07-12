@@ -100,6 +100,12 @@ result[["combinations"]] <-
              stringsAsFactors = FALSE) %>%
   purrr::map(.f = as_tibble)
 
+# We know that some combinations won't be in certain datasets
+result[["combinations"]][["household_projections"]] <- 
+  filter(result[["combinations"]][["household_projections"]],
+       !(`Household type` == "All households" &
+         `Age group` == "All ages"))
+
 result[["values_missing"]] <- purrr::map2(
   .x = result[["combinations"]],
   .y = result[["to_compare"]],
