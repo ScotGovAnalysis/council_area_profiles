@@ -256,7 +256,7 @@ check_range(
 check_range(
   tibble = "fertility-rates",
   column = "Total fertility rate",
-  min = 1,
+  min = 0.9,
   max = 2.2
 )
 
@@ -281,7 +281,7 @@ check_range(
   tibble = "deaths-by-sex-by-age",
   column = "Number",
   min = 0,
-  max = 59000
+  max = 65000
 )
 
 # * * leading_causes_of_death ---------------------------------------------
@@ -360,7 +360,7 @@ check_range(
   tibble = "household-estimates",
   column = "Number of households",
   min = 8300,
-  max = 2500000
+  max = 2600000
 )
 
 # * * household_projections -----------------------------------------------
@@ -376,7 +376,7 @@ check_range(
   tibble = "dwellings",
   column = "Number of dwellings",
   min = 9000,
-  max = 2650000
+  max = 2700000
 )
 
 # * * dwellings_by_type ---------------------------------------------------

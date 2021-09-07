@@ -287,7 +287,7 @@ expected[["col_values"]][["tibble"]][["standardised_death_rates"]] <- list(
 # * deaths_by_sex_by_age --------------------------------------------------
 expected[["col_values"]][["tibble"]][["deaths_by_sex_by_age"]] <- list(
   `Council area` = expected[["col_values"]][["council_area"]],
-  `Registration Year` = as.numeric(2019),
+  `Registration Year` = as.numeric(2020),
   Sex = c("All people",
           "Females",
           "Males"),
@@ -311,7 +311,7 @@ expected[["col_values"]][["tibble"]][["deaths_by_sex_by_age"]] <- list(
     "75 to 79",
     "80 to 84",
     "85 to 89",
-    "90 and over",
+    "90+",
     "All ages"
   )
 )
