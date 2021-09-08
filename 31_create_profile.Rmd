@@ -477,7 +477,7 @@ p_pop_proj_age_perc
 Last updated: `r births_last_update`  
 Likely next update: `r births_next_update`
 
-### `r bir_dea_marr_cp_est_end_year` Births by Council Area in Scotland
+### `r bir_est_end_year` Births by Council Area in Scotland
 
 <br>
 <a name="births_plots1"></a>
@@ -489,22 +489,22 @@ Likely next update: `r births_next_update`
 
 current_births <-
   total_births_sex$Number[total_births_sex$Sex == "All people" &
-  total_births_sex$Year == bir_dea_marr_cp_est_end_year]
+  total_births_sex$Year == bir_est_end_year]
   
   previous_births <-
   total_births_sex$Number[total_births_sex$Sex == "All people" &
-  total_births_sex$Year == bir_dea_marr_cp_est_end_year - 1]
+  total_births_sex$Year == bir_est_end_year - 1]
   
   births_perc <-
   (current_births - previous_births) / previous_births * 100
   
   current_births_f <-
   total_births_sex$Number[total_births_sex$Sex == "Female" &
-  total_births_sex$Year == bir_dea_marr_cp_est_end_year]
+  total_births_sex$Year == bir_est_end_year]
   
   current_births_m <-
   total_births_sex$Number[total_births_sex$Sex == "Male" &
-  total_births_sex$Year == bir_dea_marr_cp_est_end_year]
+  total_births_sex$Year == bir_est_end_year]
   
   prop_births_f <- current_births_f / current_births * 100
   prop_births_m <- current_births_m / current_births * 100
@@ -512,11 +512,11 @@ current_births <-
 ```
 
   In 
-`r bir_dea_marr_cp_est_end_year`, there were
+`r bir_est_end_year`, there were
 `r format(current_births, big.mark=",")` births in 
 `r paramsarea`.
 `r ifelse(previous_births > current_births, paste0("This is a decrease of ",formatC(round(abs(births_perc), 1), format='f', digits=1),"% from ",format(previous_births, big.mark=",")," births"), ifelse(previous_births < current_births, paste0("This is an increase of ",formatC(round(abs(births_perc), 1), format='f', digits=1),"% from ",format(previous_births, big.mark=",")," births"), paste0("This is the same as the number of births")))` in 
-`r bir_dea_marr_cp_est_end_year - 1`. Of these 
+`r bir_est_end_year - 1`. Of these 
 `r format(current_births, big.mark=",")` births, 
 `r paste0(format(current_births_f, big.mark=",")," (",formatC(round(abs(prop_births_f), 1), format='f', digits=1),"%)")` were female and 
 `r paste0(format(current_births_m, big.mark=",")," (",formatC(round(abs(prop_births_m), 1), format='f', digits=1),"%)")` were male.
@@ -546,13 +546,13 @@ p_births_sex
 
 ``` {r births_text2, echo=FALSE}
 
-current_birth_rate <- births_rate$Number[births_rate$Area == paramsarea & births_rate$Year == bir_dea_marr_cp_est_end_year]
+current_birth_rate <- births_rate$Number[births_rate$Area == paramsarea & births_rate$Year == bir_est_end_year]
 
-previous_birth_rate <- births_rate$Number[births_rate$Area == paramsarea & births_rate$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_birth_rate <- births_rate$Number[births_rate$Area == paramsarea & births_rate$Year == bir_est_end_year - 1]
 
-current_birth_rate_scotland <- births_rate$Number[births_rate$Area == "Scotland" & births_rate$Year == bir_dea_marr_cp_est_end_year]
+current_birth_rate_scotland <- births_rate$Number[births_rate$Area == "Scotland" & births_rate$Year == bir_est_end_year]
 
-previous_birth_rate_scotland <- births_rate$Number[births_rate$Area == "Scotland" & births_rate$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_birth_rate_scotland <- births_rate$Number[births_rate$Area == "Scotland" & births_rate$Year == bir_est_end_year - 1]
 
 births_rate_rank_ca <- births_rate_end_year$Rank[births_rate_end_year$Area == paramsarea]
 
@@ -571,15 +571,15 @@ num_births_rate_equal <- nrow(births_rate_end_year[births_rate_end_year$Change_t
 
   In 
 `r paramsarea`, the standardised birth rate 
-`r ifelse(current_birth_rate > previous_birth_rate, paste0("increased from ",formatC(previous_birth_rate, format='f', digits=1), " per 1,000 population in ",bir_dea_marr_cp_est_end_year - 1, " to ",formatC(current_birth_rate, format='f', digits=1)," in ", bir_dea_marr_cp_est_end_year), ifelse(current_birth_rate < previous_birth_rate, paste0("decreased from ",formatC(previous_birth_rate, format='f', digits=1), " per 1,000 population in ",bir_dea_marr_cp_est_end_year - 1, " to ",formatC(current_birth_rate, format='f', digits=1)," in ", bir_dea_marr_cp_est_end_year), paste0("in ",bir_dea_marr_cp_est_end_year - 1," was ",formatC(previous_birth_rate, format='f', digits=1), " per 1,000 population and remained the same in ",bir_dea_marr_cp_est_end_year)))`. In comparison, the rate in Scotland overall
-`r ifelse(current_birth_rate_scotland > previous_birth_rate_scotland, paste0("increased from ",formatC(previous_birth_rate_scotland, format='f', digits=1)," to ",formatC(current_birth_rate_scotland, format='f', digits=1)), ifelse(current_birth_rate_scotland < previous_birth_rate_scotland, paste0("decreased from ",formatC(previous_birth_rate_scotland, format='f', digits=1)," to ",formatC(current_birth_rate_scotland, format='f', digits=1)), paste0("in ",bir_dea_marr_cp_est_end_year - 1," was ",formatC(previous_birth_rate_scotland, format='f', digits=1), " and remained the same in ",bir_dea_marr_cp_est_end_year)))`. 
+`r ifelse(current_birth_rate > previous_birth_rate, paste0("increased from ",formatC(previous_birth_rate, format='f', digits=1), " per 1,000 population in ",bir_est_end_year - 1, " to ",formatC(current_birth_rate, format='f', digits=1)," in ", bir_est_end_year), ifelse(current_birth_rate < previous_birth_rate, paste0("decreased from ",formatC(previous_birth_rate, format='f', digits=1), " per 1,000 population in ",bir_est_end_year - 1, " to ",formatC(current_birth_rate, format='f', digits=1)," in ", bir_est_end_year), paste0("in ",bir_est_end_year - 1," was ",formatC(previous_birth_rate, format='f', digits=1), " per 1,000 population and remained the same in ",bir_est_end_year)))`. In comparison, the rate in Scotland overall
+`r ifelse(current_birth_rate_scotland > previous_birth_rate_scotland, paste0("increased from ",formatC(previous_birth_rate_scotland, format='f', digits=1)," to ",formatC(current_birth_rate_scotland, format='f', digits=1)), ifelse(current_birth_rate_scotland < previous_birth_rate_scotland, paste0("decreased from ",formatC(previous_birth_rate_scotland, format='f', digits=1)," to ",formatC(current_birth_rate_scotland, format='f', digits=1)), paste0("in ",bir_est_end_year - 1," was ",formatC(previous_birth_rate_scotland, format='f', digits=1), " and remained the same in ",bir_est_end_year)))`. 
 
 In 
-`r bir_dea_marr_cp_est_end_year`, 
+`r bir_est_end_year`, 
 `r paramsarea` was the council area with the
 `r ifelse(length(births_rate_end_year$Rank[births_rate_end_year$Rank==births_rate_rank_ca]) > 1, paste0("joint ",births_rate_rank_text), paste0(births_rate_rank_text))` standardised birth rate. Between 
-`r bir_dea_marr_cp_est_end_year - 1` and 
-`r bir_dea_marr_cp_est_end_year`, 
+`r bir_est_end_year - 1` and 
+`r bir_est_end_year`, 
 `r ifelse(num_births_rate_decrease == 32, paste0("all councils saw a decrease in standardised birth rate"), ifelse(num_births_rate_increase == 32, paste0("all councils saw an increase in standardised birth rate"), ifelse(num_births_rate_decrease == 1 & num_births_rate_increase == 1, paste0(num_births_rate_decrease," council saw a decrease in standardised birth rate and ",num_births_rate_increase, " council saw an increase"), ifelse(num_births_rate_increase == 1 & num_births_rate_decrease != 1, paste0(num_births_rate_decrease," councils saw a decrease in standardised birth rate and ",num_births_rate_increase, " council saw an increase"), ifelse(num_births_rate_increase != 1 & num_births_rate_decrease == 1, paste0(num_births_rate_decrease," council saw a decrease in standardised birth rate and ",num_births_rate_increase, " councils saw an increase"), paste0(num_births_rate_decrease," councils saw a decrease in standardised birth rate and ",num_births_rate_increase," councils saw an increase"))))))`.
 `r ifelse(num_births_rate_equal == 1, paste0("There was ",num_births_rate_equal," council that saw no change."), ifelse(num_births_rate_equal > 1, paste0("There were ",num_births_rate_equal," councils that saw no change."), ""))`
 <br>
@@ -609,49 +609,49 @@ p_births_rate
 ``` {r births_text3, echo=FALSE}
 
 mothers_age_most_common_current <-
-  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_dea_marr_cp_est_end_year &
+  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_est_end_year &
   total_births_mothers_age_plot$Area == paramsarea &
-  total_births_mothers_age_plot$Number == max(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_dea_marr_cp_est_end_year &
+  total_births_mothers_age_plot$Number == max(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_est_end_year &
   total_births_mothers_age_plot$Area == paramsarea])]
   
   mothers_age_most_common_num <-
   total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Age_group == mothers_age_most_common_current &
-  total_births_mothers_age_plot$Year == bir_dea_marr_cp_est_end_year &
+  total_births_mothers_age_plot$Year == bir_est_end_year &
   total_births_mothers_age_plot$Area == paramsarea]
   
   mothers_age_most_common_previous <-
-  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_dea_marr_est_start_year &
+  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_est_start_year &
   total_births_mothers_age_plot$Area == paramsarea &
-  total_births_mothers_age_plot$Number == max(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_dea_marr_est_start_year &
+  total_births_mothers_age_plot$Number == max(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_est_start_year &
   total_births_mothers_age_plot$Area == paramsarea])]
   
   mothers_age_least_common_current <-
-  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_dea_marr_cp_est_end_year &
+  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_est_end_year &
   total_births_mothers_age_plot$Area == paramsarea &
-  total_births_mothers_age_plot$Number == min(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_dea_marr_cp_est_end_year &
+  total_births_mothers_age_plot$Number == min(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_est_end_year &
   total_births_mothers_age_plot$Area == paramsarea])]
   
   mothers_age_least_common_num <-
   total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Age_group == mothers_age_least_common_current &
-  total_births_mothers_age_plot$Year == bir_dea_marr_cp_est_end_year &
+  total_births_mothers_age_plot$Year == bir_est_end_year &
   total_births_mothers_age_plot$Area == paramsarea]
   
   mothers_age_least_common_previous <-
-  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_dea_marr_est_start_year &
+  total_births_mothers_age_plot$Age_group[total_births_mothers_age_plot$Year == bir_est_start_year &
   total_births_mothers_age_plot$Area == paramsarea &
-  total_births_mothers_age_plot$Number == min(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_dea_marr_est_start_year &
+  total_births_mothers_age_plot$Number == min(total_births_mothers_age_plot$Number[total_births_mothers_age_plot$Year == bir_est_start_year &
   total_births_mothers_age_plot$Area == paramsarea])]
 
 ```
 
   In 
-`r bir_dea_marr_cp_est_end_year`, the most common 
+`r bir_est_end_year`, the most common 
 `r ifelse(length(mothers_age_most_common_current) > 1, paste0("age groups of mothers in ",paramsarea," were ",mothers_age_most_common_current," (",format(mothers_age_most_common_num[1], big.mark=","),") births"), paste0("age group of mothers in ",paramsarea," was ",mothers_age_most_common_current," (",format(mothers_age_most_common_num[1], big.mark=",")," births),"))`
 `r ifelse(mothers_age_most_common_current == mothers_age_most_common_previous, paste0("the same as"), paste0("a change from the ",mothers_age_most_common_previous," age group"))` in 
-`r bir_dea_marr_est_start_year`. The least common
+`r bir_est_start_year`. The least common
 `r ifelse(length(mothers_age_least_common_current) > 1, paste0("age groups of mothers in ",paramsarea," were ",mothers_age_least_common_current," (",format(mothers_age_least_common_num[1], big.mark=","),") births"), paste0("age group of mothers in ",paramsarea," was ",mothers_age_least_common_current," (",format(mothers_age_least_common_num[1], big.mark=",")," births)"))`, which is 
 `r ifelse(mothers_age_least_common_current == mothers_age_least_common_previous, paste0("the same as"), paste0("a change from the ",mothers_age_least_common_previous," age group"))` in 
-`r bir_dea_marr_est_start_year`.
+`r bir_est_start_year`.
 <br>
 
 View [Source Table](#table_births_mothers_age_perc)
@@ -692,8 +692,8 @@ mothers_age_group_largest_positive_change <-
 ```
 
   Between 
-`r bir_dea_marr_est_start_year` and 
-`r bir_dea_marr_cp_est_end_year`, 
+`r bir_est_start_year` and 
+`r bir_est_end_year`, 
 `r ifelse(length(which(total_births_mothers_age_perc_plot$Sign == "negative")) <= 0.05, paste0("each age group increased in size. The ",mothers_age_group_largest_positive_change," age group has seen the largest percentage increase in births (+",formatC(round(mothers_perc_largest_positive_change[1], 1), format='f', digits=1),"%)."), ifelse(length(which(total_births_mothers_age_perc_plot$Sign == "positive")) <= 0.05, paste0("each age group decreased in size. The ",mothers_age_group_largest_negative_change," age group has seen the largest percentage decrease in births (",formatC(round(mothers_perc_largest_negative_change[1], 1), format='f', digits=1),"%)."), paste0("the ",mothers_age_group_largest_negative_change," age group has seen the largest percentage decrease in births (",formatC(round(mothers_perc_largest_negative_change[1], 1), format='f', digits=1),"%) and the ",mothers_age_group_largest_positive_change," age group has seen the largest percentage increase in births (+",formatC(round(mothers_perc_largest_positive_change[1], 1), format='f', digits=1),"%).")))`
 <br>
 
@@ -722,18 +722,18 @@ p_births_mothers_age_perc
 
 current_fert_rate <-
   fert_rate$Number[fert_rate$Area == paramsarea &
-  fert_rate$Year == bir_dea_marr_cp_est_end_year]
+  fert_rate$Year == bir_est_end_year]
   
   previous_fert_rate <-
   fert_rate$Number[fert_rate$Area == paramsarea &
-  fert_rate$Year == bir_dea_marr_cp_est_end_year - 1]
+  fert_rate$Year == bir_est_end_year - 1]
   
   fert_rate_change <-
   (current_fert_rate - previous_fert_rate) / previous_fert_rate * 100
   
   current_fert_rate_scotland <-
   fert_rate$Number[fert_rate$Area == "Scotland" &
-  fert_rate$Year == bir_dea_marr_cp_est_end_year]
+  fert_rate$Year == bir_est_end_year]
   
   fert_rate_rank_ca <-
   fert_rate_end_year$Rank[fert_rate_end_year$Area == paramsarea]
@@ -751,10 +751,10 @@ num_fert_rate_increase <-
  
 The total fertility rate in
 `r params$area` 
-`r ifelse(current_fert_rate > previous_fert_rate, paste0("increased from ",previous_fert_rate, " in ",bir_dea_marr_cp_est_end_year - 1, " to ",current_fert_rate," in ", bir_dea_marr_cp_est_end_year), ifelse(current_fert_rate < previous_fert_rate, paste0("decreased from ",previous_fert_rate, " in ",bir_dea_marr_cp_est_end_year - 1, " to ",current_fert_rate," in ", bir_dea_marr_cp_est_end_year), paste0("in ",bir_dea_marr_cp_est_end_year - 1," was ",previous_fert_rate, " and remained the same in ",bir_dea_marr_cp_est_end_year)))`. Out of the 32 council areas in Scotland, 
+`r ifelse(current_fert_rate > previous_fert_rate, paste0("increased from ",previous_fert_rate, " in ",bir_est_end_year - 1, " to ",current_fert_rate," in ", bir_est_end_year), ifelse(current_fert_rate < previous_fert_rate, paste0("decreased from ",previous_fert_rate, " in ",bir_est_end_year - 1, " to ",current_fert_rate," in ", bir_est_end_year), paste0("in ",bir_est_end_year - 1," was ",previous_fert_rate, " and remained the same in ",bir_est_end_year)))`. Out of the 32 council areas in Scotland, 
 `r paramsarea` had the 
 `r ifelse(length(fert_rate_end_year$Rank[fert_rate_end_year$Rank==fert_rate_rank_ca]) > 1, paste0("joint ",fert_rate_rank_text), paste0(fert_rate_rank_text))` rate in 
-`r bir_dea_marr_cp_est_end_year` and this is 
+`r bir_est_end_year` and this is 
 `r paste0(ifelse(current_fert_rate > current_fert_rate_scotland, "higher than", ifelse(current_fert_rate < current_fert_rate_scotland, "lower than", "the same as")))` the rate of
 `r current_fert_rate_scotland` for Scotland as a whole.
 
@@ -784,7 +784,7 @@ p_births_fert_rate
 Last updated: `r deaths_last_update`  
 Likely next update: `r deaths_next_update`
 
-### `r bir_dea_marr_cp_est_end_year` Deaths by Council Area in Scotland
+### `r dea_est_end_year` Deaths by Council Area in Scotland
 
 <br>
 <a name="deaths_plots1"></a>
@@ -796,22 +796,22 @@ Likely next update: `r deaths_next_update`
 
 current_deaths <-
   total_deaths_sex$Number[total_deaths_sex$Sex == "All people" &
-  total_deaths_sex$Year == bir_dea_marr_cp_est_end_year]
+  total_deaths_sex$Year == dea_est_end_year]
   
   previous_deaths <-
   total_deaths_sex$Number[total_deaths_sex$Sex == "All people" &
-  total_deaths_sex$Year == bir_dea_marr_cp_est_end_year - 1]
+  total_deaths_sex$Year == dea_est_end_year - 1]
   
   deaths_perc <-
   (current_deaths - previous_deaths) / previous_deaths * 100
   
   current_deaths_f <-
   total_deaths_sex$Number[total_deaths_sex$Sex == "Female" &
-  total_deaths_sex$Year == bir_dea_marr_cp_est_end_year]
+  total_deaths_sex$Year == dea_est_end_year]
   
   current_deaths_m <-
   total_deaths_sex$Number[total_deaths_sex$Sex == "Male" &
-  total_deaths_sex$Year == bir_dea_marr_cp_est_end_year]
+  total_deaths_sex$Year == dea_est_end_year]
   
   prop_deaths_f <- current_deaths_f / current_deaths * 100
   prop_deaths_m <- current_deaths_m / current_deaths * 100
@@ -819,11 +819,11 @@ current_deaths <-
 ```
 
   In 
-`r bir_dea_marr_cp_est_end_year`, there were
+`r dea_est_end_year`, there were
 `r format(current_deaths, big.mark=",")` deaths in 
 `r paramsarea`. This is 
 `r ifelse(deaths_perc < 0, paste0("a ",formatC(round(abs(deaths_perc), 1), format='f', digits=1),"% decrease from ", format(previous_deaths, big.mark=",")), ifelse(deaths_perc > 0, paste0("a ",formatC(round(abs(deaths_perc), 1), format='f', digits=1),"% increase from ", format(previous_deaths, big.mark=",")), "the same as the number of "))` deaths in 
-`r bir_dea_marr_cp_est_end_year - 1`. Of these 
+`r dea_est_end_year - 1`. Of these 
 `r format(current_deaths, big.mark=",")` deaths, 
 `r paste0(format(current_deaths_f, big.mark=",")," (",formatC(round(abs(prop_deaths_f), 1), format='f', digits=1),"%)")` were female and 
 `r paste0(format(current_deaths_m, big.mark=",")," (",formatC(round(abs(prop_deaths_m), 1), format='f', digits=1),"%)")` were male.
@@ -854,19 +854,19 @@ p_deaths_sex
 
 current_death_rate <-
   deaths_rate$Number[deaths_rate$Area == paramsarea &
-  deaths_rate$Year == bir_dea_marr_cp_est_end_year]
+  deaths_rate$Year == dea_est_end_year]
   
   previous_death_rate <-
   deaths_rate$Number[deaths_rate$Area == paramsarea &
-  deaths_rate$Year == bir_dea_marr_cp_est_end_year - 1]
+  deaths_rate$Year == dea_est_end_year - 1]
   
   current_death_rate_scotland <-
   deaths_rate$Number[deaths_rate$Area == "Scotland" &
-  deaths_rate$Year == bir_dea_marr_cp_est_end_year]
+  deaths_rate$Year == dea_est_end_year]
   
   previous_death_rate_scotland <-
   deaths_rate$Number[deaths_rate$Area == "Scotland" &
-  deaths_rate$Year == bir_dea_marr_cp_est_end_year - 1]
+  deaths_rate$Year == dea_est_end_year - 1]
   
   deaths_rate_rank_ca <-
   deaths_rate_end_year$Rank[deaths_rate_end_year$Area == paramsarea]
@@ -885,15 +885,15 @@ num_deaths_rate_increase <-
 
   In 
 `r paramsarea`, the standardised death rate
-`r ifelse(current_death_rate > previous_death_rate, paste0("increased from ",formatC(previous_death_rate, format='f', digits=1), " per 1,000 population in ",bir_dea_marr_cp_est_end_year - 1, " to ",formatC(current_death_rate, format='f', digits=1)," in ", bir_dea_marr_cp_est_end_year), ifelse(current_death_rate < previous_death_rate, paste0("decreased from ",formatC(previous_death_rate, format='f', digits=1), " per 1,000 population in ",bir_dea_marr_cp_est_end_year - 1, " to ",formatC(current_death_rate, format='f', digits=1)," in ", bir_dea_marr_cp_est_end_year), paste0("in ",bir_dea_marr_cp_est_end_year - 1," was ",formatC(previous_death_rate, format='f', digits=1), " per 1,000 population and remained the same in ",bir_dea_marr_cp_est_end_year)))`. In comparison, the rate in Scotland overall
-`r ifelse(current_death_rate_scotland > previous_death_rate_scotland, paste0("increased from ",formatC(previous_death_rate_scotland, format='f', digits=1)," to ",formatC(current_death_rate_scotland, format='f', digits=1)), ifelse(current_death_rate_scotland < previous_death_rate_scotland, paste0("decreased from ",formatC(previous_death_rate_scotland, format='f', digits=1)," to ",formatC(current_death_rate_scotland, format='f', digits=1)), paste0("in ",bir_dea_marr_cp_est_end_year - 1," was ",formatC(previous_death_rate_scotland, format='f', digits=1), " and remained the same in ",bir_dea_marr_cp_est_end_year)))`. 
+`r ifelse(current_death_rate > previous_death_rate, paste0("increased from ",formatC(previous_death_rate, format='f', digits=1), " per 1,000 population in ",dea_est_end_year - 1, " to ",formatC(current_death_rate, format='f', digits=1)," in ", dea_est_end_year), ifelse(current_death_rate < previous_death_rate, paste0("decreased from ",formatC(previous_death_rate, format='f', digits=1), " per 1,000 population in ",dea_est_end_year - 1, " to ",formatC(current_death_rate, format='f', digits=1)," in ", dea_est_end_year), paste0("in ",dea_est_end_year - 1," was ",formatC(previous_death_rate, format='f', digits=1), " per 1,000 population and remained the same in ",dea_est_end_year)))`. In comparison, the rate in Scotland overall
+`r ifelse(current_death_rate_scotland > previous_death_rate_scotland, paste0("increased from ",formatC(previous_death_rate_scotland, format='f', digits=1)," to ",formatC(current_death_rate_scotland, format='f', digits=1)), ifelse(current_death_rate_scotland < previous_death_rate_scotland, paste0("decreased from ",formatC(previous_death_rate_scotland, format='f', digits=1)," to ",formatC(current_death_rate_scotland, format='f', digits=1)), paste0("in ",dea_est_end_year - 1," was ",formatC(previous_death_rate_scotland, format='f', digits=1), " and remained the same in ",dea_est_end_year)))`. 
 
 In 
-`r bir_dea_marr_cp_est_end_year`, 
+`r dea_est_end_year`, 
 `r paramsarea` was the council area with the 
 `r deaths_rate_rank_text` standardised death rate. Between 
-`r bir_dea_marr_cp_est_end_year - 1` and 
-`r bir_dea_marr_cp_est_end_year`, 
+`r dea_est_end_year - 1` and 
+`r dea_est_end_year`, 
 `r ifelse(num_deaths_rate_decrease == 32, paste0("all councils saw a decrease in standardised death rate"), ifelse(num_deaths_rate_increase == 32, paste0("all councils saw an increase in standardised death rate"), ifelse(num_deaths_rate_decrease == 1 & num_deaths_rate_increase == 1, paste0(num_deaths_rate_decrease," council saw a decrease in standardised death rate and ",num_deaths_rate_increase, " council saw an increase"), ifelse(num_deaths_rate_increase == 1 & num_deaths_rate_decrease != 1, paste0(num_deaths_rate_decrease," councils saw a decrease in standardised death rate and ",num_deaths_rate_increase, " council saw an increase"), ifelse(num_deaths_rate_increase != 1 & num_deaths_rate_decrease == 1, paste0(num_deaths_rate_decrease," council saw a decrease in standardised death rate and ",num_deaths_rate_increase, " councils saw an increase"), paste0(num_deaths_rate_decrease," councils saw a decrease in standardised death rate and ",num_deaths_rate_increase," councils saw an increase"))))))`.
 `r ifelse(num_deaths_rate_equal == 1, paste0("There was ",num_deaths_rate_equal," council that saw no change."), ifelse(num_deaths_rate_equal > 1, paste0("There were ",num_deaths_rate_equal," councils that saw no change."), ""))`
 <br>
@@ -930,19 +930,19 @@ deaths_change_type_f <-
   
   deaths_f <-
   total_deaths_sex_comp$Number[total_deaths_sex_comp$Sex == "Female" &
-  total_deaths_sex_comp$Year == bir_dea_marr_cp_est_end_year]
+  total_deaths_sex_comp$Year == dea_est_end_year]
   
   deaths_m <-
   total_deaths_sex_comp$Number[total_deaths_sex_comp$Sex == "Male" &
-  total_deaths_sex_comp$Year == bir_dea_marr_cp_est_end_year]
+  total_deaths_sex_comp$Year == dea_est_end_year]
 
 ```
 
 Between 
-`r bir_dea_marr_est_start_year` and 
-`r bir_dea_marr_cp_est_end_year`, 
+`r dea_est_start_year` and 
+`r dea_est_end_year`, 
 `r ifelse(deaths_change_type_f == "negative" & deaths_change_type_m == "negative", paste0("both female and male deaths registered in ",paramsarea," have reduced in number"), ifelse(deaths_change_type_f == "positive" & deaths_change_type_m == "positive", paste0("both female and male deaths registered in ",paramsarea," have increased in number"), ifelse(deaths_change_type_f == "positive" & deaths_change_type_m == "negative", paste0("male deaths registered in ",paramsarea," have reduced in number but the number of female deaths has increased"), paste0("female deaths registered in ",paramsarea," have reduced in number but the number of male deaths has increased"))))`. In 
-`r bir_dea_marr_cp_est_end_year`, 
+`r dea_est_end_year`, 
 `r paste0(ifelse(deaths_f > deaths_m, "a higher", ifelse(deaths_f < deaths_m, "a lower", "an equal")))` number of female 
 `r paste0("(",format(deaths_f, big.mark=","),")")`
 `r paste0(ifelse(deaths_f == deaths_m, "and", "than"))` male 
@@ -985,12 +985,12 @@ deaths_change_f <-
 ```
 
   In comparison to 
-`r bir_dea_marr_est_start_year`, the number of female deaths registered in
+`r dea_est_start_year`, the number of female deaths registered in
 `r paramsarea` in
-`r bir_dea_marr_cp_est_end_year` was
+`r dea_est_end_year` was
 `r ifelse(deaths_change_f < 0, paste0(formatC(round(abs(deaths_change_f), 1), format='f', digits=1),"% lower"), ifelse(deaths_change_f > 0, paste0(formatC(round(abs(deaths_change_f), 1), format='f', digits=1),"% higher"), "unchanged"))` and the number of male deaths was
 `r ifelse(deaths_change_m < 0, paste0(formatC(round(abs(deaths_change_m), 1), format='f', digits=1),"% lower"), ifelse(deaths_change_m > 0, paste0(formatC(round(abs(deaths_change_m), 1), format='f', digits=1),"% higher"), "unchanged"))`. At Scotland level, the number of female deaths registered in 
-`r bir_dea_marr_cp_est_end_year` was
+`r dea_est_end_year` was
 `r ifelse(deaths_change_f_scotland < 0, paste0(formatC(round(abs(deaths_change_f_scotland), 1), format='f', digits=1),"% lower"), ifelse(deaths_change_f_scotland > 0, paste0(formatC(round(abs(deaths_change_f_scotland), 1), format='f', digits=1),"% higher"), "unchanged"))` and the number of male deaths was
 `r ifelse(deaths_change_m_scotland < 0, paste0(formatC(round(abs(deaths_change_m_scotland), 1), format='f', digits=1),"% lower"), ifelse(deaths_change_m_scotland > 0, paste0(formatC(round(abs(deaths_change_m_scotland), 1), format='f', digits=1),"% higher"), "unchanged"))`.
 <br>
@@ -1049,7 +1049,7 @@ total_deaths_age_sex$Sex == "Male"]
 ```
 
   In 
-`r bir_dea_marr_cp_est_end_year`, the 
+`r dea_est_end_year`, the 
 `r most_deaths_age_group` 
 `r ifelse(length(most_deaths_age_group) > 1, "age groups", "age group")` saw the highest number of total deaths
 (`r format(most_deaths[1], big.mark=",")`) and the 
@@ -1103,7 +1103,7 @@ second_leading_cause_m_scotland <- deaths_cause_m_comp$Cause_label[deaths_cause_
 
 In 
 `r paramsarea`, the leading cause of death for males in
-`r bir_dea_marr_cp_est_end_year` was
+`r dea_est_end_year` was
 `r leading_cause_m`
 `r paste0("(",formatC(round(deaths_cause_m$Perc[deaths_cause_m$Cause_label == leading_cause_m[1]][1], 1), format='f', digits=1))`% of all male deaths), followed by
 `r second_leading_cause_m`
@@ -1149,7 +1149,7 @@ second_leading_cause_f_scotland <- deaths_cause_f_comp$Cause_label[deaths_cause_
 
 In 
 `r paramsarea`, the leading cause of death for females in
-`r bir_dea_marr_cp_est_end_year` was
+`r dea_est_end_year` was
 `r leading_cause_f`
 `r paste0("(",formatC(round(deaths_cause_f$Perc[deaths_cause_f$Cause_label == leading_cause_f[1]][1], 1), format='f', digits=1))`% of all female deaths), followed by
 `r second_leading_cause_f`
@@ -1678,7 +1678,7 @@ p_net_mig_age_sex
 Last updated: `r marr_cp_last_update`  
 Likely next update: `r marr_cp_next_update`
 
-### `r bir_dea_marr_cp_est_end_year` Marriages by Council Area in Scotland
+### `r marr_est_end_year` Marriages by Council Area in Scotland
 
 <br>
 <a name="marr_plots1"></a>
@@ -1688,15 +1688,15 @@ Likely next update: `r marr_cp_next_update`
 
 ``` {r marr_text1, echo=FALSE}
 
-current_marr <- total_marr$Number[total_marr$Area == paramsarea & total_marr$Year == bir_dea_marr_cp_est_end_year]
+current_marr <- total_marr$Number[total_marr$Area == paramsarea & total_marr$Year == marr_est_end_year]
 
-previous_marr <- total_marr$Number[total_marr$Area == paramsarea & total_marr$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_marr <- total_marr$Number[total_marr$Area == paramsarea & total_marr$Year == marr_est_end_year - 1]
 
 marr_perc <- (current_marr - previous_marr)/previous_marr*100
 
-current_marr_scotland <- total_marr$Number[total_marr$Area == "Scotland" & total_marr$Year == bir_dea_marr_cp_est_end_year]
+current_marr_scotland <- total_marr$Number[total_marr$Area == "Scotland" & total_marr$Year == marr_est_end_year]
 
-previous_marr_scotland <- total_marr$Number[total_marr$Area == "Scotland" & total_marr$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_marr_scotland <- total_marr$Number[total_marr$Area == "Scotland" & total_marr$Year == marr_est_end_year - 1]
 
 marr_perc_scotland <- (current_marr_scotland - previous_marr_scotland)/previous_marr_scotland*100
 
@@ -1713,11 +1713,11 @@ num_marr_equal <- nrow(marr_end_year[marr_end_year$Change_type=="equal",])
 ```
 
 In 
-`r bir_dea_marr_cp_est_end_year`, 
+`r marr_est_end_year`, 
 `r format(current_marr, big.mark = ",")` marriages were registered in 
 `r paramsarea`. This is 
 `r ifelse(marr_perc < 0, paste0("a ",formatC(round(abs(marr_perc), 1), format = "f", digits = 1),"% decrease from ",format(previous_marr, big.mark = ",")), ifelse(marr_perc > 0, paste0("a ",formatC(round(abs(marr_perc), 1), format = "f", digits = 1),"% increase from ",format(previous_marr, big.mark = ",")), "the same as"))` in
-`r bir_dea_marr_cp_est_end_year - 1`. In comparison, the number of marriages registered in Scotland overall 
+`r marr_est_end_year - 1`. In comparison, the number of marriages registered in Scotland overall 
 `r ifelse(marr_perc_scotland < 0, paste0("decreased by ",formatC(round(abs(marr_perc_scotland), 1), format = "f", digits = 1),"%"), ifelse(marr_perc_scotland > 0, paste0("increased by ",formatC(round(abs(marr_perc_scotland), 1), format = "f", digits = 1),"%"), "remained the same"))`.
 <br>
 
@@ -1744,9 +1744,9 @@ p_marr_one_CA
 
 `r paramsarea` had the 
 `r ifelse(length(marr_end_year$Rank[marr_end_year$Rank==marr_rank_ca]) > 1, paste0("joint ",marr_rank_text), paste0(marr_rank_text))` number of marriage registrations in 
-`r bir_dea_marr_cp_est_end_year`, out of the 32 council areas in Scotland. Between 
-`r bir_dea_marr_cp_est_end_year - 1` and 
-`r bir_dea_marr_cp_est_end_year`, 
+`r marr_est_end_year`, out of the 32 council areas in Scotland. Between 
+`r marr_est_end_year - 1` and 
+`r marr_est_end_year`, 
 `r ifelse(num_marr_decrease == 32, paste0("all councils saw a decrease in marriage registrations"), ifelse(num_marr_increase == 32, paste0("all councils saw an increase in marriage registrations"), ifelse(num_marr_decrease == 1 & num_marr_increase == 1, paste0(num_marr_decrease," council saw a decrease in marriage registrations and ",num_marr_increase, " council saw an increase"), ifelse(num_marr_increase == 1 & num_marr_decrease != 1, paste0(num_marr_decrease," councils saw a decrease in marriage registrations and ",num_marr_increase, " council saw an increase"), ifelse(num_marr_increase != 1 & num_marr_decrease == 1, paste0(num_marr_decrease," council saw a decrease in marriage registrations and ",num_marr_increase, " councils saw an increase"), paste0(num_marr_decrease," councils saw a decrease in marriage registrations and ",num_marr_increase," councils saw an increase"))))))`.
 `r ifelse(num_marr_equal == 1, paste0("There was ",num_marr_equal," council that saw no change."), ifelse(num_marr_equal > 1, paste0("There were ",num_marr_equal," councils that saw no change."), ""))`
 <br>
@@ -1768,7 +1768,7 @@ p_marr_num
 
 <br>
 
-### `r bir_dea_marr_cp_est_end_year` Civil Partnerships by Council Area in Scotland
+### `r cp_est_end_year` Civil Partnerships by Council Area in Scotland
 
 <br>
 <a name="cp_plots1"></a>
@@ -1778,19 +1778,19 @@ p_marr_num
 
 ``` {r cp_text1, echo=FALSE}
 
-current_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == bir_dea_marr_cp_est_end_year]
+current_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == cp_est_end_year]
 
-previous_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == cp_est_end_year - 1]
 
 cp_perc <- (current_cp - previous_cp)/previous_cp*100
 
-cp_f <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == bir_dea_marr_cp_est_end_year & data_cp_gender$Sex == "Female"]
+cp_f <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == cp_est_end_year & data_cp_gender$Sex == "Female"]
 
-cp_m <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == bir_dea_marr_cp_est_end_year & data_cp_gender$Sex == "Male"]
+cp_m <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == cp_est_end_year & data_cp_gender$Sex == "Male"]
 
-current_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == bir_dea_marr_cp_est_end_year]
+current_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == cp_est_end_year]
 
-previous_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == cp_est_end_year - 1]
 
 cp_perc_scotland <- (current_cp_scotland - previous_cp_scotland)/previous_cp_scotland*100
 
@@ -1806,12 +1806,12 @@ num_cp_equal <- nrow(cp_end_year[cp_end_year$Change_type=="equal",])
 ```
 
 In 
-`r bir_dea_marr_cp_est_end_year`, 
+`r cp_est_end_year`, 
 `r ifelse(current_cp == 1, paste0(format(current_cp, big.mark = ",")," civil partnership was registered in ", paramsarea,","), ifelse(current_cp == 0, paste0("no civil partnerships were registered in ", paramsarea,"."), paste0(format(current_cp, big.mark = ",")," civil partnerships were registered in ", paramsarea,",")))`
 `r ifelse(cp_f != 1 & current_cp != 0, paste0("of which ", format(cp_f, big.mark = ","), " were female and "), ifelse(cp_f == 1, paste0("of which ", format(cp_f, big.mark = ","), " was female and "), ""))` `r ifelse(cp_m != 1 & current_cp != 0, paste0(format(cp_m, big.mark = ","), " were male."), ifelse(cp_m == 1, paste0(format(cp_m, big.mark = ","), " was male."), ""))` In Scotland overall, 
 `r ifelse(current_cp_scotland == 1, paste0("there was ",current_cp_scotland," civil partnership"), ifelse(current_cp_scotland == 0, paste0("there were no civil partnerships"), paste0("there were ", current_cp_scotland," civil partnerships")))` in 
-`r bir_dea_marr_cp_est_end_year`, which is
-`r ifelse(cp_perc_scotland < 0, paste0("a decrease of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",bir_dea_marr_cp_est_end_year-1), ifelse(cp_perc_scotland > 0, paste0("an increase of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",bir_dea_marr_cp_est_end_year-1), paste0("the same as the number in ",bir_dea_marr_cp_est_end_year-1)))`.
+`r cp_est_end_year`, which is
+`r ifelse(cp_perc_scotland < 0, paste0("a decrease of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",cp_est_end_year-1), ifelse(cp_perc_scotland > 0, paste0("an increase of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",cp_est_end_year-1), paste0("the same as the number in ",cp_est_end_year-1)))`.
 <br>
 
 View [Source Table](#table_cp)
@@ -1837,9 +1837,9 @@ p_cp_one_CA
 
 `r paramsarea` had the 
 `r ifelse(length(cp_end_year$Rank[cp_end_year$Rank==cp_rank_ca]) > 1, paste0("joint ",cp_rank_text), paste0(cp_rank_text))` number of civil partnership registrations in 
-`r bir_dea_marr_cp_est_end_year`, out of the 32 council areas in Scotland. Between 
-`r bir_dea_marr_cp_est_end_year - 1` and 
-`r bir_dea_marr_cp_est_end_year`, 
+`r cp_est_end_year`, out of the 32 council areas in Scotland. Between 
+`r cp_est_end_year - 1` and 
+`r cp_est_end_year`, 
 `r ifelse(num_cp_decrease == 32, paste0("all councils saw a decrease in civil partnership registrations"), ifelse(num_cp_increase == 32, paste0("all councils saw an increase in civil partnership registrations"), ifelse(num_cp_decrease == 1 & num_cp_increase == 1, paste0(num_cp_decrease," council saw a decrease in civil partnership registrations and ",num_cp_increase, " council saw an increase"), ifelse(num_cp_increase == 1 & num_cp_decrease != 1, paste0(num_cp_decrease," councils saw a decrease in civil partnership registrations and ",num_cp_increase, " council saw an increase"), ifelse(num_cp_increase != 1 & num_cp_decrease == 1, paste0(num_cp_decrease," council saw a decrease in civil partnership registrations and ",num_cp_increase, " councils saw an increase"), paste0(num_cp_decrease," councils saw a decrease in civil partnership registrations and ",num_cp_increase," councils saw an increase"))))))`.
 `r ifelse(num_cp_equal == 1, paste0("There was ",num_cp_equal," council that saw no change."), ifelse(num_cp_equal > 1, paste0("There were ",num_cp_equal," councils that saw no change."), ""))`
 <br>
@@ -2639,13 +2639,13 @@ table_pop_proj_age_small
 
 <br>
 
-### `r bir_dea_marr_cp_est_end_year` Births by Council Area in Scotland
+### `r bir_est_end_year` Births by Council Area in Scotland
 
 <br>
 
 <a name="table_births_sex"></a>
 
-#### Births by sex, `r paramsarea`, `r bir_dea_marr_est_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Births by sex, `r paramsarea`, `r bir_est_start_year`-`r bir_est_end_year`
 
 View [Chart](#births_plots1)
 ```{r table_births_sex, echo=FALSE, warning = FALSE, fig.width=12}
@@ -2662,7 +2662,7 @@ table_births_sex
 
 <a name="table_births_rate"></a>
 
-#### Standardised birth rates, `r paramsarea`, `r bir_dea_marr_est_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Standardised birth rates, `r paramsarea`, `r bir_est_start_year`-`r bir_est_end_year`
 
 View [Chart](#births_plots2)
 
@@ -2678,7 +2678,7 @@ table_births_rate
 
 <a name="table_births_mothers_age_perc"></a>
 
-#### Births by age group of mother, `r paramsarea`, `r bir_dea_marr_est_start_year` and `r bir_dea_marr_cp_est_end_year`
+#### Births by age group of mother, `r paramsarea`, `r bir_est_start_year` and `r bir_est_end_year`
 
 View [Chart](#births_plots3)
 
@@ -2696,7 +2696,7 @@ table_births_mothers_age_perc
 
 <a name="table_fert_rate"></a>
 
-#### Approximated total fertility rate, `r paramsarea`, `r bir_dea_marr_est_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Approximated total fertility rate, `r paramsarea`, `r bir_est_start_year`-`r bir_est_end_year`
 
 View [Chart](#births_plots5)
 
@@ -2712,13 +2712,13 @@ table_fert_rate
 
 <br>
 
-### `r bir_dea_marr_cp_est_end_year` Deaths by Council Area in Scotland
+### `r dea_est_end_year` Deaths by Council Area in Scotland
 
 <br>
 
 <a name="table_deaths_sex"></a>
 
-#### Deaths by sex, `r paramsarea`, `r bir_dea_marr_est_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Deaths by sex, `r paramsarea`, `r dea_est_start_year`-`r dea_est_end_year`
 
 View [Chart](#deaths_plots1)
 
@@ -2737,7 +2737,7 @@ table_deaths_sex
 
 <a name="table_deaths_rate"></a>
 
-#### Standardised death rates, `r paramsarea`, `r bir_dea_marr_est_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Standardised death rates, `r paramsarea`, `r dea_est_start_year`-`r dea_est_end_year`
 
 View [Chart](#deaths_plots2)
 
@@ -2753,7 +2753,7 @@ table_deaths_rate
 
 <a name="table_deaths_sex_comp"></a>
 
-#### Deaths by sex, `r paramsarea`, `r bir_dea_marr_est_start_year` and `r bir_dea_marr_cp_est_end_year`
+#### Deaths by sex, `r paramsarea`, `r dea_est_start_year` and `r dea_est_end_year`
 
 View [Chart](#deaths_plots3)
 
@@ -2771,7 +2771,7 @@ table_deaths_sex_comp
 
 <a name="table_deaths_age_sex"></a>
 
-#### Deaths by age group by sex, `r paramsarea`, `r bir_dea_marr_cp_est_end_year`
+#### Deaths by age group by sex, `r paramsarea`, `r dea_est_end_year`
 
 View [Chart](#deaths_plots5)
 
@@ -2781,7 +2781,7 @@ table_deaths_age_sex
 
 ```
 
-**Source:** [Vital Events Reference Tables `r bir_dea_marr_cp_est_end_year`, Section 5: Deaths](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2018/section-5-deaths) Table 5.02
+**Source:** [Vital Events Reference Tables `r dea_est_end_year`, Section 5: Deaths](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2018/section-5-deaths) Table 5.02
 
 <div style="page-break-after: always;"></div>
 
@@ -2789,7 +2789,7 @@ table_deaths_age_sex
 
 <a name="table_deaths_cause_m"></a>
 
-#### Male leading causes of death, `r paramsarea`, `r bir_dea_marr_cp_est_end_year`
+#### Male leading causes of death, `r paramsarea`, `r dea_est_end_year`
 
 View [Chart](#deaths_plots6)
 
@@ -2799,7 +2799,7 @@ table_deaths_cause_m
 
 ```
 
-**Source:** [Vital Events Reference Tables `r bir_dea_marr_cp_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2019/list-of-data-tables#section6) Table 6.03
+**Source:** [Vital Events Reference Tables `r dea_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2019/list-of-data-tables#section6) Table 6.03
 
 <div style="page-break-after: always;"></div>
 
@@ -2807,7 +2807,7 @@ table_deaths_cause_m
 
 <a name="table_deaths_cause_f"></a>
 
-#### Female leading causes of death, `r paramsarea`, `r bir_dea_marr_cp_est_end_year`
+#### Female leading causes of death, `r paramsarea`, `r dea_est_end_year`
 
 View [Chart](#deaths_plots7)
 
@@ -2817,7 +2817,7 @@ table_deaths_cause_f
 
 ```
 
-**Source:** [Vital Events Reference Tables `r bir_dea_marr_cp_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2019/list-of-data-tables#section6) Table 6.03
+**Source:** [Vital Events Reference Tables `r dea_est_end_year`, Section 6: Deaths - Causes](https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/vital-events-reference-tables/2019/list-of-data-tables#section6) Table 6.03
 
 <br>
 
@@ -2952,13 +2952,13 @@ table_net_mig_age_sex
 
 <br>
 
-### `r bir_dea_marr_cp_est_end_year` Marriages and Civil Partnerships by Council Area in Scotland
+### `r marr_est_end_year` Marriages and Civil Partnerships by Council Area in Scotland
 
 <br>
 
 <a name="table_marr"></a>
 
-#### Total marriages, `r paramsarea`, `r bir_dea_marr_est_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Total marriages, `r paramsarea`, `r marr_est_start_year`-`r marr_est_end_year`
 
 View [Chart](#marr_plots1)
 
@@ -2976,7 +2976,7 @@ table_marr
 
 <a name="table_cp"></a>
 
-#### Total civil partnerships, `r paramsarea`, `r cp_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Total civil partnerships, `r paramsarea`, `r cp_start_year`-`r cp_est_end_year`
 
 View [Chart](#cp_plots1)
 

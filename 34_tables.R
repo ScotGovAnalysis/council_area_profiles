@@ -152,8 +152,8 @@ table_total_and_sex_perc_change_by_year_ca <- function(dataset, Area_name){
     spread(key = Sex, value = Number) %>%
     rename(Total = `All people`) %>%
     select(-Total, everything()) %>%
-    mutate(Perc = ((Total - Total[Year == bir_dea_marr_est_start_year]) /
-                     Total[Year == bir_dea_marr_est_start_year]) * 100) %>%
+    mutate(Perc = ((Total - Total[Year == bir_est_start_year]) /
+                     Total[Year == bir_est_start_year]) * 100) %>%
     mutate(Perc = round(Perc, 1)) %>%
     select(-Area)
 }
@@ -733,14 +733,14 @@ data_table_births_sex <- table_total_and_sex_perc_change_by_year_ca(total_births
                                                                     paramsarea) %>%
   rename(`All births` = Total)
 names(data_table_births_sex)[which(colnames(data_table_births_sex) == "Perc")] <-
-  paste("% change from", bir_dea_marr_est_start_year)
+  paste("% change from", bir_est_start_year)
 
 # Scotland
 data_table_births_sex_scotland <- table_total_and_sex_perc_change_by_year_ca(total_births_sex_all,
                                                                              "Scotland") %>%
   select(Year, Perc)
 names(data_table_births_sex_scotland)[which(colnames(data_table_births_sex_scotland) == "Perc")] <-
-  paste("Scotland % change from", bir_dea_marr_est_start_year)
+  paste("Scotland % change from", bir_est_start_year)
 
 # Merge the two datasets
 data_table_births_sex <- merge(data_table_births_sex,
@@ -799,14 +799,14 @@ data_table_fert_rate <- table_total_and_perc_change_by_year(fert_rate,
   select(Year, Number, Perc) %>%
   rename(`Approximated total fertility rate` = Number)
 names(data_table_fert_rate)[which(colnames(data_table_fert_rate) == "Perc")] <-
-  paste("% change from", bir_dea_marr_est_start_year)
+  paste("% change from", bir_est_start_year)
 
 # Scotland
 data_table_fert_rate_scotland <- table_total_and_perc_change_by_year(fert_rate,
                                                                      "Scotland") %>%
   select(Year, Perc)
 names(data_table_fert_rate_scotland)[which(colnames(data_table_fert_rate_scotland) == "Perc")] <-
-  paste("Scotland % change from", bir_dea_marr_est_start_year)
+  paste("Scotland % change from", bir_est_start_year)
 
 # Merge the two datasets
 data_table_fert_rate <- merge(data_table_fert_rate,
@@ -824,7 +824,7 @@ data_table_deaths_sex <- table_total_and_sex_perc_change_by_year_ca(total_deaths
                                                                     paramsarea) %>%
   rename(`All people` = Total)
 names(data_table_deaths_sex)[which(colnames(data_table_deaths_sex) == "Perc")] <-
-  paste("% change from", bir_dea_marr_est_start_year)
+  paste("% change from", dea_est_start_year)
 
 # Scotland
 data_table_deaths_sex_scotland <-
@@ -832,7 +832,7 @@ data_table_deaths_sex_scotland <-
                                              "Scotland") %>%
   select(Year, Perc)
 names(data_table_deaths_sex_scotland)[which(colnames(data_table_deaths_sex_scotland) == "Perc")] <-
-  paste("Scotland % change from", bir_dea_marr_est_start_year)
+  paste("Scotland % change from", dea_est_start_year)
 
 # Merge the two datasets
 data_table_deaths_sex <- merge(data_table_deaths_sex,
@@ -869,8 +869,8 @@ data_table_total_deaths_sex_comp_table <-
 data_table_total_deaths_sex_comp_table <-
   table_sex_by_year_perc_change_2_dataset(data_table_total_deaths_sex_comp_table,
                                           paramsarea,
-                                          start_year = bir_dea_marr_est_start_year,
-                                          end_year = bir_dea_marr_cp_est_end_year) %>%
+                                          start_year = dea_est_start_year,
+                                          end_year = dea_est_end_year) %>%
   rename(`% change` = Perc)
 
 # Scotland
@@ -880,8 +880,8 @@ data_table_total_deaths_sex_comp_table_scotland <-
 data_table_total_deaths_sex_comp_table_scotland <-
   table_sex_by_year_perc_change_2_dataset(data_table_total_deaths_sex_comp_table_scotland,
                                           "Scotland",
-                                          start_year = bir_dea_marr_est_start_year,
-                                          end_year = bir_dea_marr_cp_est_end_year) %>%
+                                          start_year = dea_est_start_year,
+                                          end_year = dea_est_end_year) %>%
   rename(`Scotland % change` = Perc) %>%
   select(Sex, `Scotland % change`)
 

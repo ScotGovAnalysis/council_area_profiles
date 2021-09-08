@@ -12,10 +12,21 @@ pop_est_end_year <- max(`population-estimates`[["Year"]])
 pop_proj_start_year <- min(`population-projections`[["Year"]])
 pop_proj_end_year <- min(`population-projections`[["Year"]]) + 10
 
-# Births, deaths, marriages and civil partnerships
-bir_dea_marr_est_start_year <- max(`standardised-birth-rates`[["Registration Year"]]) - 20
+# Births
+bir_est_start_year <- max(`standardised-birth-rates`[["Registration Year"]]) - 20
+bir_est_end_year <- max(`standardised-birth-rates`[["Registration Year"]])
+
+# Deaths
+dea_est_start_year <- max(`standardised-death-rates`[["Registration Year"]]) - 20
+dea_est_end_year <- max(`standardised-death-rates`[["Registration Year"]])
+
+# Marriages
+marr_est_start_year <- max(`marriages`[["Registration Year"]]) - 20
+marr_est_end_year <- max(`marriages`[["Registration Year"]])
+
+# Civil partnerships
 cp_start_year <- min(`civil-partnerships`[["Registration Year"]])
-bir_dea_marr_cp_est_end_year <- max(`standardised-birth-rates`[["Registration Year"]])
+cp_est_end_year <- max(`civil-partnerships`[["Registration Year"]])
 
 # Household estimates
 house_est_start_year <- min(`household-estimates`[["Year"]])
@@ -473,7 +484,7 @@ data_marr <- mutate(`marriages`,
 
 # Total marriages for each council area (and Scotland) for each year from start year to end year
 total_marr <- data_marr %>%
-  filter(Year >= bir_dea_marr_est_start_year) %>%
+  filter(Year >= marr_est_start_year) %>%
   group_by(Area, Year) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
@@ -491,10 +502,10 @@ total_marr_all_CA <- total_marr %>%
 # Rank the councils, 1=highest number of marriages. Define whether the change between end year and the 
 # previous year was a decrease, increase or equal.
 marr_end_year <- total_marr %>%
-  filter(Area != "Scotland", Year == bir_dea_marr_cp_est_end_year) %>%
+  filter(Area != "Scotland", Year == marr_est_end_year) %>%
   mutate(Rank = min_rank(desc(Number))) %>%
   mutate(Difference = Number -
-           total_marr$Number[total_marr$Year == (bir_dea_marr_cp_est_end_year - 1) &
+           total_marr$Number[total_marr$Year == (marr_est_end_year - 1) &
                                total_marr$Area != "Scotland"]) %>%
   mutate(Change_type = ifelse(Difference < 0,
                               "decrease",
@@ -534,10 +545,10 @@ total_cp_all_CA <- total_cp %>%
 # Rank the councils, 1=highest number of civil partnerships. 
 # Define whether the change between end year and the previous year was a decrease, increase or equal.
 cp_end_year <- total_cp %>%
-  filter(Area != "Scotland", Year == bir_dea_marr_cp_est_end_year) %>%
+  filter(Area != "Scotland", Year == cp_est_end_year) %>%
   mutate(Rank = min_rank(desc(Number))) %>%
   mutate(Difference = Number -
-           total_cp$Number[total_cp$Year == (bir_dea_marr_cp_est_end_year - 1) &
+           total_cp$Number[total_cp$Year == (cp_est_end_year - 1) &
                              total_cp$Area != "Scotland"]) %>%
   mutate(Change_type = ifelse(Difference < 0,
                               "decrease",
@@ -923,7 +934,7 @@ births_sex <- mutate(`births-by-sex`,
 
 # Total number of births for each council area (and Scotland) and for each year from start year to end year
 total_births <- births_sex %>%
-  filter(Sex == "All people", Year >= bir_dea_marr_est_start_year) %>%
+  filter(Sex == "All people", Year >= bir_est_start_year) %>%
   group_by(Area, Year) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
@@ -931,8 +942,8 @@ total_births <- births_sex %>%
 # Define a vector the same length as the number of rows of total_births Repeat the start year number of births
 # for each council area once for each year. e.g. repeat 20 times for a 20 year period between start and end year.
 base_births <- rep(filter(total_births, Year == min(Year))$Number,
-                  each = bir_dea_marr_cp_est_end_year -
-                    bir_dea_marr_est_start_year + 1)
+                  each = bir_est_end_year -
+                    bir_est_start_year + 1)
 
 # Use base_births to compute the percentage change from the start year for each council area for each year
 total_births <- mutate(total_births,
@@ -940,7 +951,7 @@ total_births <- mutate(total_births,
 
 # Births by sex for each year for all council areas (and Scotland)
 total_births_sex_all <- births_sex %>%
-  filter(Year >= bir_dea_marr_est_start_year) %>%
+  filter(Year >= bir_est_start_year) %>%
   group_by(Area, Year, Sex) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
@@ -970,7 +981,7 @@ births_mothers_age <- mutate(`births-by-age-of-mother`,
 total_births_mothers_age <- births_mothers_age %>%
   group_by(Area, Year, Age_group) %>%
   summarise(Number = sum(Number)) %>%
-  filter(Year %in% c(bir_dea_marr_est_start_year, bir_dea_marr_cp_est_end_year)) %>%
+  filter(Year %in% c(bir_est_start_year, bir_est_end_year)) %>%
   ungroup()
 
 # For use with % change year by age group bar plot.
@@ -982,9 +993,9 @@ total_births_mothers_age_perc_prelim <- total_births_mothers_age %>%
 
 # Compute % change between start and end year and state whether the change is positive, negative or equal.
 total_births_mothers_age_perc <- total_births_mothers_age_perc_prelim %>%
-  mutate(Perc = (total_births_mothers_age_perc_prelim[[as.character(bir_dea_marr_cp_est_end_year)]] -
-                   total_births_mothers_age_perc_prelim[[as.character(bir_dea_marr_est_start_year)]]) /
-           total_births_mothers_age_perc_prelim[[as.character(bir_dea_marr_est_start_year)]] * 100,
+  mutate(Perc = (total_births_mothers_age_perc_prelim[[as.character(bir_est_end_year)]] -
+                   total_births_mothers_age_perc_prelim[[as.character(bir_est_start_year)]]) /
+           total_births_mothers_age_perc_prelim[[as.character(bir_est_start_year)]] * 100,
          Sign = ifelse(Perc > 0,
                        "positive",
                        ifelse(Perc < 0,
@@ -1015,9 +1026,9 @@ total_births_mothers_age_perc_scotland_prelim <- total_births_mothers_age %>%
 
 # Compute % change between start and end year and state whether the change is positive, negative or equal.
 total_births_mothers_age_perc_scotland <- total_births_mothers_age_perc_scotland_prelim %>%
-  mutate(Perc = (total_births_mothers_age_perc_scotland_prelim[[as.character(bir_dea_marr_cp_est_end_year)]] -
-                   total_births_mothers_age_perc_scotland_prelim[[as.character(bir_dea_marr_est_start_year)]]) /
-           total_births_mothers_age_perc_scotland_prelim[[as.character(bir_dea_marr_est_start_year)]] * 100,
+  mutate(Perc = (total_births_mothers_age_perc_scotland_prelim[[as.character(bir_est_end_year)]] -
+                   total_births_mothers_age_perc_scotland_prelim[[as.character(bir_est_start_year)]]) /
+           total_births_mothers_age_perc_scotland_prelim[[as.character(bir_est_start_year)]] * 100,
          Sign = ifelse(Perc > 0,
                        "positive",
                        ifelse(Perc < 0,
@@ -1034,7 +1045,7 @@ births_rate <- mutate(`standardised-birth-rates`,
                      Area = `Council area`,
                      Year = `Registration Year`,
                      Number = `Standardised birth rate`) %>%
-  filter(Year >= bir_dea_marr_est_start_year) %>%
+  filter(Year >= bir_est_start_year) %>%
   group_by(Area, Year) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
@@ -1042,10 +1053,10 @@ births_rate <- mutate(`standardised-birth-rates`,
 # For use in R Markdown text. Rank the changes in birth rates, 1 = highest/largest change.
 # Define whether the change between end year and the previous year was a decrease, increase or equal.
 births_rate_end_year <- births_rate %>%
-  filter(Area != "Scotland", Year == bir_dea_marr_cp_est_end_year) %>%
+  filter(Area != "Scotland", Year == bir_est_end_year) %>%
   mutate(Rank = min_rank(desc(Number))) %>%
   mutate(Difference = Number -
-           births_rate$Number[births_rate$Year == (bir_dea_marr_cp_est_end_year - 1) &
+           births_rate$Number[births_rate$Year == (bir_est_end_year - 1) &
                                 births_rate$Area != "Scotland"]) %>%
   mutate(Change_type = ifelse(Difference < 0,
                               "decrease",
@@ -1065,13 +1076,13 @@ fert_rate <- mutate(`fertility-rates`,
                     Number = `Total fertility rate`) %>%
   mutate(Number = as.numeric(Number)) %>%
   select(Area, Year, Number) %>%
-  filter(Year >= bir_dea_marr_est_start_year)
+  filter(Year >= bir_est_start_year)
 
 # Define a vector the same length as the number of rows of fert_rate. Repeat the start year rate for each 
 # council area once for each year. e.g. repeat 20 times for a 20 year period between start and end year.
 base_fert_rate <- rep(filter(fert_rate, Year == min(Year))$Number,
-                      each = bir_dea_marr_cp_est_end_year -
-                        bir_dea_marr_est_start_year + 1)
+                      each = bir_est_end_year -
+                        bir_est_start_year + 1)
 
 # Use base_fert_rate to compute the percentage change from the start year for each council area for each year
 fert_rate <- mutate(fert_rate,
@@ -1080,10 +1091,10 @@ fert_rate <- mutate(fert_rate,
 # For use in R Markdown text. Rank the changes in fertility rates, 1 = highest/largest change.
 # Define whether the change between end year and the previous year was a decrease, increase or equal.
 fert_rate_end_year <- fert_rate %>%
-  filter(Area != "Scotland", Year == bir_dea_marr_cp_est_end_year) %>%
+  filter(Area != "Scotland", Year == bir_est_end_year) %>%
   mutate(Rank = min_rank(desc(Number))) %>%
   mutate(Difference = Number -
-           fert_rate$Number[fert_rate$Year == (bir_dea_marr_cp_est_end_year - 1) &
+           fert_rate$Number[fert_rate$Year == (bir_est_end_year - 1) &
                               fert_rate$Area != "Scotland"]) %>%
   mutate(Change_type = ifelse(Difference < 0,
                               "decrease",
@@ -1107,7 +1118,7 @@ deaths_sex <-
 # Total number of deaths for all council areas (and Scotland) for each year from start year to end year
 total_deaths <- deaths_sex %>%
   filter(Sex == "All people",
-         Year >= bir_dea_marr_est_start_year) %>%
+         Year >= dea_est_start_year) %>%
   group_by(Area, Year) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
@@ -1115,8 +1126,8 @@ total_deaths <- deaths_sex %>%
 # Define a vector the same length as the number of rows of total_deaths. Repeat the start year total for each 
 # council area once for each year. e.g. repeat 20 times for a 20 year period between start and end year.
 base_deaths <- rep(filter(total_deaths, Year == min(Year))$Number,
-                  each = bir_dea_marr_cp_est_end_year -
-                    bir_dea_marr_est_start_year + 1)
+                  each = dea_est_end_year -
+                    dea_est_start_year + 1)
 
 # Use base_deaths to compute the percentage change from the start year for each council area for each year
 total_deaths <- mutate(total_deaths,
@@ -1124,7 +1135,7 @@ total_deaths <- mutate(total_deaths,
 
 # Deaths by sex for each council area (and Scotland) for each year from start year to end year
 total_deaths_sex_all <- deaths_sex %>%
-  filter(Year >= bir_dea_marr_est_start_year) %>%
+  filter(Year >= dea_est_start_year) %>%
   group_by(Area, Year, Sex) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
@@ -1138,7 +1149,7 @@ total_deaths_sex <- total_deaths_sex_all %>%
 total_deaths_sex_comp_table <- deaths_sex %>%
   group_by(Area, Year, Sex) %>%
   summarise(Number = sum(Number)) %>%
-  filter(Year %in% c(bir_dea_marr_est_start_year, bir_dea_marr_cp_est_end_year),
+  filter(Year %in% c(dea_est_start_year, dea_est_end_year),
          Sex != "All people") %>%
   ungroup()
 
@@ -1154,9 +1165,9 @@ total_deaths_sex_perc <- total_deaths_sex_comp %>%
 
 # Compute % change between start and end year and state whether the change is positive, negative or equal.
 total_deaths_sex_perc <- total_deaths_sex_perc %>%
-  mutate(Perc = (total_deaths_sex_perc[[as.character(bir_dea_marr_cp_est_end_year)]] -
-                   total_deaths_sex_perc[[as.character(bir_dea_marr_est_start_year)]]) /
-           total_deaths_sex_perc[[as.character(bir_dea_marr_est_start_year)]] * 100,
+  mutate(Perc = (total_deaths_sex_perc[[as.character(dea_est_end_year)]] -
+                   total_deaths_sex_perc[[as.character(dea_est_start_year)]]) /
+           total_deaths_sex_perc[[as.character(dea_est_start_year)]] * 100,
          Sign = ifelse(Perc > 0, "positive", ifelse(Perc < 0, "negative", "equal")))
 
 
@@ -1168,9 +1179,9 @@ total_deaths_sex_perc_scotland <- total_deaths_sex_comp_table %>%
 
 # Compute % change between start and end year and state whether the change is positive, negative or equal.
 total_deaths_sex_perc_scotland <- total_deaths_sex_perc_scotland %>%
-  mutate(Perc = (total_deaths_sex_perc_scotland[[as.character(bir_dea_marr_cp_est_end_year)]] -
-                   total_deaths_sex_perc_scotland[[as.character(bir_dea_marr_est_start_year)]]) /
-           total_deaths_sex_perc_scotland[[as.character(bir_dea_marr_est_start_year)]] * 100,
+  mutate(Perc = (total_deaths_sex_perc_scotland[[as.character(dea_est_end_year)]] -
+                   total_deaths_sex_perc_scotland[[as.character(dea_est_start_year)]]) /
+           total_deaths_sex_perc_scotland[[as.character(dea_est_start_year)]] * 100,
          Sign = ifelse(Perc > 0,
                        "positive",
                        ifelse(Perc < 0,
@@ -1203,7 +1214,7 @@ deaths_age_sex <-
 
 # Total deaths by sex (not total "All people") by age group for each council area and Scotland
 total_deaths_age_sex_comp <- deaths_age_sex %>%
-  filter(Year == bir_dea_marr_cp_est_end_year) %>%
+  filter(Year == dea_est_end_year) %>%
   group_by(Area, Sex, Age_group) %>%
   summarise(Number = sum(Number)) %>%
   filter(Sex != "All people",
@@ -1240,7 +1251,7 @@ deaths_rate <- mutate(`standardised-death-rates`,
                       Area = `Council area`,
                       Year = `Registration Year`,
                       Number = `Standardised death rate`) %>%
-  filter(Year >= bir_dea_marr_est_start_year) %>%
+  filter(Year >= dea_est_start_year) %>%
   group_by(Area, Year) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
@@ -1248,10 +1259,10 @@ deaths_rate <- mutate(`standardised-death-rates`,
 # For use in R Markdown text. Rank the changes in death rates, 1 = highest/largest change.
 # Define whether the change between end year and the previous year was a decrease, increase or equal.
 deaths_rate_end_year <- deaths_rate %>%
-  filter(Area != "Scotland", Year == bir_dea_marr_cp_est_end_year) %>%
+  filter(Area != "Scotland", Year == dea_est_end_year) %>%
   mutate(Rank = min_rank(desc(Number))) %>%
   mutate(Difference = Number -
-           deaths_rate$Number[deaths_rate$Year == (bir_dea_marr_cp_est_end_year - 1) &
+           deaths_rate$Number[deaths_rate$Year == (dea_est_end_year - 1) &
                                 deaths_rate$Area != "Scotland"]) %>%
   mutate(Change_type = ifelse(Difference < 0,
                               "decrease",

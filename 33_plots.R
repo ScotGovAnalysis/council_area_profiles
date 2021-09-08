@@ -1232,8 +1232,8 @@ p_marr_one_CA <- plot_one_CA_num(
   dataset = total_marr_CA,
   col = mar,
   title = paramsarea,
-  subtitle = paste0("Number of marriages, ", bir_dea_marr_est_start_year,
-                    "-", bir_dea_marr_cp_est_end_year))
+  subtitle = paste0("Number of marriages, ", marr_est_start_year,
+                    "-", marr_est_end_year))
 
 
 p_cp_one_CA <- plot_one_CA_num(
@@ -1241,9 +1241,9 @@ p_cp_one_CA <- plot_one_CA_num(
   col = mar,
   title = paramsarea,
   subtitle = paste0("Number of civil partnerships, ", cp_start_year,
-                    "-", bir_dea_marr_cp_est_end_year)) +
+                    "-", cp_est_end_year)) +
   scale_x_continuous(
-    breaks = seq(cp_start_year, bir_dea_marr_cp_est_end_year))
+    breaks = seq(cp_start_year, cp_est_end_year))
 
 
 p_house_proj_one_CA <- plot_one_CA_num(
@@ -1262,15 +1262,15 @@ p_births_sex <- plot_one_CA_sex(
   dataset = total_births_sex,
   col = bir,
   title = paramsarea,
-  subtitle = paste0("Births by sex, ", bir_dea_marr_est_start_year,
-                    "-", bir_dea_marr_cp_est_end_year))
+  subtitle = paste0("Births by sex, ", bir_est_start_year,
+                    "-", bir_est_end_year))
 
 p_deaths_sex <- plot_one_CA_sex(
   dataset = total_deaths_sex,
   col = dea,
   title = paramsarea,
-  subtitle = paste0("Deaths by sex, ", bir_dea_marr_est_start_year,
-                    "-", bir_dea_marr_cp_est_end_year))
+  subtitle = paste0("Deaths by sex, ", dea_est_start_year,
+                    "-", dea_est_end_year))
 
 
 
@@ -1309,8 +1309,8 @@ p_marr_num <- plot_all_CA_num(
   dataset = total_marr_all_CA,
   col = mar,
   title = "Council areas of Scotland",
-  subtitle = paste0("Number of marriages, ", bir_dea_marr_est_start_year,
-                    "-", bir_dea_marr_cp_est_end_year))
+  subtitle = paste0("Number of marriages, ", marr_est_start_year,
+                    "-", marr_est_end_year))
 
 
 p_cp_num <- plot_all_CA_num(
@@ -1318,7 +1318,7 @@ p_cp_num <- plot_all_CA_num(
   col = mar,
   title = "Council areas of Scotland",
   subtitle = paste0("Number of civil partnerships, ", cp_start_year,
-                    "-", bir_dea_marr_cp_est_end_year))
+                    "-", cp_est_end_year))
 
 
 p_house_est_num <- plot_all_CA_num(
@@ -1386,8 +1386,8 @@ p_births_fert_rate <- plot_all_CA_rate(
   col = bir,
   title = "Council areas of Scotland",
   subtitle = paste0("Approximate total fertility rates (1), ",
-                    bir_dea_marr_est_start_year, "-",
-                    bir_dea_marr_cp_est_end_year),
+                    bir_est_start_year, "-",
+                    bir_est_end_year),
   num_digits = 2) +
   labs(caption = "(1) The approximate total fertility rate is defined to be the average number of children (per woman) that would \n be born to a cohort of women if they experienced, throughout their childbearing years, the age-specific fertility \n rates of the year in question. These rates are approximate because they were calculated using fertility rates \n for 5-year age-groups rather than for individual years of age.")
 
@@ -1397,8 +1397,8 @@ p_births_rate <- plot_all_CA_rate(
   col = bir,
   title = "Council areas of Scotland",
   subtitle = paste0("Standardised birth rates (1), ",
-                    bir_dea_marr_est_start_year, "-",
-                    bir_dea_marr_cp_est_end_year),
+                    bir_est_start_year, "-",
+                    bir_est_end_year),
   num_digits = 1) +
   labs(caption = "(1) Births per 1,000 population - 'standardised' using the age/sex-specific rates for Scotland as a whole.")
 
@@ -1408,8 +1408,8 @@ p_deaths_rate <- plot_all_CA_rate(
   col = dea,
   title = "Council areas of Scotland",
   subtitle = paste0("Standardised death rates (1), ",
-                    bir_dea_marr_est_start_year, "-",
-                    bir_dea_marr_cp_est_end_year),
+                    dea_est_start_year, "-",
+                    dea_est_end_year),
   num_digits = 1) +
   labs(caption = "(1) Deaths per 1,000 population - 'standardised' using the age/sex-specific rates for Scotland as a whole.")
 
@@ -1529,8 +1529,8 @@ p_births_perc <- plot_all_CA_perc(
   col = bir,
   title = "Council areas of Scotland",
   subtitle = paste0("Percentage change in the number of births, ",
-                    bir_dea_marr_est_start_year, "-",
-                    bir_dea_marr_cp_est_end_year),
+                    bir_est_start_year, "-",
+                    bir_est_end_year),
   neg_poss = TRUE)
 
 
@@ -1539,8 +1539,8 @@ p_deaths_perc <- plot_all_CA_perc(
   col = dea,
   title = "Council areas of Scotland",
   subtitle = paste0("Percentage change in the number of deaths by sex, ",
-                    bir_dea_marr_est_start_year, "-",
-                    bir_dea_marr_cp_est_end_year),
+                    bir_est_start_year, "-",
+                    bir_est_end_year),
   neg_poss = TRUE)
 
 
@@ -1642,7 +1642,7 @@ p_deaths_cause_f <- plot_horizontal_bar(
   col = dea,
   title = paramsarea,
   subtitle = paste0("Female leading causes of death, ",
-                    bir_dea_marr_cp_est_end_year, "\n\n",
+                    dea_est_end_year, "\n\n",
                     abs_comma(deaths_cause_f$Total[1]), " female deaths")) +
   labs(x = NULL, y = NULL)
 
@@ -1652,7 +1652,7 @@ p_deaths_cause_m <- plot_horizontal_bar(
   col = dea,
   title = paramsarea,
   subtitle = paste0("Male leading causes of death, ",
-                    bir_dea_marr_cp_est_end_year, "\n\n",
+                    dea_est_end_year, "\n\n",
                     abs_comma(deaths_cause_m$Total[1]), " male deaths")) +
   labs(x = NULL, y = NULL)
 
@@ -1713,8 +1713,8 @@ p_births_mothers_age <- plot_bar_age_sex(
   col2 = grey,
   title = paramsarea,
   subtitle = paste0("Births by age group of mother, ",
-                    bir_dea_marr_est_start_year, " and ",
-                    bir_dea_marr_cp_est_end_year)) +
+                    bir_est_start_year, " and ",
+                    bir_est_end_year)) +
   xlab("Age group of mother")
 
 
@@ -1747,7 +1747,7 @@ p_deaths_age_sex <- plot_bar_age_sex_legend(
   col = dea,
   title = paramsarea,
   subtitle = paste0("Deaths by age group by sex, ",
-                    bir_dea_marr_cp_est_end_year)) +
+                    dea_est_end_year)) +
   xlab("Age group") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 5))
 
@@ -1762,8 +1762,8 @@ p_deaths_sex_comp <- plot_bar_sex(
   col1 = dea,
   col2 = grey,
   title = paramsarea,
-  subtitle = paste0("Deaths by sex by year, ", bir_dea_marr_est_start_year,
-                    " and ", bir_dea_marr_cp_est_end_year))
+  subtitle = paste0("Deaths by sex by year, ", dea_est_start_year,
+                    " and ", dea_est_end_year))
 
 
 
@@ -1796,8 +1796,8 @@ p_births_mothers_age_perc <- plot_bar_age_perc(
   col = bir,
   title = paramsarea,
   subtitle = paste0("Percentage change in the number of births by age group of mother, ",
-                    bir_dea_marr_est_start_year, " and ",
-                    bir_dea_marr_cp_est_end_year)) +
+                    bir_est_start_year, " and ",
+                    bir_est_end_year)) +
   labs(x = "Age group of mother")
 
 
@@ -1807,8 +1807,8 @@ p_deaths_sex_perc <- plot_bar_age_perc(
   col = dea,
   title = paramsarea,
   subtitle = paste0("Percentage change in the number of deaths by sex, ",
-                    bir_dea_marr_est_start_year, " and ",
-                    bir_dea_marr_cp_est_end_year)) +
+                    dea_est_start_year, " and ",
+                    dea_est_end_year)) +
   labs(x = "Sex")
 
 
