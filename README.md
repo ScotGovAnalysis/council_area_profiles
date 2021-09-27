@@ -33,6 +33,14 @@ council area.
 11. **After publication** upload changes to GitHub
 12. Delete old local copies of the code
 
+## Who owns each tab
+The household branch is responsible for:
+- Household estimates
+- Household projections
+- Dwellings
+- Dwellings by type
+- Dwellings by council tax band
+
 ## Room for improvement
 
 In rough order of importance/urgency:
