@@ -34,12 +34,28 @@ council area.
 12. Delete old local copies of the code
 
 ## Who owns each tab
-The household branch is responsible for:
+Household Estimates and Projections:
 - Household estimates
 - Household projections
 - Dwellings
 - Dwellings by type
 - Dwellings by council tax band
+
+Vital Events:
+- Births by sex
+- Standardised birth rates
+- Births by age of mother
+- Fertility rates
+- Deaths by sex
+- Standardised death rates
+- Deaths by sex by age
+- Leading causes of death
+- Life expectancy
+- Marriages
+- Civil partnerships
+
+Population and Migration Statistics:
+- All other tabs
 
 ## Room for improvement
 
