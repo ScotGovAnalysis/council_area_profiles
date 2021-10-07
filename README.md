@@ -55,7 +55,12 @@ Vital Events:
 - Civil partnerships
 
 Population and Migration Statistics:
-- All other tabs
+- Population estimates
+- Population projections
+- Nature of population change
+- Migration
+- Net Migration
+- Met migration rates
 
 ## Room for improvement
 
