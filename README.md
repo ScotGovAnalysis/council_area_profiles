@@ -33,6 +33,20 @@ council area.
 11. **After publication** upload changes to GitHub
 12. Delete old local copies of the code
 
+## Roles and responsibilities
+Branches:
+- Provide updated data up to 1 week after any relevant publications
+- Let central team know when data has been updated
+- Check all content in HTML files is correct (including: data, links, text, next update estimates)
+- Correct any issues flagged by the QA scripts. This includes minor issues like "and" vs "&" to retain data provenance.
+
+Statistical Promotion and Analysis:
+- Run code and share with branches for QA within 1 week of branches updating any datasets
+- Make any changes required by branches and provide web team with HTML files
+
+Statistics Dissemination:
+- Upload HTML files within 1 week of them being available
+
 ## Who owns each tab
 Household Estimates and Projections:
 - Household estimates
