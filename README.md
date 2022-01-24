@@ -91,6 +91,7 @@ In rough order of importance/urgency:
       - This may be because some datasets are very large
       - A solution could be to create aggregate versions of a single
         dataset
+  - Automate horizontal axis labels so the final label is for the final datapoint (same for the first)
   - Improve/shorten variable names
   - Improve comments (e.g. **why** not **what**)
   - Nest/tidy datasets so the environment is more managable
