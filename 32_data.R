@@ -1,7 +1,7 @@
 # Define paramsarea ======================================================================
 
 paramsarea <- params$area
-#paramsarea <- "City of Edinburgh"
+#paramsarea <- "West Lothian"
 # Start and end years for each chapter
 
 # Population estimates
@@ -14,8 +14,9 @@ pop_proj_end_year <- min(`population-projections`[["Year"]]) + 10
 
 # Births, deaths, marriages and civil partnerships
 bir_dea_marr_est_start_year <- max(`standardised-birth-rates`[["Registration Year"]]) - 20
-cp_start_year <- min(`civil-partnerships`[["Registration Year"]])
 bir_dea_marr_cp_est_end_year <- max(`standardised-birth-rates`[["Registration Year"]])
+cp_start_year <- min(`civil-partnerships`[["Registration Year"]])
+cp_end_yr <- max(`civil-partnerships`[["Registration Year"]])
 
 # Household estimates
 house_est_start_year <- min(`household-estimates`[["Year"]])
@@ -24,6 +25,7 @@ house_est_end_year <- max(`household-estimates`[["Year"]])
 # Dwellings estimates
 dwell_est_start_year <- min(`dwellings`[["Year"]])
 dwell_est_end_year <- max(`dwellings`[["Year"]])
+dwell_type_end_year <- max(`dwellings-by-type`[["Year"]])
 
 # Household projections
 house_proj_start_year <- min(`household-projections`[["Year"]])
@@ -157,7 +159,9 @@ total_pop_est_age_sex_prelim <- pop_est %>%
 
 # Population estimates for paramsarea only and for end year only, by age group by sex
 total_pop_est_age_sex <- total_pop_est_age_sex_prelim %>%
-  filter(Year == pop_est_end_year, Area == paramsarea)
+  filter(Year == pop_est_end_year, 
+         Area == paramsarea
+         )
 
 # For use with automated text. 
 # For each age group, is female population larger than male population?
@@ -511,19 +515,19 @@ data_cp <- mutate(`civil-partnerships`,
                   Area = `Council area`,
                   Year = `Registration Year`,
                   Number = `Number of civil partnerships`) %>%
-  mutate(Sex = factor(Sex, levels = c("Male", "Female", "All"))) %>%
+  mutate(Sex = factor(Sex, levels = c("Male", "Female", "All", "Mixed-sex", "Same-sex"))) %>%
   arrange(Sex)
 
 # Total civil partnerships for each council area (and Scotland) for each year from start year to end year
 total_cp <- data_cp %>%
-  filter(Sex != "All") %>%
+  filter(Sex == "All") %>%
   group_by(Area, Year) %>%
   summarise(Number = sum(Number)) %>%
   ungroup()
- 
+
 # Total civil partnerships for paramsarea only for each year from start year to end year
 total_cp_CA <- total_cp %>%
-  filter(Area == paramsarea)
+  filter(Area == paramsarea) 
 
 # Total civil partnerships for each council area (but not Scotland) for each year from start year to end year
 total_cp_all_CA <- total_cp %>%
@@ -534,16 +538,16 @@ total_cp_all_CA <- total_cp %>%
 # Rank the councils, 1=highest number of civil partnerships. 
 # Define whether the change between end year and the previous year was a decrease, increase or equal.
 cp_end_year <- total_cp %>%
-  filter(Area != "Scotland", Year == bir_dea_marr_cp_est_end_year) %>%
+  filter(Area != "Scotland", Year == cp_end_yr) %>%
   mutate(Rank = min_rank(desc(Number))) %>%
   mutate(Difference = Number -
-           total_cp$Number[total_cp$Year == (bir_dea_marr_cp_est_end_year - 1) &
+           total_cp$Number[total_cp$Year == (cp_end_yr - 1) &
                              total_cp$Area != "Scotland"]) %>%
   mutate(Change_type = ifelse(Difference < 0,
                               "decrease",
                               ifelse(Difference > 0,
                                      "increase",
-                                     "equal"))) #%>%
+                                     "equal")))
 
 # Total civil partnerships for each council area (and Scotland) for each year from start year to end year,
 # broken down by sex
@@ -1272,7 +1276,7 @@ deaths_cause <- mutate(`leading-causes-of-death`, Area = `Council area`, Total =
 
 # Leading causes of death for females for each council area and Scotland, arranged in descending order
 deaths_cause_f_comp <- deaths_cause %>%
-  filter(Sex == "Female") %>%
+  filter(Sex == "Females") %>%
   arrange(Area, -Number)
 
 # Leading causes of death for females for paramsarea only, arranged in descending order
@@ -1282,7 +1286,7 @@ deaths_cause_f <- deaths_cause_f_comp %>%
 
 # Leading causes of death for males for each council area and Scotland, arranged in descending order
 deaths_cause_m_comp <- deaths_cause %>%
-  filter(Sex == "Male") %>%
+  filter(Sex == "Males") %>%
   arrange(Area, -Number)
 
 # Leading causes of death for males for paramsarea only, arranged in descending order
@@ -1450,3 +1454,4 @@ life_exp_at_65_m_end_year <- life_exp_at_65_m %>%
 life_exp_at_65_comp <- life_exp_at_65 %>%
   filter(Area %in% c(paramsarea, "Scotland")) %>%
   spread(key = Type, value = Number)
+

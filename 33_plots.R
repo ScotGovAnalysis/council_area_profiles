@@ -363,7 +363,7 @@ plot_all_CA_num <- function(dataset, col, title, subtitle){
       name = "",
       labels = scales::comma) +
     scale_x_continuous(
-      breaks = seq(min(dataset$Year), max(dataset$Year), 5),
+      breaks = seq(min(dataset$Year), max(dataset$Year), by = 5),
       limits = c(min(dataset$Year), max(dataset$Year) +
                    0.31 * (max(dataset$Year) - min(dataset$Year)))) +
     theme_classic() +
@@ -1194,7 +1194,8 @@ p_pop_est_one_CA <- plot_one_CA_num(
   col = pop,
   title = paramsarea,
   subtitle = paste0("Total population, ", pop_est_start_year,
-                    "-", pop_est_end_year))
+                    "-", pop_est_end_year)) +
+  labs(x = "Year to 30 June")
 
 
 p_pop_proj_one_CA <- plot_one_CA_num(
@@ -1241,9 +1242,7 @@ p_cp_one_CA <- plot_one_CA_num(
   col = mar,
   title = paramsarea,
   subtitle = paste0("Number of civil partnerships, ", cp_start_year,
-                    "-", bir_dea_marr_cp_est_end_year)) +
-  scale_x_continuous(
-    breaks = seq(cp_start_year, bir_dea_marr_cp_est_end_year))
+                    "-", cp_end_yr)) 
 
 
 p_house_proj_one_CA <- plot_one_CA_num(
@@ -1284,8 +1283,6 @@ p_mig_type <- plot_one_CA_type(
   subtitle = paste0("Total in and out migration, ", mig_start_year,
                     " to ", mig_end_year, "*"))
 
-
-
 # All plots using function plot_all_CA_num ====================================
 
 
@@ -1294,7 +1291,8 @@ p_pop_est <- plot_all_CA_num(
   col = pop,
   title = "Council areas of Scotland",
   subtitle = paste0("Total population, ", pop_est_start_year,
-                    "-", pop_est_end_year))
+                    "-", pop_est_end_year)) +
+  labs(x = "Year to 30 June")
 
 
 p_pop_proj <- plot_all_CA_num(
@@ -1318,7 +1316,7 @@ p_cp_num <- plot_all_CA_num(
   col = mar,
   title = "Council areas of Scotland",
   subtitle = paste0("Number of civil partnerships, ", cp_start_year,
-                    "-", bir_dea_marr_cp_est_end_year))
+                    "-", cp_end_yr))
 
 
 p_house_est_num <- plot_all_CA_num(
@@ -1473,7 +1471,8 @@ p_pop_est_perc <- plot_all_CA_perc(
   title = "Council areas of Scotland",
   subtitle = paste0("Percentage change in population, ", pop_est_start_year,
                     "-", pop_est_end_year),
-  neg_poss = TRUE)
+  neg_poss = TRUE) +
+  labs(x = "Year to 30 June")
 
 
 p_pop_proj_perc <- plot_all_CA_perc(

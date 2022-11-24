@@ -1768,7 +1768,7 @@ p_marr_num
 
 <br>
 
-### `r bir_dea_marr_cp_est_end_year` Civil Partnerships by Council Area in Scotland
+### `r cp_end_yr` Civil Partnerships by Council Area in Scotland
 
 <br>
 <a name="cp_plots1"></a>
@@ -1778,19 +1778,19 @@ p_marr_num
 
 ``` {r cp_text1, echo=FALSE}
 
-current_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == bir_dea_marr_cp_est_end_year]
+current_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == cp_end_yr]
 
-previous_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_cp <- total_cp$Number[total_cp$Area == paramsarea & total_cp$Year == cp_end_yr - 1]
 
 cp_perc <- (current_cp - previous_cp)/previous_cp*100
 
-cp_f <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == bir_dea_marr_cp_est_end_year & data_cp_gender$Sex == "Female"]
+cp_f <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == cp_end_yr & data_cp_gender$Sex == "Mixed-sex"]
 
-cp_m <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == bir_dea_marr_cp_est_end_year & data_cp_gender$Sex == "Male"]
+cp_m <- data_cp_gender$Number[data_cp_gender$Area == paramsarea & data_cp_gender$Year == cp_end_yr & data_cp_gender$Sex == "Same-sex"]
 
-current_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == bir_dea_marr_cp_est_end_year]
+current_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == cp_end_yr]
 
-previous_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == bir_dea_marr_cp_est_end_year - 1]
+previous_cp_scotland <- total_cp$Number[total_cp$Area == "Scotland" & total_cp$Year == cp_end_yr - 1]
 
 cp_perc_scotland <- (current_cp_scotland - previous_cp_scotland)/previous_cp_scotland*100
 
@@ -1805,13 +1805,16 @@ num_cp_equal <- nrow(cp_end_year[cp_end_year$Change_type=="equal",])
 
 ```
 
-In 
-`r bir_dea_marr_cp_est_end_year`, 
-`r ifelse(current_cp == 1, paste0(format(current_cp, big.mark = ",")," civil partnership was registered in ", paramsarea,","), ifelse(current_cp == 0, paste0("no civil partnerships were registered in ", paramsarea,"."), paste0(format(current_cp, big.mark = ",")," civil partnerships were registered in ", paramsarea,",")))`
-`r ifelse(cp_f != 1 & current_cp != 0, paste0("of which ", format(cp_f, big.mark = ","), " were female and "), ifelse(cp_f == 1, paste0("of which ", format(cp_f, big.mark = ","), " was female and "), ""))` `r ifelse(cp_m != 1 & current_cp != 0, paste0(format(cp_m, big.mark = ","), " were male."), ifelse(cp_m == 1, paste0(format(cp_m, big.mark = ","), " was male."), ""))` In Scotland overall, 
+In Scotland overall, 
 `r ifelse(current_cp_scotland == 1, paste0("there was ",current_cp_scotland," civil partnership"), ifelse(current_cp_scotland == 0, paste0("there were no civil partnerships"), paste0("there were ", current_cp_scotland," civil partnerships")))` in 
-`r bir_dea_marr_cp_est_end_year`, which is
-`r ifelse(cp_perc_scotland < 0, paste0("a decrease of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",bir_dea_marr_cp_est_end_year-1), ifelse(cp_perc_scotland > 0, paste0("an increase of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",bir_dea_marr_cp_est_end_year-1), paste0("the same as the number in ",bir_dea_marr_cp_est_end_year-1)))`.
+`r cp_end_yr`, which is
+`r ifelse(cp_perc_scotland < 0, paste0("a decrease of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",cp_end_yr-1), ifelse(cp_perc_scotland > 0, paste0("an increase of ",formatC(round(abs(cp_perc_scotland), 1), format = "f", digits = 1),"% from ",cp_end_yr-1), paste0("the same as the number in ",cp_end_yr-1)))`.
+
+Since June 2021 mixed-sex couples have been able to form a civil partnership.
+In 
+`r cp_end_yr`, 
+`r ifelse(current_cp == 1, paste0(format(current_cp, big.mark = ",")," civil partnership was registered in ", paramsarea,","), ifelse(current_cp == 0, paste0("no civil partnerships were registered in ", paramsarea,"."), paste0(format(current_cp, big.mark = ",")," civil partnerships were registered in ", paramsarea,",")))`
+`r ifelse(cp_f != 1 & current_cp != 0, paste0("of which ", format(cp_f, big.mark = ","), " were mixed-sex and "), ifelse(cp_f == 1, paste0("of which ", format(cp_f, big.mark = ","), " was mixed-sex and "), ""))` `r ifelse(cp_m != 1 & current_cp != 0, paste0(format(cp_m, big.mark = ","), " were same-sex."), ifelse(cp_m == 1, paste0(format(cp_m, big.mark = ","), " was same-sex."), ""))` 
 <br>
 
 View [Source Table](#table_cp)
@@ -1837,9 +1840,9 @@ p_cp_one_CA
 
 `r paramsarea` had the 
 `r ifelse(length(cp_end_year$Rank[cp_end_year$Rank==cp_rank_ca]) > 1, paste0("joint ",cp_rank_text), paste0(cp_rank_text))` number of civil partnership registrations in 
-`r bir_dea_marr_cp_est_end_year`, out of the 32 council areas in Scotland. Between 
-`r bir_dea_marr_cp_est_end_year - 1` and 
-`r bir_dea_marr_cp_est_end_year`, 
+`r cp_end_yr`, out of the 32 council areas in Scotland. Between 
+`r cp_end_yr - 1` and 
+`r cp_end_yr`, 
 `r ifelse(num_cp_decrease == 32, paste0("all councils saw a decrease in civil partnership registrations"), ifelse(num_cp_increase == 32, paste0("all councils saw an increase in civil partnership registrations"), ifelse(num_cp_decrease == 1 & num_cp_increase == 1, paste0(num_cp_decrease," council saw a decrease in civil partnership registrations and ",num_cp_increase, " council saw an increase"), ifelse(num_cp_increase == 1 & num_cp_decrease != 1, paste0(num_cp_decrease," councils saw a decrease in civil partnership registrations and ",num_cp_increase, " council saw an increase"), ifelse(num_cp_increase != 1 & num_cp_decrease == 1, paste0(num_cp_decrease," council saw a decrease in civil partnership registrations and ",num_cp_increase, " councils saw an increase"), paste0(num_cp_decrease," councils saw a decrease in civil partnership registrations and ",num_cp_increase," councils saw an increase"))))))`.
 `r ifelse(num_cp_equal == 1, paste0("There was ",num_cp_equal," council that saw no change."), ifelse(num_cp_equal > 1, paste0("There were ",num_cp_equal," councils that saw no change."), ""))`
 <br>
@@ -2976,7 +2979,7 @@ table_marr
 
 <a name="table_cp"></a>
 
-#### Total civil partnerships, `r paramsarea`, `r cp_start_year`-`r bir_dea_marr_cp_est_end_year`
+#### Total civil partnerships, `r paramsarea`, `r cp_start_year`-`r cp_end_yr`
 
 View [Chart](#cp_plots1)
 
@@ -3122,10 +3125,10 @@ table_dwell_tax_grouped
 
 <a name="table_dwell_type"></a>
 
-#### Dwellings by type, `r paramsarea`, `r dwell_est_end_year`
+#### Dwellings by type, `r paramsarea`, `r dwell_type_end_year`
 
-View [Chart](#dwell_num_plots5)
-
+<!-- View [Chart](#dwell_num_plots5) --> 
+<!-- There doesn't seem to be a chart any more so commented this shortcut out.  -->
 ```{r table_dwell_type, echo=FALSE, warning = FALSE}
 
 table_dwell_type

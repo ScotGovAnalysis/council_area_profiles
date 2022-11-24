@@ -8,10 +8,39 @@ source("23_check_expectations.R")
 
 # Knit HTML documents =========================================================
 Area <- c(
-  # "Aberdeen City",
-  "Aberdeenshire",
-  "Angus"
-  )
+ "Aberdeen City",
+ "Aberdeenshire",
+ "Angus",
+ "Argyll and Bute",
+ "City of Edinburgh",
+ "Clackmannanshire",
+ "Dumfries and Galloway",
+ "Dundee City",
+ "East Ayrshire",
+ "East Dunbartonshire",
+ "East Lothian",
+ "East Renfrewshire",
+ "Falkirk",
+ "Fife",
+ "Glasgow City",
+ "Highland",
+ "Inverclyde",
+ "Midlothian",
+ "Moray",
+ "Na h-Eileanan Siar",
+ "North Ayrshire",
+ "North Lanarkshire",
+ "Orkney Islands",
+ "Perth and Kinross",
+ "Renfrewshire",
+ "Scottish Borders",
+ "Shetland Islands",
+ "South Ayrshire",
+ "South Lanarkshire",
+ "Stirling",
+ "West Dunbartonshire",
+ "West Lothian"
+)
 
 pb <- txtProgressBar(min = 0, max = length(Area), initial = 0, style = 3)
 
