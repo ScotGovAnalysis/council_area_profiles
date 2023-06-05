@@ -12,6 +12,12 @@ raw_data <- path %>%
 
 list2env(raw_data, globalenv())
 
+# WTF is this doing?
 updates %>%
   as.list() %>%
   list2env(globalenv())
+# It's a shortcut to get the elements in the 
+# updates list, which sits inside raw_data, to the top level
+# of the global env so that in the Rmd file
+# they don't have to have the prefix "data$"
+# this is super hacky and shouldn't be done
