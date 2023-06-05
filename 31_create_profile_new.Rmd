@@ -8,14 +8,15 @@ output:
     self_contained: yes
 params: 
   area: " "
-  data: NULL
 ---
 
 ```{r setup, echo=FALSE, include=FALSE, warning = FALSE}
 
+CA_data = read_rds(paste0("temp/",params$area,".rds"))
 
+list2env(CA_data, envir = environment())
 
-list2env(params$data, envir = environment())
+rm(CA_data)
 # Updates needed:
 # - Chapter start and end years
 # - Last and next chapter update
