@@ -16,6 +16,7 @@ st = Sys.time()
 
 source("functions folder/source functions.R")
 
+
 raw_data = read_CA_data("data/council-area-profiles-dataset.xlsx")
 
 expectations = set_expectations()
@@ -70,17 +71,14 @@ n_cores = detectCores()
 # create a compute cluster with this resource
 cl = makeCluster(n_cores)
 
-# export all the functions and data to distribute across the 
+# export the data to distribute across the 
 # cluster nodes
-clusterExport(cl, varlist = c("produce_CA_data", 
-                              "produce_CA_plots", 
-                              "produce_CA_tables",
-                              "produce_CA_text",
-                              "raw_data"
-                              ))
+clusterExport(cl, varlist = c("raw_data"))
+
+
 # call any specific R commands across the nodes
-# here we call libraries to make sure the nodes can access tidyverse functions
 clusterCall(cl, fun = function(){
+  # here we call libraries to make sure the nodes can access tidyverse functions
   library(tidyverse)
   # Plot
   library(ggplot2)
@@ -95,22 +93,24 @@ clusterCall(cl, fun = function(){
   
   # Text
   library(glue)
+  
   })
 
-CA_data_list = parLapply(cl, Area, function(CA){
-  
+# source custom functions for producing the content across all the nodes
+clusterEvalQ(cl, source("functions folder/plot_functions.R" ,local = T))
+clusterEvalQ(cl, source("functions folder/table_functions.R" ,local = T))
+clusterEvalQ(cl, source("functions folder/text_functions.R" ,local = T))
+clusterEvalQ(cl, source("functions folder/produce_CA_content.R" ,local = T))
+
+
+# produce the content for all the areas 
+CA_content_list = parLapply(cl, Area, function(CA){
   
   # CA=Area[1]
   
-  CA_data = produce_CA_data(CA, raw_data)
+  CA_data = produce_CA_content(CA, raw_data)
   
-  CA_data = produce_CA_plots(CA_data)
-  
-  CA_data = produce_CA_tables(CA_data)
-  
-  CA_data = produce_CA_text(CA_data)
-  
-  write_rds(CA_data, file = paste0("temp/",CA_data$area,".rds"))
+  write_rds(CA_data, file = paste0("temp/",CA_data$area,"-content.rds"))
   
   return(1)
   

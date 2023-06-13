@@ -12,7 +12,7 @@ params:
 
 ```{r setup, echo=FALSE, include=FALSE, warning = FALSE}
 
-CA_data = read_rds(paste0("temp/",params$area,".rds"))
+CA_data = read_rds(paste0("temp/",params$area,"-content.rds"))
 
 list2env(CA_data, envir = environment())
 
@@ -39,12 +39,9 @@ library(kableExtra)
 # Text
 library(glue)
 
-# source("32_data.R")
-# source("33_plots.R")
-# source("34_tables.R")
-# source("35_text.R")
-
-
+# there's one function in this file but it's used inline 
+# at some point so is required to be loaded
+source("functions folder/text_functions.R", local = T)
 
 
 ```
