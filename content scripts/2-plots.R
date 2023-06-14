@@ -1,5 +1,4 @@
 # All plots using function plot_one_CA_num ====================================
-# paramsarea <- area
 
 p_pop_est_one_CA <- plot_one_CA_num(
   dataset = total_pop_est_CA,

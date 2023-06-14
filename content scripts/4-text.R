@@ -1,4 +1,3 @@
-paramsarea <- area
 # Population Estimates ----------------------------------------------------
 current_pop_est <- total_pop_est %>%
   filter(Area == paramsarea,

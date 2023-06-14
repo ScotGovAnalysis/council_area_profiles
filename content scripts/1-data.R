@@ -1,4 +1,3 @@
-paramsarea <- area
 # Start and end years for each chapter
 
 # Population estimates
