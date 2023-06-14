@@ -20,14 +20,14 @@ produce_CA_content <- function(area, full_dataset) {
   # that ran at the beginning of the markdown
   # ==========================
   
+  # run these scripts in the local environment
+  # all objects produced end up in the env
+  # later on they are packaged up for the Rmd file
   source("content scripts/1-data.R",local = T)
-  # print(111111111111111)
   source("content scripts/2-plots.R",local = T)
-  # print(222222222222222)
   source("content scripts/3-tables.R",local = T)
-  # print(333333333333333)
   source("content scripts/4-text.R",local = T)
-  # print(444444444444444)
+  
   # ==========================
   # This is where the original script ends
   # we now repack the function's environment 
@@ -36,6 +36,7 @@ produce_CA_content <- function(area, full_dataset) {
   
   # here we gather all our environment vars set above
   # into a single list for passing back out of the function
+  # to end up in the Rmd file
   CA_data = mget(ls(environment()))
   
   # If we wanted to add anything to the list we pass back
