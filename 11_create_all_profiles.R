@@ -16,11 +16,13 @@ st = Sys.time()
 
 source("functions folder/source functions.R")
 
-
+# read in the excel file with all tabs
 raw_data = read_CA_data("data/council-area-profiles-dataset.xlsx")
 
+# define the expected shape and characteristics of the data
 expectations = set_expectations()
 
+# check whether the raw data matches these expectations
 check_expectations(raw_data, expectations)
 
 # There is a later dependency in the Rmd file where having the 
@@ -29,7 +31,8 @@ raw_data = list.merge(raw_data, raw_data$updates)
 # this is a bandaid and needs to be changed 
 # TODO fix this shit
 
-# Knit HTML documents =========================================================
+# Create Content =========================================================
+# list of Council Areas to produce reports for
 Area <- c(
  "Aberdeen City",
  "Aberdeenshire",
@@ -64,9 +67,10 @@ Area <- c(
  "West Dunbartonshire",
  "West Lothian"
 )
-
-
-# find the number of cpu cores we have to available
+# # # # # # # # # # # # 
+# parallel setup
+# # # # # # # # # # # # 
+# find the number of cpu cores we have available
 n_cores = detectCores()
 # create a compute cluster with this resource
 cl = makeCluster(n_cores)
@@ -74,7 +78,6 @@ cl = makeCluster(n_cores)
 # export the data to distribute across the 
 # cluster nodes
 clusterExport(cl, varlist = c("raw_data"))
-
 
 # call any specific R commands across the nodes
 clusterCall(cl, fun = function(){
@@ -102,6 +105,9 @@ clusterEvalQ(cl, source("functions folder/table_functions.R" ,local = T))
 clusterEvalQ(cl, source("functions folder/text_functions.R" ,local = T))
 clusterEvalQ(cl, source("functions folder/produce_CA_content.R" ,local = T))
 
+# # # # # # # # # # # # 
+# parallel execution
+# # # # # # # # # # # # 
 
 # produce the content for all the areas 
 CA_content_status = parLapply(cl, Area, function(CA){
@@ -109,13 +115,24 @@ CA_content_status = parLapply(cl, Area, function(CA){
   # CA=Area[1]
   
   CA_data = produce_CA_content(CA, raw_data)
+  # TODO add QA steps in to check content 
+  # check number of items
+  # check for NAs
   
+  # write the content to file.
+  # the Rmd will load it later
   write_rds(CA_data, file = paste0("temp/",CA_data$area,"-content.rds"))
   
+  # assuming nothing went wrong
+  # return 1
   return(1)
+  
+  
   
 }
 )
+
+# Knit HTML Files =========================================================
 
 parLapply(cl, Area, function(area){
   
@@ -132,6 +149,10 @@ parLapply(cl, Area, function(area){
 })
 
 stopCluster(cl)
+
+# # # # # # # # # # # # 
+# parallel end
+# # # # # # # # # # # # 
 
 timed_run = Sys.time() - st
 
