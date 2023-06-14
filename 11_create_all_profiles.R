@@ -104,7 +104,7 @@ clusterEvalQ(cl, source("functions folder/produce_CA_content.R" ,local = T))
 
 
 # produce the content for all the areas 
-CA_content_list = parLapply(cl, Area, function(CA){
+CA_content_status = parLapply(cl, Area, function(CA){
   
   # CA=Area[1]
   
@@ -122,7 +122,7 @@ parLapply(cl, Area, function(area){
   # for debugging with a single CA
   # area = Area[1]
   
-  rmarkdown::render("31_create_profile_new.Rmd",
+  rmarkdown::render("CA_profile.Rmd",
                     output_dir = "output",
                     output_file = paste0(gsub(" ", "-", tolower(area)),
                                          "-council-profile.html"),
