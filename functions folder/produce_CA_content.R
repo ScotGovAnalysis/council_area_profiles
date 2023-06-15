@@ -21,7 +21,7 @@ produce_CA_content <- function(area, full_dataset) {
   # ==========================
   
   # run these scripts in the local environment
-  # all objects produced end up in the env
+  # all objects produced end up in the local env
   # later on they are packaged up for the Rmd file
   source("content scripts/1-data.R",local = T)
   source("content scripts/2-plots.R",local = T)

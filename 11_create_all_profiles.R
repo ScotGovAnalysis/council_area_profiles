@@ -115,6 +115,7 @@ CA_content_status = parLapply(cl, Area, function(CA){
   
   # CA=Area[1]
   
+  # produce_CA_content function declared in functions folder/produce_CA_content.R
   CA_data = produce_CA_content(CA, raw_data)
   # TODO add QA steps in to check content 
   # check number of items
