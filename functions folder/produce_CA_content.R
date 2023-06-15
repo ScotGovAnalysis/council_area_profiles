@@ -5,11 +5,11 @@ produce_CA_content <- function(area, full_dataset) {
   # this allows us to keep the code exactly as it was 
   # when it ran as a script at global level
   list2env(full_dataset, envir = environment())
-  # we don't the input object anymore
-  # and we don't want to return it 
+  # we don't need the input object anymore
+  # and we don't want to return it at the end of the function
   rm(full_dataset)
   # Define paramsarea ======================================================================
-  # we also put our council area name 
+  # we also take our council area name 
   # and put it where the original area was before this 
   # 
   paramsarea <- area
@@ -34,7 +34,7 @@ produce_CA_content <- function(area, full_dataset) {
   # into a list to return upwards
   # ==========================
   
-  # here we gather all our environment vars set above
+  # here we gather all our environment vars set above in the scripts
   # into a single list for passing back out of the function
   # to end up in the Rmd file
   CA_data = mget(ls(environment()))
