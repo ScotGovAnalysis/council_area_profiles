@@ -3,7 +3,7 @@ produce_CA_content <- function(area, full_dataset) {
   # we take our full dataset input and throw it 
   # into this function's local environment
   # this allows us to keep the code exactly as it was 
-  # when it ran as a script at global level
+  # when it ran as a script in the Rmd at global level
   list2env(full_dataset, envir = environment())
   # we don't need the input object anymore
   # and we don't want to return it at the end of the function

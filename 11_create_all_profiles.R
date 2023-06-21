@@ -29,10 +29,11 @@ check_expectations(raw_data, expectations)
 # updates sublist at the top level of the global env is important.
 raw_data = list.merge(raw_data, raw_data$updates)
 # this is a bandaid and needs to be changed 
-# TODO fix this shit
+# TODO fix this 
 
 # Create Content =========================================================
 # list of Council Areas to produce reports for
+##########
 Area <- c(
  "Aberdeen City",
  "Aberdeenshire",
@@ -67,6 +68,7 @@ Area <- c(
  "West Dunbartonshire",
  "West Lothian"
 )
+##########
 # # # # # # # # # # # # 
 # parallel setup
 # # # # # # # # # # # # 
