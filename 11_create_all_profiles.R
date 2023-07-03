@@ -23,7 +23,7 @@ raw_data = read_CA_data("data/council-area-profiles-dataset.xlsx")
 expectations = set_expectations()
 
 # check whether the raw data matches these expectations
-check_expectations(raw_data, expectations)
+check_results = check_expectations(raw_data, expectations)
 
 # There is a later dependency in the Rmd file where having the 
 # updates sublist at the top level of the global env is important.

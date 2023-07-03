@@ -114,16 +114,57 @@ check_expectations <- function(raw_data, expected) {
     .y = result[["to_compare"]],
     .f = anti_join) %>%
     `[`(names(.) != "leading_causes_of_death") %>%
-    purrr::discard(~ nrow(.x) == 0)
+    purrr::discard(~ nrow(.x) == 0) %>% 
+    # suppress the "joining by" console messages as there are far too many to be useful
+    suppressMessages()
   # We cannot have different combinations of ICD code, Cause, and Cause label.
   # Also some rows in this table are suppressed. So we don't check this table for
   # missing values.
   
+  message("Checking for missing values...")
+  
   if (length(result[["values_missing"]]) == 0) {
     message("Check passed: no missing values found")
   } else {
-    message("Check failed: these rows are missing:")
-    print(result[["values_missing"]])
+    message("Check failed: there are rows are missing in the following tables.")
+    message("Table summaries:")
+    
+    # so we have identified rows which are missing 
+    # according to our expectations
+    # sometimes there are far too many rows to print
+    # eg. pop est has 18k rows 
+    # here we summarise each table based on which columns are present
+    # it's not a catch all, but will give an idea of how many pieces of
+    # information are missing in the console which has a 10 row limit for 
+    # printing tables
+    
+    summary_tables = lapply(result[["values_missing"]], function(df){
+      
+      # df = result[["values_missing"]][[4]] %>% names()
+      
+      sum_table = df %>% group_by(`Council area`) %>%
+        summarize(Year = ifelse("Year" %in% names(df), paste(min(Year),"to",max(Year)), NA),
+                  Sex = ifelse("Sex" %in% names(df), paste(unique(Sex), collapse = ", "), NA),
+                  Age = ifelse("Age" %in% names(df), paste(min(Age),"to",max(Age)), NA),
+                  `Registration Year` = ifelse("Registration Year" %in% names(df), paste(min(`Registration Year`),"to",max(`Registration Year`)), NA),
+                  `Age group` = ifelse("Age group" %in% names(df), paste(first(`Age group`),"to",last(`Age group`)), NA),
+                  Type = ifelse("Type" %in% names(df), paste(first(`Type`),"and",last(`Type`)), NA),
+                  `Council Tax band` = ifelse("Council Tax band" %in% names(df), paste(first(`Council Tax band`),"to",last(`Council Tax band`)), NA),
+                  n_rows = n()
+                  ) %>% 
+        select_if(~ !any(is.na(.)))
+      
+      # TODO add other summary functions for columns not in the set that already have issues
+      
+    })
+    
+    print(summary_tables)
+    
+    message("If any tables have not been summarised correctly there is a chance that there is a new problem with the data.")
+    
+    message("To see a detailed account of the missing rows, please inspect the 'check_results' object")
+    
+    # print(result[["values_missing"]])
   }
   
   # * Unexpected ------------------------------------------------------------
@@ -131,7 +172,9 @@ check_expectations <- function(raw_data, expected) {
     .x = result[["to_compare"]],
     .y = result[["combinations"]],
     .f = anti_join) %>%
-    purrr::discard(~ nrow(.x) == 0)
+    purrr::discard(~ nrow(.x) == 0) %>% 
+    # suppress all of the join by messages that float up
+    suppressMessages()
   
   if (length(result[["values_unexpected"]]) == 0) {
     message("Check passed: no unexpected values found")
@@ -397,5 +440,8 @@ check_expectations <- function(raw_data, expected) {
     min = 0,
     max = 605000
   )
+  
+  return(result)
+  
 }
 
