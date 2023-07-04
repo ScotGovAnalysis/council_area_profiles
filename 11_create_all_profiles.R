@@ -119,13 +119,21 @@ CA_content_status = parLapply(cl, Area, function(CA){
   
   # produce_CA_content function declared in functions folder/produce_CA_content.R
   CA_data = produce_CA_content(CA, raw_data)
-  # TODO add QA steps in to check content 
-  # check number of items
-  # check for NAs
   
   # write the content to file.
   # the Rmd will load it later
   write_rds(CA_data, file = paste0("temp/",CA_data$area,"-content.rds"))
+  
+  # TODO add QA steps in to check content 
+  # check number of items
+  # check for NAs
+  if(length(CA_data) != 430){
+    return(-1)
+  } else {
+    
+    # Check here for any NAs in the CA_data list
+    
+  }
   
   # assuming nothing went wrong
   # return 1
@@ -135,6 +143,19 @@ CA_content_status = parLapply(cl, Area, function(CA){
   
 }
 )
+
+# All parallel output is written to file regardless of whether it worked
+# there are some basic checks after it is written and we check for 
+# good output here. Any status which is not 1 means there's 
+# an issue with the production of the content for that CA
+if(any(CA_content_status %>% unlist() !=1)){
+  
+  # helpful indicator of where to look for missing content
+  warning(paste("Please check content for:", paste(Area[which(CA_content_status %>% unlist() !=1)],collapse = ", ")))
+  # if any status is not 1 then we won't even progress to knitting
+  stop("Content missing in at least one set")
+  
+}
 
 # Knit HTML Files =========================================================
 
