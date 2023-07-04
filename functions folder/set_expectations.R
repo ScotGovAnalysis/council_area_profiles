@@ -214,7 +214,7 @@ set_expectations <- function() {
   # * population_estimates --------------------------------------------------
   expected[["col_values"]][["tibble"]][["population_estimates"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = as.numeric(1998:2020),
+    Year = as.numeric(1998:2021), # this needs changed every year
     Sex = c("Female", "Male"),
     Age = as.numeric(0:90)
   )
@@ -236,7 +236,7 @@ set_expectations <- function() {
   # * births_by_sex ---------------------------------------------------------
   expected[["col_values"]][["tibble"]][["births_by_sex"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(1991:2020),
+    `Registration Year` = as.numeric(1991:2021), # this needs changed every year
     Sex = c("All people",
             "Female",
             "Male")
@@ -245,13 +245,13 @@ set_expectations <- function() {
   # * standardised_birth_rates ---------------------------------------------
   expected[["col_values"]][["tibble"]][["standardised_birth_rates"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(1991:2020)
+    `Registration Year` = as.numeric(1991:2021) # this needs changed every year
   )
   
   # * births_by_age_of_mother -----------------------------------------------
   expected[["col_values"]][["tibble"]][["births_by_age_of_mother"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(1991:2020),
+    `Registration Year` = as.numeric(1991:2021), # this needs changed every year
     `Mother age group` = c(
       "0 to 19",
       "20 to 24",
@@ -267,13 +267,13 @@ set_expectations <- function() {
   # * fertility_rates -------------------------------------------------------
   expected[["col_values"]][["tibble"]][["fertility_rates"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(1991:2020)
+    `Registration Year` = as.numeric(1991:2021) # this needs changed every year
   )
   
   # * deaths_by_sex ---------------------------------------------------------
   expected[["col_values"]][["tibble"]][["deaths_by_sex"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(1991:2020),
+    `Registration Year` = as.numeric(1991:2021), # this needs changed every year
     Sex = c("All people",
             "Female",
             "Male")
@@ -282,13 +282,13 @@ set_expectations <- function() {
   # * standardised_death_rates ----------------------------------------------
   expected[["col_values"]][["tibble"]][["standardised_death_rates"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(1991:2020)
+    `Registration Year` = as.numeric(1991:2021) # this needs changed every year
   )
   
   # * deaths_by_sex_by_age --------------------------------------------------
   expected[["col_values"]][["tibble"]][["deaths_by_sex_by_age"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(2020),
+    `Registration Year` = as.numeric(2021), # this needs changed every year
     Sex = c("All people",
             "Females",
             "Males"),
@@ -320,7 +320,7 @@ set_expectations <- function() {
   # * leading_causes_of_death -----------------------------------------------
   expected[["col_values"]][["tibble"]][["leading_causes_of_death"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = as.numeric(2019),
+    Year = as.numeric(2021), # this needs changed every year
     `ICD codes` = c(
       "I20-I25",
       "C33-C34",
@@ -368,9 +368,9 @@ set_expectations <- function() {
   # * migration -------------------------------------------------------------
   expected[["col_values"]][["tibble"]][["migration"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = paste0(2001:2019,
+    Year = paste0(2001:2020,  # this needs changed every year 2001:lastyear
                   "-",
-                  stringr::str_sub(2002:2020, start = 3, end = 4)),
+                  stringr::str_sub(2002:2021, start = 3, end = 4)),  # this needs changed every year 2002:thisyear
     Sex = c("Female",
             "Male",
             "Persons"),
@@ -381,9 +381,9 @@ set_expectations <- function() {
   # * net_migration ---------------------------------------------------------
   expected[["col_values"]][["tibble"]][["net_migration"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = paste0(2001:2019,
+    Year = paste0(2001:2020,# this needs changed every year 2001:lastyear
                   "-",
-                  stringr::str_sub(2002:2020, start = 3, end = 4)),
+                  stringr::str_sub(2002:2021, start = 3, end = 4)), # this needs changed every year 2002:thisyear
     Sex = c("Female",
             "Male"),
     `Age group` = c(
@@ -413,17 +413,17 @@ set_expectations <- function() {
   # * net_migration_rates ---------------------------------------------------
   expected[["col_values"]][["tibble"]][["net_migration_rates"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = paste0(2008:2019,
+    Year = paste0(2008:2020,# this needs changed every year 2001:lastyear
                   "-",
-                  stringr::str_sub(2009:2020, start = 3, end = 4))
+                  stringr::str_sub(2009:2021, start = 3, end = 4))# this needs changed every year 2002:thisyear
   )
   
   # * life_expectancy -------------------------------------------------------
   expected[["col_values"]][["tibble"]][["life_expectancy"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = paste0(2001:2017,
+    Year = paste0(2001:2018,# this needs changed every year
                   "-",
-                  stringr::str_sub(2003:2019, start = 3, end = 4)),
+                  stringr::str_sub(2003:2020, start = 3, end = 4)),# this needs changed every year
     Sex = c("Female",
             "Male"),
     `Age group` = c(
@@ -459,14 +459,14 @@ set_expectations <- function() {
   # * marriages -------------------------------------------------------------
   expected[["col_values"]][["tibble"]][["marriages"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(1991:2019)
+    `Registration Year` = as.numeric(1991:2020)# this needs changed every year
   )
   
   
   # * civil_partnerships ----------------------------------------------------
   expected[["col_values"]][["tibble"]][["civil_partnerships"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    `Registration Year` = as.numeric(2005:2019),
+    `Registration Year` = as.numeric(2005:2020),# this needs changed every year
     Sex = c(
       "All",
       "Female",
@@ -477,7 +477,7 @@ set_expectations <- function() {
   # * household_estimates ---------------------------------------------------
   expected[["col_values"]][["tibble"]][["household_estimates"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = as.numeric(2001:2020)
+    Year = as.numeric(2001:2022)# this needs changed every year
   )
   
   # * household_projections -------------------------------------------------
@@ -520,7 +520,7 @@ set_expectations <- function() {
   # * dwellings -------------------------------------------------------------
   expected[["col_values"]][["tibble"]][["dwellings"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = as.numeric(2001:2020)
+    Year = as.numeric(2001:2022)# this needs changed every year
   )
   
   
@@ -541,7 +541,7 @@ set_expectations <- function() {
   # * dwellings_by_council_tax_band -----------------------------------------
   expected[["col_values"]][["tibble"]][["dwellings_by_council_tax_band"]] <- list(
     `Council area` = expected[["col_values"]][["council_area"]],
-    Year = as.numeric(2020),
+    Year = as.numeric(2022),
     `Council Tax band` = LETTERS[1:8]
   )
   
