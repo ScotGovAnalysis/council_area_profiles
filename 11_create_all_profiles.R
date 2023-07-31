@@ -108,6 +108,16 @@ clusterEvalQ(cl, source("functions folder/table_functions.R" ,local = T))
 clusterEvalQ(cl, source("functions folder/text_functions.R" ,local = T))
 clusterEvalQ(cl, source("functions folder/produce_CA_content.R" ,local = T))
 
+# check if the temporary folder to hold the content for each report exists
+
+if(!dir.exists("temp")){
+  
+  # if it doesn't exist then create it
+  
+  dir.create("temp")
+  
+}
+
 # # # # # # # # # # # # 
 # parallel execution
 # # # # # # # # # # # # 
@@ -127,12 +137,16 @@ CA_content_status = parLapply(cl, Area, function(CA){
   # TODO add QA steps in to check content 
   # check number of items
   # check for NAs
-  if(length(CA_data) != 430){
+  if(length(CA_data) < content_length){
+    
     return(-1)
+    
+  } else if(length(CA_data) > content_length) {
+    
+    return(-2)
+    
   } else {
-    
     # Check here for any NAs in the CA_data list
-    
   }
   
   # assuming nothing went wrong
@@ -151,25 +165,37 @@ CA_content_status = parLapply(cl, Area, function(CA){
 if(any(CA_content_status %>% unlist() !=1)){
   
   # helpful indicator of where to look for missing content
-  warning(paste("Please check content for:", paste(Area[which(CA_content_status %>% unlist() !=1)],collapse = ", ")))
+  stop(paste("Please check content for:", paste(Area[which(CA_content_status %>% unlist() !=1)],collapse = ", "), " | inside the 'temp' folder"))
   # if any status is not 1 then we won't even progress to knitting
-  stop("Content missing in at least one set")
   
 }
 
 # Knit HTML Files =========================================================
 
-parLapply(cl, Area, function(area){
+knit_result = parLapply(cl, Area, function(area){
   
   # for debugging with a single CA
   # area = Area[1]
   
-  rmarkdown::render("CA_profile.Rmd",
-                    output_dir = "output",
-                    output_file = paste0(gsub(" ", "-", tolower(area)),
-                                         "-council-profile.html"),
-                    params = list(area = area),
-                    quiet = ifelse(length(area) > 1, TRUE, FALSE))
+  # if the content for this CA exists then knit
+  if(file.exists(paste0("temp/",area,"-content.rds"))){
+    
+    res = rmarkdown::render("CA_profile.Rmd",
+                      output_dir = "output",
+                      output_file = paste0(gsub(" ", "-", tolower(area)),
+                                           "-council-profile.html"),
+                      params = list(area = area),
+                      quiet = ifelse(length(area) > 1, TRUE, FALSE))
+    
+    # remove the content rds file when done
+    file.remove(paste0("temp/",area,"-content.rds"))
+    
+    return(1)
+    
+  } else {
+    # if the content didn't exist then just return -1
+    return(-1)
+  }
   
 })
 
@@ -182,3 +208,12 @@ stopCluster(cl)
 timed_run = Sys.time() - st
 
 print(paste("Code complete. Run time:",timed_run))
+
+# last check to see if everything went to plan
+if(any(knit_result %>% unlist() !=1)){
+  
+  # helpful indicator of where to look for missing reports
+  stop(paste("Please check for missing reports:", paste(Area[which(knit_result %>% unlist() !=1)],collapse = ", ")))
+  
+}
+
