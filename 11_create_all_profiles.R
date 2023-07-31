@@ -27,9 +27,9 @@ check_results = check_expectations(raw_data, expectations)
 
 # There is a later dependency in the Rmd file where having the 
 # updates sublist at the top level of the global env is important.
+# However this can't be done before the check_expectations stage.
+# So it is done here.
 raw_data = list.merge(raw_data, raw_data$updates)
-# this is a bandaid and needs to be changed 
-# TODO fix this 
 
 # Create Content =========================================================
 # list of Council Areas to produce reports for
