@@ -5,11 +5,11 @@ library(testthat)
 library(parallel)
 library(rlist)
 
+# Setup =========================================================
 
-# 
-# readline(paste("Are you following the update instructions?",
-#                "\n https://github.com/DataScienceScotland/council_area_profiles",
-#                "\n Hit enter to continue:"))
+# the expected number of items produced when creating the content
+# for the repots
+content_length = 430
 
 # start a timer 
 st = Sys.time()
