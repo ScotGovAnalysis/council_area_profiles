@@ -73,8 +73,16 @@ Area <- c(
 # parallel setup
 # # # # # # # # # # # # 
 
+
+
 # find the number of cpu cores we have available
 n_cores = detectCores()
+
+# NOTE: If the code takes too long to run and memory pressure is high
+# reduce the value of n_cores to 2 or 4;
+# n_cores = 2
+
+
 # create a compute cluster with this resource
 cl = makeCluster(n_cores)
 
