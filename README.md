@@ -18,6 +18,12 @@ elements are then knitted into an HTML document by an RMarkdown file.
 The whole process is controlled by a single script that produces reports in parallel for each
 council area.
 
+### A note on parallel exectution
+
+The number of compute cores allocated for running the code is set to the maximum available for the highest performance gain. 
+On SCOTS machines this can be more resource than the machine can practicably give at once. In these cases the ```n_cores``` 
+variable should be set to a lower value such as 2 or 4, to avoid issues with memory and performace.
+
 ## How to update
 
 1. Save a copy of the most recent files to a local drive (RMarkdown will knit faster in a local drive)
@@ -83,8 +89,6 @@ In rough order of importance/urgency:
   - Validate data before preparing tables (e.g. is every council area included? Should Scotland be included? Are all combinations of all variables included? Are values sensible e.g. age < 120?)
   - Simplify the code. For example:
       - Replace deeply nested `ifelse` with `case_when` or `switch` statements
-      - Use functions and apply
-        [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
       - Use [existing
         utilities](https://scales.r-lib.org/reference/label_ordinal.html)
   - Automate horizontal axis labels so the final label is for the final datapoint (same for the first)
