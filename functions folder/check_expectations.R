@@ -121,6 +121,13 @@ check_expectations <- function(raw_data, expected) {
   # Also some rows in this table are suppressed. So we don't check this table for
   # missing values.
   
+  # TODO by not looking for missing values in leading_causes_of_death it means all of the data
+  # is labelled as unexpected during the checking stage. This is not helpful but it's a really big
+  # edge case that is difficult to deal with.
+  
+  # TODO leading_causes_of_death needs slimming down to only the combinations of codes, causes and labels 
+  # which are used together, not every possible combination. 
+  
   message("Checking for missing values...")
   
   if (length(result[["values_missing"]]) == 0) {
@@ -175,6 +182,8 @@ check_expectations <- function(raw_data, expected) {
     purrr::discard(~ nrow(.x) == 0) %>% 
     # suppress all of the join by messages that float up
     suppressMessages()
+  
+  # TODO leading_causes_of_death needs excluding from here too? 
   
   if (length(result[["values_unexpected"]]) == 0) {
     message("Check passed: no unexpected values found")
